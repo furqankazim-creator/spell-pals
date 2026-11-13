@@ -1,0 +1,4078 @@
+[
+  {
+    "word": "cat",
+    "emoji": "🐱",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "a",
+      "tuh"
+    ]
+  },
+  {
+    "word": "dog",
+    "emoji": "🐶",
+    "level": 1,
+    "sounds": [
+      "duh",
+      "o",
+      "guh"
+    ]
+  },
+  {
+    "word": "bee",
+    "emoji": "🐝",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "ee",
+      "ee"
+    ]
+  },
+  {
+    "word": "ant",
+    "emoji": "🐜",
+    "level": 1,
+    "sounds": [
+      "a",
+      "nnn",
+      "tuh"
+    ]
+  },
+  {
+    "word": "sun",
+    "emoji": "☀️",
+    "level": 1,
+    "sounds": [
+      "sss",
+      "uh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "car",
+    "emoji": "🚗",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "ah",
+      "rrr"
+    ]
+  },
+  {
+    "word": "fox",
+    "emoji": "🦊",
+    "level": 1,
+    "sounds": [
+      "fff",
+      "o",
+      "ks"
+    ]
+  },
+  {
+    "word": "pig",
+    "emoji": "🐷",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "i",
+      "guh"
+    ]
+  },
+  {
+    "word": "bat",
+    "emoji": "🦇",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "a",
+      "tuh"
+    ]
+  },
+  {
+    "word": "hen",
+    "emoji": "🐔",
+    "level": 1,
+    "sounds": [
+      "huh",
+      "e",
+      "nnn"
+    ]
+  },
+  {
+    "word": "egg",
+    "emoji": "🥚",
+    "level": 1,
+    "sounds": [
+      "e",
+      "guh",
+      "guh"
+    ]
+  },
+  {
+    "word": "cup",
+    "emoji": "🥤",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "uh",
+      "puh"
+    ]
+  },
+  {
+    "word": "hat",
+    "emoji": "🎩",
+    "level": 1,
+    "sounds": [
+      "huh",
+      "a",
+      "tuh"
+    ]
+  },
+  {
+    "word": "pen",
+    "emoji": "🖊️",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "e",
+      "nnn"
+    ]
+  },
+  {
+    "word": "bed",
+    "emoji": "🛏️",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "e",
+      "duh"
+    ]
+  },
+  {
+    "word": "map",
+    "emoji": "🗺️",
+    "level": 1,
+    "sounds": [
+      "mmm",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "bus",
+    "emoji": "🚌",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "uh",
+      "sss"
+    ]
+  },
+  {
+    "word": "cow",
+    "emoji": "🐮",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "ow",
+      "wuh"
+    ]
+  },
+  {
+    "word": "rat",
+    "emoji": "🐀",
+    "level": 1,
+    "sounds": [
+      "rrr",
+      "a",
+      "tuh"
+    ]
+  },
+  {
+    "word": "owl",
+    "emoji": "🦉",
+    "level": 1,
+    "sounds": [
+      "ow",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "jam",
+    "emoji": "🫙",
+    "level": 1,
+    "sounds": [
+      "juh",
+      "a",
+      "mmm"
+    ]
+  },
+  {
+    "word": "net",
+    "emoji": "🥅",
+    "level": 1,
+    "sounds": [
+      "nnn",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "web",
+    "emoji": "🕸️",
+    "level": 1,
+    "sounds": [
+      "wuh",
+      "e",
+      "buh"
+    ]
+  },
+  {
+    "word": "box",
+    "emoji": "📦",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "o",
+      "ks"
+    ]
+  },
+  {
+    "word": "top",
+    "emoji": "🌀",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "o",
+      "puh"
+    ]
+  },
+  {
+    "word": "red",
+    "emoji": "🔴",
+    "level": 1,
+    "sounds": [
+      "rrr",
+      "e",
+      "duh"
+    ]
+  },
+  {
+    "word": "leg",
+    "emoji": "🦵",
+    "level": 1,
+    "sounds": [
+      "lll",
+      "e",
+      "guh"
+    ]
+  },
+  {
+    "word": "arm",
+    "emoji": "💪",
+    "level": 1,
+    "sounds": [
+      "ah",
+      "rrr",
+      "mmm"
+    ]
+  },
+  {
+    "word": "zip",
+    "emoji": "🤐",
+    "level": 1,
+    "sounds": [
+      "zzz",
+      "i",
+      "puh"
+    ]
+  },
+  {
+    "word": "van",
+    "emoji": "🚐",
+    "level": 1,
+    "sounds": [
+      "vvv",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "jet",
+    "emoji": "✈️",
+    "level": 1,
+    "sounds": [
+      "juh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "mud",
+    "emoji": "🟤",
+    "level": 1,
+    "sounds": [
+      "mmm",
+      "uh",
+      "duh"
+    ]
+  },
+  {
+    "word": "rug",
+    "emoji": "🧶",
+    "level": 1,
+    "sounds": [
+      "rrr",
+      "uh",
+      "guh"
+    ]
+  },
+  {
+    "word": "tub",
+    "emoji": "🛁",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "uh",
+      "buh"
+    ]
+  },
+  {
+    "word": "lip",
+    "emoji": "👄",
+    "level": 1,
+    "sounds": [
+      "lll",
+      "i",
+      "puh"
+    ]
+  },
+  {
+    "word": "mom",
+    "emoji": "👩",
+    "level": 1,
+    "sounds": [
+      "mmm",
+      "o",
+      "mmm"
+    ]
+  },
+  {
+    "word": "dad",
+    "emoji": "👨",
+    "level": 1,
+    "sounds": [
+      "duh",
+      "a",
+      "duh"
+    ]
+  },
+  {
+    "word": "kid",
+    "emoji": "🧒",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "i",
+      "duh"
+    ]
+  },
+  {
+    "word": "pie",
+    "emoji": "🥧",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "eye",
+      "ee"
+    ]
+  },
+  {
+    "word": "log",
+    "emoji": "🪵",
+    "level": 1,
+    "sounds": [
+      "lll",
+      "o",
+      "guh"
+    ]
+  },
+  {
+    "word": "bug",
+    "emoji": "🐛",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "uh",
+      "guh"
+    ]
+  },
+  {
+    "word": "bun",
+    "emoji": "🥖",
+    "level": 1,
+    "sounds": [
+      "buh",
+      "uh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "cap",
+    "emoji": "🧢",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "cub",
+    "emoji": "🦁",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "uh",
+      "buh"
+    ]
+  },
+  {
+    "word": "dot",
+    "emoji": "⚫",
+    "level": 1,
+    "sounds": [
+      "duh",
+      "o",
+      "tuh"
+    ]
+  },
+  {
+    "word": "fan",
+    "emoji": "🪭",
+    "level": 1,
+    "sounds": [
+      "fff",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "gas",
+    "emoji": "⛽",
+    "level": 1,
+    "sounds": [
+      "guh",
+      "a",
+      "sss"
+    ]
+  },
+  {
+    "word": "gum",
+    "emoji": "🍬",
+    "level": 1,
+    "sounds": [
+      "guh",
+      "uh",
+      "mmm"
+    ]
+  },
+  {
+    "word": "hug",
+    "emoji": "🤗",
+    "level": 1,
+    "sounds": [
+      "huh",
+      "uh",
+      "guh"
+    ]
+  },
+  {
+    "word": "ice",
+    "emoji": "🧊",
+    "level": 1,
+    "sounds": [
+      "eye",
+      "kuh",
+      "e"
+    ]
+  },
+  {
+    "word": "ink",
+    "emoji": "🖋️",
+    "level": 1,
+    "sounds": [
+      "i",
+      "nnn",
+      "kuh"
+    ]
+  },
+  {
+    "word": "jug",
+    "emoji": "🏺",
+    "level": 1,
+    "sounds": [
+      "juh",
+      "uh",
+      "guh"
+    ]
+  },
+  {
+    "word": "key",
+    "emoji": "🔑",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "ee",
+      "ee"
+    ]
+  },
+  {
+    "word": "kit",
+    "emoji": "🧰",
+    "level": 1,
+    "sounds": [
+      "kuh",
+      "i",
+      "tuh"
+    ]
+  },
+  {
+    "word": "lap",
+    "emoji": "🦵",
+    "level": 1,
+    "sounds": [
+      "lll",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "man",
+    "emoji": "👨‍🦰",
+    "level": 1,
+    "sounds": [
+      "mmm",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "mat",
+    "emoji": "🧺",
+    "level": 1,
+    "sounds": [
+      "mmm",
+      "a",
+      "tuh"
+    ]
+  },
+  {
+    "word": "mix",
+    "emoji": "🥣",
+    "level": 1,
+    "sounds": [
+      "mmm",
+      "i",
+      "ks"
+    ]
+  },
+  {
+    "word": "nap",
+    "emoji": "😴",
+    "level": 1,
+    "sounds": [
+      "nnn",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "nod",
+    "emoji": "🙂",
+    "level": 1,
+    "sounds": [
+      "nnn",
+      "o",
+      "duh"
+    ]
+  },
+  {
+    "word": "nut",
+    "emoji": "🥜",
+    "level": 1,
+    "sounds": [
+      "nnn",
+      "uh",
+      "tuh"
+    ]
+  },
+  {
+    "word": "pan",
+    "emoji": "🍳",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "pet",
+    "emoji": "🐹",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "pin",
+    "emoji": "📌",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "pit",
+    "emoji": "🕳️",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "i",
+      "tuh"
+    ]
+  },
+  {
+    "word": "pop",
+    "emoji": "🎈",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "o",
+      "puh"
+    ]
+  },
+  {
+    "word": "pot",
+    "emoji": "🍲",
+    "level": 1,
+    "sounds": [
+      "puh",
+      "o",
+      "tuh"
+    ]
+  },
+  {
+    "word": "rib",
+    "emoji": "🦴",
+    "level": 1,
+    "sounds": [
+      "rrr",
+      "i",
+      "buh"
+    ]
+  },
+  {
+    "word": "rip",
+    "emoji": "📄",
+    "level": 1,
+    "sounds": [
+      "rrr",
+      "i",
+      "puh"
+    ]
+  },
+  {
+    "word": "run",
+    "emoji": "🏃",
+    "level": 1,
+    "sounds": [
+      "rrr",
+      "uh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "sad",
+    "emoji": "😢",
+    "level": 1,
+    "sounds": [
+      "sss",
+      "a",
+      "duh"
+    ]
+  },
+  {
+    "word": "sit",
+    "emoji": "🪑",
+    "level": 1,
+    "sounds": [
+      "sss",
+      "i",
+      "tuh"
+    ]
+  },
+  {
+    "word": "sip",
+    "emoji": "🥤",
+    "level": 1,
+    "sounds": [
+      "sss",
+      "i",
+      "puh"
+    ]
+  },
+  {
+    "word": "six",
+    "emoji": "🎲",
+    "level": 1,
+    "sounds": [
+      "sss",
+      "i",
+      "ks"
+    ]
+  },
+  {
+    "word": "tan",
+    "emoji": "☀️",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "tap",
+    "emoji": "👆",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "ten",
+    "emoji": "🔟",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "e",
+      "nnn"
+    ]
+  },
+  {
+    "word": "tin",
+    "emoji": "🥫",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "toy",
+    "emoji": "🧸",
+    "level": 1,
+    "sounds": [
+      "tuh",
+      "oy",
+      "oy"
+    ]
+  },
+  {
+    "word": "wag",
+    "emoji": "🐕",
+    "level": 1,
+    "sounds": [
+      "wuh",
+      "a",
+      "guh"
+    ]
+  },
+  {
+    "word": "frog",
+    "emoji": "🐸",
+    "level": 2,
+    "sounds": [
+      "fff",
+      "rrr",
+      "o",
+      "guh"
+    ]
+  },
+  {
+    "word": "crab",
+    "emoji": "🦀",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "rrr",
+      "a",
+      "buh"
+    ]
+  },
+  {
+    "word": "star",
+    "emoji": "⭐",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "tuh",
+      "ah",
+      "rrr"
+    ]
+  },
+  {
+    "word": "drum",
+    "emoji": "🥁",
+    "level": 2,
+    "sounds": [
+      "duh",
+      "rrr",
+      "uh",
+      "mmm"
+    ]
+  },
+  {
+    "word": "flag",
+    "emoji": "🚩",
+    "level": 2,
+    "sounds": [
+      "fff",
+      "lll",
+      "a",
+      "guh"
+    ]
+  },
+  {
+    "word": "clip",
+    "emoji": "📎",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "lll",
+      "i",
+      "puh"
+    ]
+  },
+  {
+    "word": "grin",
+    "emoji": "😁",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "rrr",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "plum",
+    "emoji": "🟣",
+    "level": 2,
+    "sounds": [
+      "puh",
+      "lll",
+      "uh",
+      "mmm"
+    ]
+  },
+  {
+    "word": "sled",
+    "emoji": "🛷",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "lll",
+      "e",
+      "duh"
+    ]
+  },
+  {
+    "word": "swim",
+    "emoji": "🏊",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "wuh",
+      "i",
+      "mmm"
+    ]
+  },
+  {
+    "word": "snap",
+    "emoji": "👏",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "nnn",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "trap",
+    "emoji": "🪤",
+    "level": 2,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "a",
+      "puh"
+    ]
+  },
+  {
+    "word": "nest",
+    "emoji": "🪺",
+    "level": 2,
+    "sounds": [
+      "nnn",
+      "e",
+      "sss",
+      "tuh"
+    ]
+  },
+  {
+    "word": "milk",
+    "emoji": "🥛",
+    "level": 3,
+    "sounds": [
+      "mmm",
+      "i",
+      "lll",
+      "kuh"
+    ]
+  },
+  {
+    "word": "hand",
+    "emoji": "✋",
+    "level": 3,
+    "sounds": [
+      "huh",
+      "a",
+      "nnn",
+      "duh"
+    ]
+  },
+  {
+    "word": "sand",
+    "emoji": "🏖️",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "a",
+      "nnn",
+      "duh"
+    ]
+  },
+  {
+    "word": "lamp",
+    "emoji": "💡",
+    "level": 2,
+    "sounds": [
+      "lll",
+      "a",
+      "mmm",
+      "puh"
+    ]
+  },
+  {
+    "word": "belt",
+    "emoji": "👖",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "e",
+      "lll",
+      "tuh"
+    ]
+  },
+  {
+    "word": "tent",
+    "emoji": "⛺",
+    "level": 2,
+    "sounds": [
+      "tuh",
+      "e",
+      "nnn",
+      "tuh"
+    ]
+  },
+  {
+    "word": "ship",
+    "emoji": "🚢",
+    "level": 2,
+    "sounds": [
+      "shh",
+      "i",
+      "puh",
+      "puh"
+    ]
+  },
+  {
+    "word": "tree",
+    "emoji": "🌳",
+    "level": 2,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "ee",
+      "ee"
+    ]
+  },
+  {
+    "word": "rain",
+    "emoji": "🌧️",
+    "level": 3,
+    "sounds": [
+      "rrr",
+      "ay",
+      "nnn",
+      "nnn"
+    ]
+  },
+  {
+    "word": "snow",
+    "emoji": "❄️",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "nnn",
+      "oh",
+      "wuh"
+    ]
+  },
+  {
+    "word": "wind",
+    "emoji": "💨",
+    "level": 2,
+    "sounds": [
+      "wuh",
+      "i",
+      "nnn",
+      "duh"
+    ]
+  },
+  {
+    "word": "moon",
+    "emoji": "🌙",
+    "level": 2,
+    "sounds": [
+      "mmm",
+      "oo",
+      "nnn",
+      "nnn"
+    ]
+  },
+  {
+    "word": "king",
+    "emoji": "👑",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "i",
+      "nng",
+      "guh"
+    ]
+  },
+  {
+    "word": "ring",
+    "emoji": "💍",
+    "level": 2,
+    "sounds": [
+      "rrr",
+      "i",
+      "nng",
+      "guh"
+    ]
+  },
+  {
+    "word": "sing",
+    "emoji": "🎤",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "i",
+      "nng",
+      "guh"
+    ]
+  },
+  {
+    "word": "sock",
+    "emoji": "🧦",
+    "level": 3,
+    "sounds": [
+      "sss",
+      "o",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "rock",
+    "emoji": "🪨",
+    "level": 2,
+    "sounds": [
+      "rrr",
+      "o",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "leaf",
+    "emoji": "🍃",
+    "level": 2,
+    "sounds": [
+      "lll",
+      "ee",
+      "fff",
+      "fff"
+    ]
+  },
+  {
+    "word": "goat",
+    "emoji": "🐐",
+    "level": 3,
+    "sounds": [
+      "guh",
+      "oh",
+      "tuh",
+      "tuh"
+    ]
+  },
+  {
+    "word": "wolf",
+    "emoji": "🐺",
+    "level": 3,
+    "sounds": [
+      "wuh",
+      "oo",
+      "lll",
+      "fff"
+    ]
+  },
+  {
+    "word": "deer",
+    "emoji": "🦌",
+    "level": 3,
+    "sounds": [
+      "duh",
+      "eer",
+      "rrr",
+      "rrr"
+    ]
+  },
+  {
+    "word": "seal",
+    "emoji": "🦭",
+    "level": 3,
+    "sounds": [
+      "sss",
+      "ee",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "clam",
+    "emoji": "🐚",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "lll",
+      "a",
+      "mmm"
+    ]
+  },
+  {
+    "word": "glue",
+    "emoji": "🧴",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "lll",
+      "oo",
+      "e"
+    ]
+  },
+  {
+    "word": "blue",
+    "emoji": "🔵",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "lll",
+      "oo",
+      "e"
+    ]
+  },
+  {
+    "word": "green",
+    "emoji": "🟢",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "rrr",
+      "ee",
+      "ee",
+      "nnn"
+    ]
+  },
+  {
+    "word": "pink",
+    "emoji": "🩷",
+    "level": 2,
+    "sounds": [
+      "puh",
+      "i",
+      "nng",
+      "kuh"
+    ]
+  },
+  {
+    "word": "black",
+    "emoji": "⬛",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "lll",
+      "a",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "white",
+    "emoji": "⬜",
+    "level": 2,
+    "sounds": [
+      "wuh",
+      "wuh",
+      "eye",
+      "tuh",
+      "e"
+    ]
+  },
+  {
+    "word": "brown",
+    "emoji": "🟤",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "rrr",
+      "ow",
+      "wuh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "gold",
+    "emoji": "🥇",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "oh",
+      "lll",
+      "duh"
+    ]
+  },
+  {
+    "word": "brick",
+    "emoji": "🧱",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "rrr",
+      "i",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "brush",
+    "emoji": "🖌️",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "rrr",
+      "uh",
+      "shh",
+      "shh"
+    ]
+  },
+  {
+    "word": "clock",
+    "emoji": "🕐",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "lll",
+      "o",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "cloud",
+    "emoji": "☁️",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "lll",
+      "ow",
+      "wuh",
+      "duh"
+    ]
+  },
+  {
+    "word": "crown",
+    "emoji": "👑",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "rrr",
+      "ow",
+      "wuh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "dress",
+    "emoji": "👗",
+    "level": 2,
+    "sounds": [
+      "duh",
+      "rrr",
+      "e",
+      "sss",
+      "sss"
+    ]
+  },
+  {
+    "word": "drink",
+    "emoji": "🥤",
+    "level": 2,
+    "sounds": [
+      "duh",
+      "rrr",
+      "i",
+      "nng",
+      "kuh"
+    ]
+  },
+  {
+    "word": "fresh",
+    "emoji": "🌿",
+    "level": 2,
+    "sounds": [
+      "fff",
+      "rrr",
+      "e",
+      "shh",
+      "shh"
+    ]
+  },
+  {
+    "word": "glass",
+    "emoji": "🥛",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "lll",
+      "a",
+      "sss",
+      "sss"
+    ]
+  },
+  {
+    "word": "grass",
+    "emoji": "🌱",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "rrr",
+      "a",
+      "sss",
+      "sss"
+    ]
+  },
+  {
+    "word": "smile",
+    "emoji": "😊",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "mmm",
+      "eye",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "snail",
+    "emoji": "🐌",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "nnn",
+      "ay",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "spoon",
+    "emoji": "🥄",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "puh",
+      "oo",
+      "nnn",
+      "nnn"
+    ]
+  },
+  {
+    "word": "stair",
+    "emoji": "🪜",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "tuh",
+      "air",
+      "rrr",
+      "rrr"
+    ]
+  },
+  {
+    "word": "stone",
+    "emoji": "🪨",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "tuh",
+      "oh",
+      "nnn",
+      "e"
+    ]
+  },
+  {
+    "word": "glad",
+    "emoji": "😊",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "lll",
+      "a",
+      "duh"
+    ]
+  },
+  {
+    "word": "fish",
+    "emoji": "🐟",
+    "level": 2,
+    "sounds": [
+      "fff",
+      "i",
+      "shh",
+      "shh"
+    ]
+  },
+  {
+    "word": "bird",
+    "emoji": "🐦",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "er",
+      "duh",
+      "duh"
+    ]
+  },
+  {
+    "word": "bear",
+    "emoji": "🐻",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "air",
+      "rrr",
+      "rrr"
+    ]
+  },
+  {
+    "word": "cake",
+    "emoji": "🎂",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "ay",
+      "kuh",
+      "e"
+    ]
+  },
+  {
+    "word": "ball",
+    "emoji": "⚽",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "aw",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "book",
+    "emoji": "📖",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "oo",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "door",
+    "emoji": "🚪",
+    "level": 3,
+    "sounds": [
+      "duh",
+      "or",
+      "rrr",
+      "rrr"
+    ]
+  },
+  {
+    "word": "duck",
+    "emoji": "🦆",
+    "level": 2,
+    "sounds": [
+      "duh",
+      "uh",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "lion",
+    "emoji": "🦁",
+    "level": 3,
+    "sounds": [
+      "lll",
+      "eye",
+      "uh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "zebra",
+    "emoji": "🦓",
+    "level": 3,
+    "sounds": [
+      "zzz",
+      "ee",
+      "buh",
+      "rrr",
+      "uh"
+    ]
+  },
+  {
+    "word": "panda",
+    "emoji": "🐼",
+    "level": 3,
+    "sounds": [
+      "puh",
+      "a",
+      "nnn",
+      "duh",
+      "uh"
+    ]
+  },
+  {
+    "word": "koala",
+    "emoji": "🐨",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "oh",
+      "ah",
+      "lll",
+      "uh"
+    ]
+  },
+  {
+    "word": "whale",
+    "emoji": "🐳",
+    "level": 3,
+    "sounds": [
+      "wuh",
+      "wuh",
+      "ay",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "shark",
+    "emoji": "🦈",
+    "level": 3,
+    "sounds": [
+      "shh",
+      "shh",
+      "ah",
+      "rrr",
+      "kuh"
+    ]
+  },
+  {
+    "word": "apple",
+    "emoji": "🍎",
+    "level": 3,
+    "sounds": [
+      "a",
+      "puh",
+      "puh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "banana",
+    "emoji": "🍌",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "a",
+      "nnn",
+      "a",
+      "nnn",
+      "uh"
+    ]
+  },
+  {
+    "word": "orange",
+    "emoji": "🍊",
+    "level": 3,
+    "sounds": [
+      "or",
+      "rrr",
+      "a",
+      "nnn",
+      "juh",
+      "e"
+    ]
+  },
+  {
+    "word": "grapes",
+    "emoji": "🍇",
+    "level": 3,
+    "sounds": [
+      "guh",
+      "rrr",
+      "ay",
+      "puh",
+      "e",
+      "sss"
+    ]
+  },
+  {
+    "word": "lemon",
+    "emoji": "🍋",
+    "level": 3,
+    "sounds": [
+      "lll",
+      "e",
+      "mmm",
+      "uh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "melon",
+    "emoji": "🍉",
+    "level": 3,
+    "sounds": [
+      "mmm",
+      "e",
+      "lll",
+      "uh",
+      "nnn"
+    ]
+  },
+  {
+    "word": "peach",
+    "emoji": "🍑",
+    "level": 3,
+    "sounds": [
+      "puh",
+      "ee",
+      "ee",
+      "chh",
+      "chh"
+    ]
+  },
+  {
+    "word": "cherry",
+    "emoji": "🍒",
+    "level": 3,
+    "sounds": [
+      "chh",
+      "chh",
+      "e",
+      "rrr",
+      "rrr",
+      "ee"
+    ]
+  },
+  {
+    "word": "bread",
+    "emoji": "🍞",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "rrr",
+      "e",
+      "e",
+      "duh"
+    ]
+  },
+  {
+    "word": "cheese",
+    "emoji": "🧀",
+    "level": 3,
+    "sounds": [
+      "chh",
+      "chh",
+      "ee",
+      "ee",
+      "zzz",
+      "e"
+    ]
+  },
+  {
+    "word": "pizza",
+    "emoji": "🍕",
+    "level": 3,
+    "sounds": [
+      "puh",
+      "ee",
+      "zzz",
+      "zzz",
+      "uh"
+    ]
+  },
+  {
+    "word": "pasta",
+    "emoji": "🍝",
+    "level": 3,
+    "sounds": [
+      "puh",
+      "ah",
+      "sss",
+      "tuh",
+      "uh"
+    ]
+  },
+  {
+    "word": "rice",
+    "emoji": "🍚",
+    "level": 3,
+    "sounds": [
+      "rrr",
+      "eye",
+      "sss",
+      "e"
+    ]
+  },
+  {
+    "word": "soup",
+    "emoji": "🍜",
+    "level": 3,
+    "sounds": [
+      "sss",
+      "oo",
+      "oo",
+      "puh"
+    ]
+  },
+  {
+    "word": "juice",
+    "emoji": "🧃",
+    "level": 3,
+    "sounds": [
+      "juh",
+      "oo",
+      "oo",
+      "sss",
+      "e"
+    ]
+  },
+  {
+    "word": "candy",
+    "emoji": "🍭",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "a",
+      "nnn",
+      "duh",
+      "ee"
+    ]
+  },
+  {
+    "word": "cookie",
+    "emoji": "🍪",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "oo",
+      "oo",
+      "kuh",
+      "ee",
+      "ee"
+    ]
+  },
+  {
+    "word": "muffin",
+    "emoji": "🧁",
+    "level": 3,
+    "sounds": [
+      "mmm",
+      "uh",
+      "fff",
+      "fff",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "train",
+    "emoji": "🚂",
+    "level": 3,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "ay",
+      "nnn",
+      "nnn"
+    ]
+  },
+  {
+    "word": "plane",
+    "emoji": "✈️",
+    "level": 3,
+    "sounds": [
+      "puh",
+      "lll",
+      "ay",
+      "nnn",
+      "e"
+    ]
+  },
+  {
+    "word": "boat",
+    "emoji": "🚤",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "oh",
+      "tuh",
+      "tuh"
+    ]
+  },
+  {
+    "word": "bike",
+    "emoji": "🚲",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "eye",
+      "kuh",
+      "e"
+    ]
+  },
+  {
+    "word": "house",
+    "emoji": "🏠",
+    "level": 3,
+    "sounds": [
+      "huh",
+      "ow",
+      "wuh",
+      "sss",
+      "e"
+    ]
+  },
+  {
+    "word": "school",
+    "emoji": "🏫",
+    "level": 3,
+    "sounds": [
+      "sss",
+      "kuh",
+      "kuh",
+      "oo",
+      "oo",
+      "lll"
+    ]
+  },
+  {
+    "word": "garden",
+    "emoji": "🌷",
+    "level": 3,
+    "sounds": [
+      "guh",
+      "ah",
+      "rrr",
+      "duh",
+      "e",
+      "nnn"
+    ]
+  },
+  {
+    "word": "beach",
+    "emoji": "🏖️",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "ee",
+      "ee",
+      "chh",
+      "chh"
+    ]
+  },
+  {
+    "word": "forest",
+    "emoji": "🌲",
+    "level": 3,
+    "sounds": [
+      "fff",
+      "or",
+      "rrr",
+      "e",
+      "sss",
+      "tuh"
+    ]
+  },
+  {
+    "word": "river",
+    "emoji": "🏞️",
+    "level": 3,
+    "sounds": [
+      "rrr",
+      "i",
+      "vvv",
+      "er",
+      "rrr"
+    ]
+  },
+  {
+    "word": "kite",
+    "emoji": "🪁",
+    "level": 2,
+    "sounds": [
+      "kuh",
+      "eye",
+      "tuh",
+      "e"
+    ]
+  },
+  {
+    "word": "castle",
+    "emoji": "🏰",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "a",
+      "sss",
+      "tuh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "bridge",
+    "emoji": "🌉",
+    "level": 3,
+    "sounds": [
+      "buh",
+      "rrr",
+      "i",
+      "juh",
+      "juh",
+      "e"
+    ]
+  },
+  {
+    "word": "tower",
+    "emoji": "🗼",
+    "level": 3,
+    "sounds": [
+      "tuh",
+      "ow",
+      "wuh",
+      "er",
+      "rrr"
+    ]
+  },
+  {
+    "word": "farm",
+    "emoji": "🚜",
+    "level": 3,
+    "sounds": [
+      "fff",
+      "ah",
+      "rrr",
+      "mmm"
+    ]
+  },
+  {
+    "word": "market",
+    "emoji": "🛒",
+    "level": 3,
+    "sounds": [
+      "mmm",
+      "ah",
+      "rrr",
+      "kuh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "doctor",
+    "emoji": "🩺",
+    "level": 3,
+    "sounds": [
+      "duh",
+      "o",
+      "kuh",
+      "tuh",
+      "or",
+      "rrr"
+    ]
+  },
+  {
+    "word": "rope",
+    "emoji": "🪢",
+    "level": 3,
+    "sounds": [
+      "rrr",
+      "oh",
+      "puh",
+      "e"
+    ]
+  },
+  {
+    "word": "friend",
+    "emoji": "🧑‍🤝‍🧑",
+    "level": 3,
+    "sounds": [
+      "fff",
+      "rrr",
+      "e",
+      "e",
+      "nnn",
+      "duh"
+    ]
+  },
+  {
+    "word": "family",
+    "emoji": "👨‍👩‍👧‍👦",
+    "level": 3,
+    "sounds": [
+      "fff",
+      "a",
+      "mmm",
+      "i",
+      "lll",
+      "ee"
+    ]
+  },
+  {
+    "word": "happy",
+    "emoji": "😊",
+    "level": 3,
+    "sounds": [
+      "huh",
+      "a",
+      "puh",
+      "puh",
+      "ee"
+    ]
+  },
+  {
+    "word": "sunny",
+    "emoji": "☀️",
+    "level": 3,
+    "sounds": [
+      "sss",
+      "uh",
+      "nnn",
+      "nnn",
+      "ee"
+    ]
+  },
+  {
+    "word": "sleep",
+    "emoji": "😴",
+    "level": 3,
+    "sounds": [
+      "sss",
+      "lll",
+      "ee",
+      "puh",
+      "puh"
+    ]
+  },
+  {
+    "word": "dream",
+    "emoji": "💭",
+    "level": 3,
+    "sounds": [
+      "duh",
+      "rrr",
+      "ee",
+      "ee",
+      "mmm"
+    ]
+  },
+  {
+    "word": "dance",
+    "emoji": "💃",
+    "level": 3,
+    "sounds": [
+      "duh",
+      "a",
+      "nnn",
+      "sss",
+      "e"
+    ]
+  },
+  {
+    "word": "music",
+    "emoji": "🎵",
+    "level": 3,
+    "sounds": [
+      "mmm",
+      "yoo",
+      "zzz",
+      "i",
+      "kuh"
+    ]
+  },
+  {
+    "word": "tiger",
+    "emoji": "🐯",
+    "level": 3,
+    "sounds": [
+      "tuh",
+      "eye",
+      "guh",
+      "er",
+      "rrr"
+    ]
+  },
+  {
+    "word": "monkey",
+    "emoji": "🐵",
+    "level": 3,
+    "sounds": [
+      "mmm",
+      "uh",
+      "nnn",
+      "kuh",
+      "ee",
+      "ee"
+    ]
+  },
+  {
+    "word": "bell",
+    "emoji": "🔔",
+    "level": 2,
+    "sounds": [
+      "buh",
+      "e",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "gift",
+    "emoji": "🎁",
+    "level": 2,
+    "sounds": [
+      "guh",
+      "i",
+      "fff",
+      "tuh"
+    ]
+  },
+  {
+    "word": "swan",
+    "emoji": "🦢",
+    "level": 2,
+    "sounds": [
+      "sss",
+      "wuh",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "nose",
+    "emoji": "👃",
+    "level": 3,
+    "sounds": [
+      "nnn",
+      "oh",
+      "zzz",
+      "e"
+    ]
+  },
+  {
+    "word": "shoe",
+    "emoji": "👟",
+    "level": 3,
+    "sounds": [
+      "shh",
+      "oo",
+      "e",
+      "e"
+    ]
+  },
+  {
+    "word": "pear",
+    "emoji": "🍐",
+    "level": 3,
+    "sounds": [
+      "puh",
+      "air",
+      "rrr",
+      "rrr"
+    ]
+  },
+  {
+    "word": "corn",
+    "emoji": "🌽",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "or",
+      "nnn",
+      "nnn"
+    ]
+  },
+  {
+    "word": "kiwi",
+    "emoji": "🥝",
+    "level": 3,
+    "sounds": [
+      "kuh",
+      "ee",
+      "wuh",
+      "ee"
+    ]
+  },
+  {
+    "word": "rabbit",
+    "emoji": "🐰",
+    "level": 4,
+    "sounds": [
+      "rrr",
+      "a",
+      "buh",
+      "buh",
+      "i",
+      "tuh"
+    ]
+  },
+  {
+    "word": "turtle",
+    "emoji": "🐢",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "u",
+      "rrr",
+      "tuh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "spider",
+    "emoji": "🕷️",
+    "level": 4,
+    "sounds": [
+      "sss",
+      "puh",
+      "i",
+      "duh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "dragon",
+    "emoji": "🐉",
+    "level": 4,
+    "sounds": [
+      "duh",
+      "rrr",
+      "a",
+      "guh",
+      "o",
+      "nnn"
+    ]
+  },
+  {
+    "word": "rocket",
+    "emoji": "🚀",
+    "level": 4,
+    "sounds": [
+      "rrr",
+      "o",
+      "kuh",
+      "kuh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "flower",
+    "emoji": "🌸",
+    "level": 4,
+    "sounds": [
+      "fff",
+      "lll",
+      "o",
+      "wuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "carrot",
+    "emoji": "🥕",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "a",
+      "rrr",
+      "rrr",
+      "o",
+      "tuh"
+    ]
+  },
+  {
+    "word": "potato",
+    "emoji": "🥔",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "o",
+      "tuh",
+      "a",
+      "tuh",
+      "o"
+    ]
+  },
+  {
+    "word": "tomato",
+    "emoji": "🍅",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "o",
+      "mmm",
+      "a",
+      "tuh",
+      "o"
+    ]
+  },
+  {
+    "word": "pepper",
+    "emoji": "🌶️",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "e",
+      "puh",
+      "puh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "guitar",
+    "emoji": "🎸",
+    "level": 4,
+    "sounds": [
+      "guh",
+      "u",
+      "i",
+      "tuh",
+      "a",
+      "rrr"
+    ]
+  },
+  {
+    "word": "camera",
+    "emoji": "📷",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "a",
+      "mmm",
+      "e",
+      "rrr",
+      "a"
+    ]
+  },
+  {
+    "word": "pencil",
+    "emoji": "✏️",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "e",
+      "nnn",
+      "kuh",
+      "i",
+      "lll"
+    ]
+  },
+  {
+    "word": "basket",
+    "emoji": "🧺",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "a",
+      "sss",
+      "kuh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "window",
+    "emoji": "🪟",
+    "level": 4,
+    "sounds": [
+      "wuh",
+      "i",
+      "nnn",
+      "duh",
+      "o",
+      "wuh"
+    ]
+  },
+  {
+    "word": "mirror",
+    "emoji": "🪞",
+    "level": 4,
+    "sounds": [
+      "mmm",
+      "i",
+      "rrr",
+      "rrr",
+      "o",
+      "rrr"
+    ]
+  },
+  {
+    "word": "bucket",
+    "emoji": "🪣",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "u",
+      "kuh",
+      "kuh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "candle",
+    "emoji": "🕯️",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "a",
+      "nnn",
+      "duh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "planet",
+    "emoji": "🪐",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "lll",
+      "a",
+      "nnn",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "island",
+    "emoji": "🏝️",
+    "level": 4,
+    "sounds": [
+      "i",
+      "sss",
+      "lll",
+      "a",
+      "nnn",
+      "duh"
+    ]
+  },
+  {
+    "word": "rainbow",
+    "emoji": "🌈",
+    "level": 4,
+    "sounds": [
+      "rrr",
+      "a",
+      "i",
+      "nnn",
+      "buh",
+      "o",
+      "wuh"
+    ]
+  },
+  {
+    "word": "balloon",
+    "emoji": "🎈",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "a",
+      "lll",
+      "lll",
+      "o",
+      "o",
+      "nnn"
+    ]
+  },
+  {
+    "word": "magnet",
+    "emoji": "🧲",
+    "level": 4,
+    "sounds": [
+      "mmm",
+      "a",
+      "guh",
+      "nnn",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "tractor",
+    "emoji": "🚜",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "a",
+      "kuh",
+      "tuh",
+      "o",
+      "rrr"
+    ]
+  },
+  {
+    "word": "anchor",
+    "emoji": "⚓",
+    "level": 4,
+    "sounds": [
+      "a",
+      "nnn",
+      "kuh",
+      "huh",
+      "o",
+      "rrr"
+    ]
+  },
+  {
+    "word": "ticket",
+    "emoji": "🎫",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "i",
+      "kuh",
+      "kuh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "trophy",
+    "emoji": "🏆",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "o",
+      "puh",
+      "huh",
+      "yuh"
+    ]
+  },
+  {
+    "word": "parrot",
+    "emoji": "🦜",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "a",
+      "rrr",
+      "rrr",
+      "o",
+      "tuh"
+    ]
+  },
+  {
+    "word": "turkey",
+    "emoji": "🦃",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "u",
+      "rrr",
+      "kuh",
+      "e",
+      "yuh"
+    ]
+  },
+  {
+    "word": "rooster",
+    "emoji": "🐓",
+    "level": 4,
+    "sounds": [
+      "rrr",
+      "o",
+      "o",
+      "sss",
+      "tuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "dolphin",
+    "emoji": "🐬",
+    "level": 4,
+    "sounds": [
+      "duh",
+      "o",
+      "lll",
+      "puh",
+      "huh",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "penguin",
+    "emoji": "🐧",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "e",
+      "nnn",
+      "guh",
+      "u",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "giraffe",
+    "emoji": "🦒",
+    "level": 4,
+    "sounds": [
+      "guh",
+      "i",
+      "rrr",
+      "a",
+      "fff",
+      "fff",
+      "e"
+    ]
+  },
+  {
+    "word": "puppy",
+    "emoji": "🐶",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "u",
+      "puh",
+      "puh",
+      "yuh"
+    ]
+  },
+  {
+    "word": "beetle",
+    "emoji": "🪲",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "e",
+      "e",
+      "tuh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "pumpkin",
+    "emoji": "🎃",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "u",
+      "mmm",
+      "puh",
+      "kuh",
+      "i",
+      "nnn"
+    ]
+  },
+  {
+    "word": "cactus",
+    "emoji": "🌵",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "a",
+      "kuh",
+      "tuh",
+      "u",
+      "sss"
+    ]
+  },
+  {
+    "word": "volcano",
+    "emoji": "🌋",
+    "level": 4,
+    "sounds": [
+      "vvv",
+      "o",
+      "lll",
+      "kuh",
+      "a",
+      "nnn",
+      "o"
+    ]
+  },
+  {
+    "word": "snowman",
+    "emoji": "⛄",
+    "level": 4,
+    "sounds": [
+      "sss",
+      "nnn",
+      "o",
+      "wuh",
+      "mmm",
+      "a",
+      "nnn"
+    ]
+  },
+  {
+    "word": "present",
+    "emoji": "🎁",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "rrr",
+      "e",
+      "sss",
+      "e",
+      "nnn",
+      "tuh"
+    ]
+  },
+  {
+    "word": "scooter",
+    "emoji": "🛴",
+    "level": 4,
+    "sounds": [
+      "sss",
+      "kuh",
+      "o",
+      "o",
+      "tuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "piano",
+    "emoji": "🎹",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "i",
+      "a",
+      "nnn",
+      "o"
+    ]
+  },
+  {
+    "word": "lobster",
+    "emoji": "🦞",
+    "level": 4,
+    "sounds": [
+      "lll",
+      "o",
+      "buh",
+      "sss",
+      "tuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "octopus",
+    "emoji": "🐙",
+    "level": 4,
+    "sounds": [
+      "o",
+      "kuh",
+      "tuh",
+      "o",
+      "puh",
+      "u",
+      "sss"
+    ]
+  },
+  {
+    "word": "shrimp",
+    "emoji": "🦐",
+    "level": 4,
+    "sounds": [
+      "sss",
+      "huh",
+      "rrr",
+      "i",
+      "mmm",
+      "puh"
+    ]
+  },
+  {
+    "word": "donut",
+    "emoji": "🍩",
+    "level": 4,
+    "sounds": [
+      "duh",
+      "o",
+      "nnn",
+      "u",
+      "tuh"
+    ]
+  },
+  {
+    "word": "burger",
+    "emoji": "🍔",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "u",
+      "rrr",
+      "guh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "cupcake",
+    "emoji": "🧁",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "u",
+      "puh",
+      "kuh",
+      "a",
+      "kuh",
+      "e"
+    ]
+  },
+  {
+    "word": "popcorn",
+    "emoji": "🍿",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "o",
+      "puh",
+      "kuh",
+      "o",
+      "rrr",
+      "nnn"
+    ]
+  },
+  {
+    "word": "waffle",
+    "emoji": "🧇",
+    "level": 4,
+    "sounds": [
+      "wuh",
+      "a",
+      "fff",
+      "fff",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "pretzel",
+    "emoji": "🥨",
+    "level": 4,
+    "sounds": [
+      "puh",
+      "rrr",
+      "e",
+      "tuh",
+      "zzz",
+      "e",
+      "lll"
+    ]
+  },
+  {
+    "word": "butter",
+    "emoji": "🧈",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "u",
+      "tuh",
+      "tuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "honey",
+    "emoji": "🍯",
+    "level": 4,
+    "sounds": [
+      "huh",
+      "o",
+      "nnn",
+      "e",
+      "yuh"
+    ]
+  },
+  {
+    "word": "avocado",
+    "emoji": "🥑",
+    "level": 4,
+    "sounds": [
+      "a",
+      "vvv",
+      "o",
+      "kuh",
+      "a",
+      "duh",
+      "o"
+    ]
+  },
+  {
+    "word": "coconut",
+    "emoji": "🥥",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "o",
+      "kuh",
+      "o",
+      "nnn",
+      "u",
+      "tuh"
+    ]
+  },
+  {
+    "word": "diamond",
+    "emoji": "💎",
+    "level": 4,
+    "sounds": [
+      "duh",
+      "i",
+      "a",
+      "mmm",
+      "o",
+      "nnn",
+      "duh"
+    ]
+  },
+  {
+    "word": "bubble",
+    "emoji": "🫧",
+    "level": 4,
+    "sounds": [
+      "buh",
+      "u",
+      "buh",
+      "buh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "medal",
+    "emoji": "🏅",
+    "level": 4,
+    "sounds": [
+      "mmm",
+      "e",
+      "duh",
+      "a",
+      "lll"
+    ]
+  },
+  {
+    "word": "tulip",
+    "emoji": "🌷",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "u",
+      "lll",
+      "i",
+      "puh"
+    ]
+  },
+  {
+    "word": "ladybug",
+    "emoji": "🐞",
+    "level": 4,
+    "sounds": [
+      "lll",
+      "a",
+      "duh",
+      "yuh",
+      "buh",
+      "u",
+      "guh"
+    ]
+  },
+  {
+    "word": "noodles",
+    "emoji": "🍜",
+    "level": 4,
+    "sounds": [
+      "nnn",
+      "o",
+      "o",
+      "duh",
+      "lll",
+      "e",
+      "sss"
+    ]
+  },
+  {
+    "word": "kitten",
+    "emoji": "🐱",
+    "level": 4,
+    "sounds": [
+      "kuh",
+      "i",
+      "tuh",
+      "tuh",
+      "e",
+      "nnn"
+    ]
+  },
+  {
+    "word": "donkey",
+    "emoji": "🫏",
+    "level": 4,
+    "sounds": [
+      "duh",
+      "o",
+      "nnn",
+      "kuh",
+      "e",
+      "yuh"
+    ]
+  },
+  {
+    "word": "toast",
+    "emoji": "🍞",
+    "level": 4,
+    "sounds": [
+      "tuh",
+      "o",
+      "a",
+      "sss",
+      "tuh"
+    ]
+  },
+  {
+    "word": "elephant",
+    "emoji": "🐘",
+    "level": 5,
+    "sounds": [
+      "e",
+      "lll",
+      "e",
+      "puh",
+      "huh",
+      "a",
+      "nnn",
+      "tuh"
+    ]
+  },
+  {
+    "word": "butterfly",
+    "emoji": "🦋",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "u",
+      "tuh",
+      "tuh",
+      "e",
+      "rrr",
+      "fff",
+      "lll",
+      "yuh"
+    ]
+  },
+  {
+    "word": "dinosaur",
+    "emoji": "🦖",
+    "level": 5,
+    "sounds": [
+      "duh",
+      "i",
+      "nnn",
+      "o",
+      "sss",
+      "a",
+      "u",
+      "rrr"
+    ]
+  },
+  {
+    "word": "crocodile",
+    "emoji": "🐊",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "rrr",
+      "o",
+      "kuh",
+      "o",
+      "duh",
+      "i",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "kangaroo",
+    "emoji": "🦘",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "a",
+      "nnn",
+      "guh",
+      "a",
+      "rrr",
+      "o",
+      "o"
+    ]
+  },
+  {
+    "word": "hedgehog",
+    "emoji": "🦔",
+    "level": 5,
+    "sounds": [
+      "huh",
+      "e",
+      "duh",
+      "guh",
+      "e",
+      "huh",
+      "o",
+      "guh"
+    ]
+  },
+  {
+    "word": "squirrel",
+    "emoji": "🐿️",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "kwuh",
+      "u",
+      "i",
+      "rrr",
+      "rrr",
+      "e",
+      "lll"
+    ]
+  },
+  {
+    "word": "flamingo",
+    "emoji": "🦩",
+    "level": 5,
+    "sounds": [
+      "fff",
+      "lll",
+      "a",
+      "mmm",
+      "i",
+      "nnn",
+      "guh",
+      "o"
+    ]
+  },
+  {
+    "word": "hamburger",
+    "emoji": "🍔",
+    "level": 5,
+    "sounds": [
+      "huh",
+      "a",
+      "mmm",
+      "buh",
+      "u",
+      "rrr",
+      "guh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "sandwich",
+    "emoji": "🥪",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "a",
+      "nnn",
+      "duh",
+      "wuh",
+      "i",
+      "kuh",
+      "huh"
+    ]
+  },
+  {
+    "word": "chocolate",
+    "emoji": "🍫",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "huh",
+      "o",
+      "kuh",
+      "o",
+      "lll",
+      "a",
+      "tuh",
+      "e"
+    ]
+  },
+  {
+    "word": "strawberry",
+    "emoji": "🍓",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "tuh",
+      "rrr",
+      "a",
+      "wuh",
+      "buh",
+      "e",
+      "rrr",
+      "rrr",
+      "yuh"
+    ]
+  },
+  {
+    "word": "pineapple",
+    "emoji": "🍍",
+    "level": 5,
+    "sounds": [
+      "puh",
+      "i",
+      "nnn",
+      "e",
+      "a",
+      "puh",
+      "puh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "watermelon",
+    "emoji": "🍉",
+    "level": 5,
+    "sounds": [
+      "wuh",
+      "a",
+      "tuh",
+      "e",
+      "rrr",
+      "mmm",
+      "e",
+      "lll",
+      "o",
+      "nnn"
+    ]
+  },
+  {
+    "word": "broccoli",
+    "emoji": "🥦",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "rrr",
+      "o",
+      "kuh",
+      "kuh",
+      "o",
+      "lll",
+      "i"
+    ]
+  },
+  {
+    "word": "mushroom",
+    "emoji": "🍄",
+    "level": 5,
+    "sounds": [
+      "mmm",
+      "u",
+      "sss",
+      "huh",
+      "rrr",
+      "o",
+      "o",
+      "mmm"
+    ]
+  },
+  {
+    "word": "sunflower",
+    "emoji": "🌻",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "u",
+      "nnn",
+      "fff",
+      "lll",
+      "o",
+      "wuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "snowflake",
+    "emoji": "❄️",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "nnn",
+      "o",
+      "wuh",
+      "fff",
+      "lll",
+      "a",
+      "kuh",
+      "e"
+    ]
+  },
+  {
+    "word": "umbrella",
+    "emoji": "☂️",
+    "level": 5,
+    "sounds": [
+      "u",
+      "mmm",
+      "buh",
+      "rrr",
+      "e",
+      "lll",
+      "lll",
+      "a"
+    ]
+  },
+  {
+    "word": "telescope",
+    "emoji": "🔭",
+    "level": 5,
+    "sounds": [
+      "tuh",
+      "e",
+      "lll",
+      "e",
+      "sss",
+      "kuh",
+      "o",
+      "puh",
+      "e"
+    ]
+  },
+  {
+    "word": "microscope",
+    "emoji": "🔬",
+    "level": 5,
+    "sounds": [
+      "mmm",
+      "i",
+      "kuh",
+      "rrr",
+      "o",
+      "sss",
+      "kuh",
+      "o",
+      "puh",
+      "e"
+    ]
+  },
+  {
+    "word": "helicopter",
+    "emoji": "🚁",
+    "level": 5,
+    "sounds": [
+      "huh",
+      "e",
+      "lll",
+      "i",
+      "kuh",
+      "o",
+      "puh",
+      "tuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "airplane",
+    "emoji": "✈️",
+    "level": 5,
+    "sounds": [
+      "a",
+      "i",
+      "rrr",
+      "puh",
+      "lll",
+      "a",
+      "nnn",
+      "e"
+    ]
+  },
+  {
+    "word": "motorcycle",
+    "emoji": "🏍️",
+    "level": 5,
+    "sounds": [
+      "mmm",
+      "o",
+      "tuh",
+      "o",
+      "rrr",
+      "kuh",
+      "yuh",
+      "kuh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "bicycle",
+    "emoji": "🚲",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "i",
+      "kuh",
+      "yuh",
+      "kuh",
+      "lll",
+      "e"
+    ]
+  },
+  {
+    "word": "ambulance",
+    "emoji": "🚑",
+    "level": 5,
+    "sounds": [
+      "a",
+      "mmm",
+      "buh",
+      "u",
+      "lll",
+      "a",
+      "nnn",
+      "kuh",
+      "e"
+    ]
+  },
+  {
+    "word": "skateboard",
+    "emoji": "🛹",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "kuh",
+      "a",
+      "tuh",
+      "e",
+      "buh",
+      "o",
+      "a",
+      "rrr",
+      "duh"
+    ]
+  },
+  {
+    "word": "backpack",
+    "emoji": "🎒",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "a",
+      "kuh",
+      "kuh",
+      "puh",
+      "a",
+      "kuh",
+      "kuh"
+    ]
+  },
+  {
+    "word": "calendar",
+    "emoji": "📅",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "a",
+      "lll",
+      "e",
+      "nnn",
+      "duh",
+      "a",
+      "rrr"
+    ]
+  },
+  {
+    "word": "keyboard",
+    "emoji": "⌨️",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "e",
+      "yuh",
+      "buh",
+      "o",
+      "a",
+      "rrr",
+      "duh"
+    ]
+  },
+  {
+    "word": "computer",
+    "emoji": "💻",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "o",
+      "mmm",
+      "puh",
+      "u",
+      "tuh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "telephone",
+    "emoji": "☎️",
+    "level": 5,
+    "sounds": [
+      "tuh",
+      "e",
+      "lll",
+      "e",
+      "puh",
+      "huh",
+      "o",
+      "nnn",
+      "e"
+    ]
+  },
+  {
+    "word": "fireworks",
+    "emoji": "🎆",
+    "level": 5,
+    "sounds": [
+      "fff",
+      "i",
+      "rrr",
+      "e",
+      "wuh",
+      "o",
+      "rrr",
+      "kuh",
+      "sss"
+    ]
+  },
+  {
+    "word": "lightning",
+    "emoji": "⚡",
+    "level": 5,
+    "sounds": [
+      "lll",
+      "i",
+      "guh",
+      "huh",
+      "tuh",
+      "nnn",
+      "i",
+      "nnn",
+      "guh"
+    ]
+  },
+  {
+    "word": "hourglass",
+    "emoji": "⌛",
+    "level": 5,
+    "sounds": [
+      "huh",
+      "o",
+      "u",
+      "rrr",
+      "guh",
+      "lll",
+      "a",
+      "sss",
+      "sss"
+    ]
+  },
+  {
+    "word": "toothbrush",
+    "emoji": "🪥",
+    "level": 5,
+    "sounds": [
+      "tuh",
+      "o",
+      "o",
+      "tuh",
+      "huh",
+      "buh",
+      "rrr",
+      "u",
+      "sss",
+      "huh"
+    ]
+  },
+  {
+    "word": "blueberry",
+    "emoji": "🫐",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "lll",
+      "u",
+      "e",
+      "buh",
+      "e",
+      "rrr",
+      "rrr",
+      "yuh"
+    ]
+  },
+  {
+    "word": "cucumber",
+    "emoji": "🥒",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "u",
+      "kuh",
+      "u",
+      "mmm",
+      "buh",
+      "e",
+      "rrr"
+    ]
+  },
+  {
+    "word": "sunglasses",
+    "emoji": "🕶️",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "u",
+      "nnn",
+      "guh",
+      "lll",
+      "a",
+      "sss",
+      "sss",
+      "e",
+      "sss"
+    ]
+  },
+  {
+    "word": "snowboard",
+    "emoji": "🏂",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "nnn",
+      "o",
+      "wuh",
+      "buh",
+      "o",
+      "a",
+      "rrr",
+      "duh"
+    ]
+  },
+  {
+    "word": "crayon",
+    "emoji": "🖍️",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "rrr",
+      "a",
+      "yuh",
+      "o",
+      "nnn"
+    ]
+  },
+  {
+    "word": "paintbrush",
+    "emoji": "🖌️",
+    "level": 5,
+    "sounds": [
+      "puh",
+      "a",
+      "i",
+      "nnn",
+      "tuh",
+      "buh",
+      "rrr",
+      "u",
+      "sss",
+      "huh"
+    ]
+  },
+  {
+    "word": "treasure",
+    "emoji": "💰",
+    "level": 5,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "e",
+      "a",
+      "sss",
+      "u",
+      "rrr",
+      "e"
+    ]
+  },
+  {
+    "word": "lollipop",
+    "emoji": "🍭",
+    "level": 5,
+    "sounds": [
+      "lll",
+      "o",
+      "lll",
+      "lll",
+      "i",
+      "puh",
+      "o",
+      "puh"
+    ]
+  },
+  {
+    "word": "pancakes",
+    "emoji": "🥞",
+    "level": 5,
+    "sounds": [
+      "puh",
+      "a",
+      "nnn",
+      "kuh",
+      "a",
+      "kuh",
+      "e",
+      "sss"
+    ]
+  },
+  {
+    "word": "spaghetti",
+    "emoji": "🍝",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "puh",
+      "a",
+      "guh",
+      "huh",
+      "e",
+      "tuh",
+      "tuh",
+      "i"
+    ]
+  },
+  {
+    "word": "bandage",
+    "emoji": "🩹",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "a",
+      "nnn",
+      "duh",
+      "a",
+      "guh",
+      "e"
+    ]
+  },
+  {
+    "word": "stethoscope",
+    "emoji": "🩺",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "tuh",
+      "e",
+      "tuh",
+      "huh",
+      "o",
+      "sss",
+      "kuh",
+      "o",
+      "puh",
+      "e"
+    ]
+  },
+  {
+    "word": "rhinoceros",
+    "emoji": "🦏",
+    "level": 5,
+    "sounds": [
+      "rrr",
+      "huh",
+      "i",
+      "nnn",
+      "o",
+      "kuh",
+      "e",
+      "rrr",
+      "o",
+      "sss"
+    ]
+  },
+  {
+    "word": "jellyfish",
+    "emoji": "🪼",
+    "level": 5,
+    "sounds": [
+      "juh",
+      "e",
+      "lll",
+      "lll",
+      "yuh",
+      "fff",
+      "i",
+      "sss",
+      "huh"
+    ]
+  },
+  {
+    "word": "starfish",
+    "emoji": "⭐",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "tuh",
+      "a",
+      "rrr",
+      "fff",
+      "i",
+      "sss",
+      "huh"
+    ]
+  },
+  {
+    "word": "dandelion",
+    "emoji": "🌼",
+    "level": 5,
+    "sounds": [
+      "duh",
+      "a",
+      "nnn",
+      "duh",
+      "e",
+      "lll",
+      "i",
+      "o",
+      "nnn"
+    ]
+  },
+  {
+    "word": "raindrop",
+    "emoji": "💧",
+    "level": 5,
+    "sounds": [
+      "rrr",
+      "a",
+      "i",
+      "nnn",
+      "duh",
+      "rrr",
+      "o",
+      "puh"
+    ]
+  },
+  {
+    "word": "campfire",
+    "emoji": "🔥",
+    "level": 5,
+    "sounds": [
+      "kuh",
+      "a",
+      "mmm",
+      "puh",
+      "fff",
+      "i",
+      "rrr",
+      "e"
+    ]
+  },
+  {
+    "word": "trumpet",
+    "emoji": "🎺",
+    "level": 5,
+    "sounds": [
+      "tuh",
+      "rrr",
+      "u",
+      "mmm",
+      "puh",
+      "e",
+      "tuh"
+    ]
+  },
+  {
+    "word": "saxophone",
+    "emoji": "🎷",
+    "level": 5,
+    "sounds": [
+      "sss",
+      "a",
+      "ks",
+      "o",
+      "puh",
+      "huh",
+      "o",
+      "nnn",
+      "e"
+    ]
+  },
+  {
+    "word": "baseball",
+    "emoji": "⚾",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "a",
+      "sss",
+      "e",
+      "buh",
+      "a",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "football",
+    "emoji": "🏈",
+    "level": 5,
+    "sounds": [
+      "fff",
+      "o",
+      "o",
+      "tuh",
+      "buh",
+      "a",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "basketball",
+    "emoji": "🏀",
+    "level": 5,
+    "sounds": [
+      "buh",
+      "a",
+      "sss",
+      "kuh",
+      "e",
+      "tuh",
+      "buh",
+      "a",
+      "lll",
+      "lll"
+    ]
+  },
+  {
+    "word": "volleyball",
+    "emoji": "🏐",
+    "level": 5,
+    "sounds": [
+      "vvv",
+      "o",
+      "lll",
+      "lll",
+      "e",
+      "yuh",
+      "buh",
+      "a",
+      "lll",
+      "lll"
+    ]
+  }
+]

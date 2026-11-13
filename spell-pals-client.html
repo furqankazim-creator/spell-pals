@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light" />
+<link rel="icon" href="data:," />
+<title>Spell Pals — Leo &amp; Bella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#3b2a1a; --dim:#7c6a58;
+    --ring-amber:#fde68a; --ring-amber-soft:#fef3c7;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Nunito",system-ui,sans-serif; color:var(--ink);
+    background:linear-gradient(180deg,#7dd3fc 0%,#bae6fd 30%,#e0f2fe 62%,#fffbeb 100%);
+    min-height:100vh;
+  }
+  body.night{background:linear-gradient(180deg,#1e1b4b 0%,#312e81 55%,#0f172a 100%); color:#f5f3ff;}
+  body.night .dim, body.night .card-sub{color:#c4b5fd;}
+  .font-display{font-family:"Baloo 2",system-ui,sans-serif;}
+  .wrap{max-width:880px;margin:0 auto;padding:16px 16px 120px;position:relative;}
+  .wrap.nopad-tab{padding-bottom:40px;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  button:focus-visible, input:focus-visible{outline:3px solid #f59e0b;outline-offset:2px;}
+
+  /* ── home header ── */
+  .toprow{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+  .profile-pill{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.92);border-radius:999px;padding:8px 20px 8px 8px;box-shadow:0 4px 14px rgba(59,42,26,.10);border:2px solid var(--ring-amber);}
+  .avatar-circle{width:56px;height:56px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;}
+  .profile-pill .pname{font-family:"Baloo 2";font-size:20px;font-weight:800;line-height:1.15;}
+  .profile-pill .pstars{font-size:14px;font-weight:700;color:var(--dim);}
+  .grown-btn{display:flex;align-items:center;gap:8px;min-height:64px;background:#fff;border-radius:999px;padding:8px 18px;font-family:"Baloo 2";font-size:18px;font-weight:700;box-shadow:0 4px 14px rgba(59,42,26,.10);border:2px solid var(--ring-amber);white-space:nowrap;flex-shrink:0;}
+  @media(max-width:480px){.grown-btn{font-size:16px;padding:8px 14px;}.profile-pill{padding-right:14px;}.profile-pill .pname{font-size:18px;}}
+  .grown-btn:active{transform:scale(.95);}
+
+  .leo-card{margin-top:16px;background:#fff;border-radius:40px;padding:20px;text-align:center;box-shadow:0 8px 24px rgba(59,42,26,.10);border:2px solid var(--ring-amber);}
+  body.night .leo-card{background:#312e81;border-color:#4c1d95;color:#f5f3ff;}
+  .leo-card .leo-title{font-family:"Baloo 2";font-size:clamp(24px,4.5vw,30px);font-weight:800;margin:0;}
+  .leo-card .leo-sub{font-weight:600;color:var(--dim);margin:4px 0 0;}
+  body.night .leo-card .leo-sub{color:#c4b5fd;}
+
+  .wotd-row{margin-top:16px;display:grid;grid-template-columns:1fr;gap:12px;}
+  @media(min-width:640px){.wotd-row{grid-template-columns:3fr 2fr;}}
+  .wotd-card{display:flex;align-items:center;gap:16px;background:#fff;border-radius:28px;padding:16px;box-shadow:0 4px 14px rgba(59,42,26,.08);border:2px solid #ddd6fe;}
+  body.night .wotd-card{background:#312e81;border-color:#4c1d95;color:#f5f3ff;}
+  .wotd-emoji{font-size:60px;line-height:1;}
+  .wotd-label{font-family:"Baloo 2";font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#8b5cf6;margin:0;}
+  body.night .wotd-label{color:#c4b5fd;}
+  .wotd-word{font-family:"Baloo 2";font-size:32px;font-weight:800;line-height:1.1;margin:0;}
+  .wotd-btns{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;}
+  .btn-hear{min-height:48px;border-radius:999px;background:#8b5cf6;color:#fff;padding:8px 16px;font-family:"Baloo 2";font-size:16px;font-weight:800;box-shadow:0 3px 8px rgba(139,92,246,.35);}
+  .btn-spell{min-height:48px;border-radius:999px;background:#fbbf24;color:#fff;padding:8px 16px;font-family:"Baloo 2";font-size:16px;font-weight:800;box-shadow:0 3px 8px rgba(245,158,11,.35);}
+  .btn-hear:active,.btn-spell:active{transform:scale(.95);}
+  .goal-card{display:flex;align-items:center;gap:12px;background:#fff;border-radius:28px;padding:16px;box-shadow:0 4px 14px rgba(59,42,26,.08);border:2px solid #99f6e4;}
+  body.night .goal-card{background:#312e81;border-color:#134e4a;color:#f5f3ff;}
+  .goal-card .g-title{font-family:"Baloo 2";font-size:18px;font-weight:800;line-height:1.2;margin:0;}
+  .goal-card .g-sub{font-size:14px;font-weight:700;color:var(--dim);margin:2px 0 0;}
+  body.night .goal-card .g-sub{color:#c4b5fd;}
+
+  .starwords-btn{margin-top:12px;display:flex;align-items:center;gap:16px;width:100%;min-height:84px;border-radius:28px;background:linear-gradient(90deg,#a78bfa,#e879f9);padding:16px;text-align:left;color:#fff;box-shadow:0 4px 14px rgba(139,92,246,.3);}
+  .starwords-btn:active{transform:scale(.98);}
+  .starwords-btn .sw-ico{width:64px;height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:24px;background:rgba(255,255,255,.25);font-size:36px;}
+  .starwords-btn .sw-name{font-family:"Baloo 2";font-size:24px;font-weight:800;line-height:1.15;display:block;}
+  .starwords-btn .sw-sub{font-size:14px;font-weight:700;color:rgba(255,255,255,.85);display:block;}
+
+  .games-grid{margin-top:20px;display:grid;grid-template-columns:1fr;gap:12px;}
+  @media(min-width:640px){.games-grid{grid-template-columns:1fr 1fr;}}
+  .game-card{display:flex;align-items:center;gap:16px;min-height:96px;border-radius:28px;background:#fff;padding:16px;text-align:left;box-shadow:0 4px 14px rgba(59,42,26,.08);border:2px solid #fef3c7;width:100%;}
+  body.night .game-card{background:#312e81;border-color:#4c1d95;color:#f5f3ff;}
+  .game-card:active{transform:scale(.98);}
+  .game-tile{width:72px;height:72px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:24px;font-size:36px;}
+  .game-name{font-family:"Baloo 2";font-size:24px;font-weight:800;line-height:1.15;display:block;}
+  .game-skill{font-size:14px;font-weight:600;color:var(--dim);display:block;margin-top:2px;}
+  body.night .game-skill{color:#c4b5fd;}
+  .abc-tile{background:#38bdf8;color:#fff;font-family:"Baloo 2";font-weight:800;font-size:22px;border-radius:12px;padding:6px 10px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15);}
+  .a-tile{background:#f43f5e;color:#fff;font-family:"Baloo 2";font-weight:800;font-size:30px;border-radius:12px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15);}
+  .reward-card{background:linear-gradient(90deg,#fcd34d,#fdba74);border:none;}
+  .reward-card .game-skill{color:rgba(120,53,15,.7);}
+  .map-card{background:linear-gradient(90deg,#5eead4,#6ee7b7);border:none;}
+  .map-card .game-skill{color:rgba(19,78,74,.7);}
+  .story-card{background:linear-gradient(90deg,#c4b5fd,#d8b4fe);border:none;}
+  @media(min-width:640px){.story-card{grid-column:span 2;}}
+  .story-card .game-skill{color:rgba(76,29,149,.7);}
+  .tile-light{background:rgba(255,255,255,.7)!important;}
+  .home-foot{margin-top:24px;text-align:center;font-size:14px;font-weight:600;color:var(--dim);}
+
+  /* ── tab bar ── */
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.96);border-top:4px solid var(--ring-amber);box-shadow:0 -4px 24px rgba(0,0,0,.08);padding-bottom:env(safe-area-inset-bottom);}
+  .tabbar-inner{max-width:880px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);}
+  .tab-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:72px;padding:4px 2px;}
+  .tab-btn .t-ico{font-size:30px;line-height:1;}
+  .tab-btn .t-lab{font-family:"Baloo 2";font-size:14px;font-weight:800;color:#7c6a58;}
+  .tab-btn.on{background:#fef3c7;}
+  .tab-btn.on .t-lab{color:#b45309;}
+  .tab-btn:not(.on) .t-ico{opacity:.7;}
+
+  /* ── generic screens ── */
+  .screen-head{display:flex;align-items:center;gap:12px;}
+  .screen-head h2{font-family:"Baloo 2";font-size:clamp(26px,5vw,36px);font-weight:800;margin:0;}
+  .back-btn{width:64px;height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;font-size:28px;box-shadow:0 4px 12px rgba(59,42,26,.12);border:2px solid var(--ring-amber);}
+  .back-btn:active{transform:scale(.95);}
+  .dim{color:var(--dim);}
+  .lead{font-size:18px;font-weight:600;color:var(--dim);margin-top:12px;}
+  body.night .lead{color:#c4b5fd;}
+
+  /* ── game screens ── */
+  .game-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .game-head .g-title{font-family:"Baloo 2";font-size:24px;font-weight:800;text-align:center;margin:0;}
+  .round-dots{display:flex;justify-content:center;gap:4px;font-size:20px;margin-top:2px;}
+  .round-dots .off{opacity:.3;filter:grayscale(1);}
+  .avatar-mini{width:64px;height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;font-size:28px;box-shadow:0 4px 12px rgba(59,42,26,.12);border:2px solid var(--ring-amber);}
+  .game-panel{margin-top:24px;border-radius:40px;background:rgba(255,251,235,.85);padding:32px 16px;box-shadow:inset 0 2px 10px rgba(59,42,26,.06);border:2px solid #fff;}
+  body.night .game-panel{background:rgba(49,46,129,.85);border-color:#4c1d95;}
+  @media(min-width:640px){.game-panel{padding:32px;}}
+  .round-col{display:flex;flex-direction:column;align-items:center;gap:20px;}
+  .pic-row{display:flex;align-items:center;gap:12px;}
+  .pic-card{display:flex;flex-direction:column;align-items:center;background:#fff;border-radius:32px;padding:16px 24px;box-shadow:0 8px 20px rgba(59,42,26,.12);border:4px solid var(--ring-amber);}
+  .pic-card .pic-emoji{font-size:7rem;line-height:1.1;}
+  .pic-card.small .pic-emoji{font-size:5rem;}
+  body.night .pic-card{color:var(--ink);}
+  .speaker-btn{width:64px;height:64px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#0ea5e9;color:#fff;font-size:28px;box-shadow:0 4px 12px rgba(14,165,233,.4);flex-shrink:0;}
+  .speaker-btn:active{transform:scale(.95);}
+  .round-prompt{font-family:"Baloo 2";font-size:20px;font-weight:700;color:var(--dim);text-align:center;margin:0;}
+  body.night .round-prompt{color:#c4b5fd;}
+  .round-prompt.big{font-size:24px;color:var(--ink);}
+  body.night .round-prompt.big{color:#f5f3ff;}
+  .slots-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  @media(min-width:640px){.slots-row{gap:12px;}}
+  .slot{font-family:"Baloo 2";display:flex;align-items:center;justify-content:center;border-radius:24px;font-weight:800;text-transform:uppercase;box-shadow:inset 0 2px 6px rgba(59,42,26,.12);width:64px;height:80px;font-size:36px;background:rgba(255,255,255,.8);border:2px solid var(--ring-amber);color:transparent;}
+  .slot.filled{background:#fcd34d;color:var(--ink);}
+  .slot.done{background:#2dd4bf;color:#fff;border-color:#2dd4bf;}
+  .slot.hintslot{background:#fff;border:4px dashed #fda4af;color:#fda4af;}
+  .slot.md{width:52px;height:72px;font-size:32px;}
+  .slot.sm{width:44px;height:64px;font-size:28px;}
+  .hint-pill{background:#ffe4e6;color:#e11d48;border-radius:999px;padding:8px 16px;font-family:"Baloo 2";font-size:18px;font-weight:700;margin:0;}
+  .tiles-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;}
+  .letter-tile{font-family:"Baloo 2";width:72px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:24px;font-size:36px;font-weight:800;text-transform:uppercase;background:#fff;color:var(--ink);box-shadow:0 4px 10px rgba(59,42,26,.12);border:2px solid #fcd34d;}
+  .letter-tile:active{transform:scale(.95);}
+  .letter-tile.used{background:#fef3c7;color:#fde68a;opacity:.5;box-shadow:none;}
+  .praise{font-family:"Baloo 2";font-size:30px;font-weight:700;color:#0d9488;text-align:center;margin:0;}
+  body.night .praise{color:#5eead4;}
+  .game-tip{margin-top:20px;text-align:center;font-family:"Baloo 2";font-size:18px;font-weight:700;color:var(--dim);}
+  body.night .game-tip{color:#c4b5fd;}
+  .choice-lg{font-family:"Baloo 2";width:96px;height:96px;display:flex;align-items:center;justify-content:center;border-radius:32px;background:#fff;font-size:60px;font-weight:800;text-transform:uppercase;box-shadow:0 8px 20px rgba(59,42,26,.12);border:4px solid #99f6e4;color:var(--ink);}
+  .choice-lg:active{transform:scale(.95);}
+  .sound-slot{font-family:"Baloo 2";display:flex;align-items:center;justify-content:center;border-radius:16px;font-weight:800;text-transform:uppercase;width:56px;height:64px;font-size:28px;background:rgba(255,255,255,.7);border:2px solid #ddd6fe;color:#ddd6fe;}
+  .sound-slot.on{background:#a78bfa;color:#fff;border-color:#a78bfa;}
+  .sound-piece{font-family:"Baloo 2";width:76px;height:76px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;text-transform:uppercase;background:#fff;color:var(--ink);box-shadow:0 4px 10px rgba(59,42,26,.12);border:2px solid #c4b5fd;border-radius:22px 22px 22px 6px;}
+  .sound-piece:active{transform:scale(.95);}
+  .sound-piece.used{background:#ede9fe;color:#c4b5fd;opacity:.5;}
+  .sounds-line{font-weight:600;color:var(--dim);margin:0;text-align:center;}
+  body.night .sounds-line{color:#c4b5fd;}
+  .match-word{background:#fff;border-radius:32px;padding:16px 32px;box-shadow:0 8px 20px rgba(59,42,26,.12);border:4px solid #fcd34d;color:var(--ink);}
+  .match-word span{font-family:"Baloo 2";font-size:56px;font-weight:800;letter-spacing:.02em;}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .match-opt{width:128px;height:128px;display:flex;align-items:center;justify-content:center;border-radius:32px;background:#fff;font-size:64px;box-shadow:0 8px 20px rgba(59,42,26,.12);border:4px solid var(--ring-amber);}
+  @media(min-width:640px){.match-opt{width:144px;height:144px;}}
+  .match-opt:active{transform:scale(.95);}
+  .vowel-slot{font-family:"Baloo 2";display:flex;align-items:center;justify-content:center;border-radius:24px;font-weight:800;text-transform:uppercase;width:64px;height:80px;font-size:36px;background:#fff;box-shadow:0 2px 6px rgba(59,42,26,.08);border:2px solid var(--ring-amber);color:var(--ink);}
+  .vowel-slot.missing{background:#e0f2fe;border:4px dashed #38bdf8;color:#38bdf8;}
+  .vowel-slot.found{background:#38bdf8;color:#fff;border-color:#38bdf8;}
+  .vowel-btn{font-family:"Baloo 2";width:72px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;font-size:36px;font-weight:800;box-shadow:0 4px 10px rgba(59,42,26,.12);border:4px solid #bae6fd;color:var(--ink);}
+  .vowel-btn:active{transform:scale(.95);}
+  .rhyme-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
+  .rhyme-opt{width:112px;height:128px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:32px;background:#fff;box-shadow:0 8px 20px rgba(59,42,26,.12);border:4px solid #fbcfe8;color:var(--ink);}
+  @media(min-width:640px){.rhyme-opt{width:128px;}}
+  .rhyme-opt .r-emoji{font-size:56px;line-height:1;}
+  .rhyme-opt .r-word{font-family:"Baloo 2";font-size:20px;font-weight:800;}
+  .rhyme-opt:active{transform:scale(.95);}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+  .wiggle{animation:wiggle .4s ease-in-out 2;border-color:#fda4af!important;}
+  @media (prefers-reduced-motion: reduce){.wiggle{animation:none;}}
+
+  /* ── memory ── */
+  .memory-grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  @media(min-width:640px){.memory-grid{grid-template-columns:repeat(4,1fr);}}
+  .mem-card{position:relative;height:96px;display:flex;align-items:center;justify-content:center;border-radius:22px;box-shadow:0 4px 12px rgba(59,42,26,.12);}
+  @media(min-width:640px){.mem-card{height:112px;}}
+  .mem-card.hidden-card{background:linear-gradient(135deg,#22d3ee,#0ea5e9);color:#fff;font-family:"Baloo 2";font-size:36px;font-weight:800;}
+  .mem-card.hidden-card:active{transform:scale(.95);}
+  .mem-card.up{background:#fff;border:4px solid #67e8f9;color:var(--ink);}
+  .mem-card.matched{background:#fff;border:4px solid #2dd4bf;color:var(--ink);}
+  .mem-card .m-word{font-family:"Baloo 2";font-size:clamp(20px,4vw,28px);font-weight:800;padding:0 4px;text-align:center;}
+  .mem-card .m-pic{font-size:52px;}
+  .mem-check{position:absolute;right:6px;top:6px;width:28px;height:28px;border-radius:50%;background:#2dd4bf;color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+
+  /* ── celebrate ── */
+  .celebrate-col{display:flex;flex-direction:column;align-items:center;padding-top:24px;text-align:center;}
+  .celebrate-col h2{font-family:"Baloo 2";font-size:48px;font-weight:800;margin:20px 0 0;}
+  .stars-row{font-size:48px;margin-top:12px;}
+  .stars-row .off{opacity:.3;filter:grayscale(1);}
+  .celebrate-sub{font-size:18px;font-weight:700;color:var(--dim);margin-top:8px;max-width:520px;}
+  body.night .celebrate-sub{color:#c4b5fd;}
+  .sticker-new{margin-top:24px;background:#fff;border-radius:32px;padding:20px 32px;box-shadow:0 8px 20px rgba(59,42,26,.12);border:4px solid #fcd34d;color:var(--ink);}
+  .sticker-new .sn-label{font-family:"Baloo 2";font-size:18px;font-weight:700;color:var(--dim);margin:0;}
+  .sticker-new .sn-emoji{font-size:72px;margin:4px 0;}
+  .sticker-new .sn-name{font-family:"Baloo 2";font-size:24px;font-weight:800;margin:0;}
+  .big-btns{margin-top:32px;display:flex;flex-direction:column;gap:12px;width:100%;max-width:380px;}
+  .big-btn{font-family:"Baloo 2";min-height:72px;border-radius:999px;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:12px 20px;}
+  .big-btn:active{transform:scale(.98);}
+  .btn-amber-grad{background:linear-gradient(90deg,#fbbf24,#fb923c);color:#fff;box-shadow:0 6px 16px rgba(245,158,11,.35);}
+  .btn-white{background:#fff;box-shadow:0 4px 12px rgba(59,42,26,.1);border:2px solid var(--ring-amber);color:var(--ink);}
+  .btn-teal{background:#2dd4bf;color:#fff;box-shadow:0 6px 16px rgba(45,212,191,.35);}
+  .btn-violet-grad{background:linear-gradient(90deg,#a78bfa,#a855f7);color:#fff;box-shadow:0 6px 16px rgba(139,92,246,.35);}
+
+  /* ── rewards / map / stories ── */
+  .stickers-grid{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .sticker-cell{position:relative;display:flex;flex-direction:column;align-items:center;border-radius:28px;padding:20px 8px;box-shadow:0 4px 12px rgba(59,42,26,.08);}
+  .sticker-cell.owned{background:#fff;border:4px solid #fcd34d;color:var(--ink);}
+  .sticker-cell.locked{background:rgba(255,255,255,.5);border:2px solid #fff;}
+  .sticker-cell .s-emoji{font-size:56px;}
+  .sticker-cell.locked .s-emoji{opacity:.25;filter:grayscale(1);}
+  .sticker-cell .s-name{font-family:"Baloo 2";margin-top:8px;text-align:center;font-size:16px;font-weight:700;line-height:1.2;}
+  .sticker-cell.locked .s-name{color:var(--dim);}
+  .sticker-count-badge{position:absolute;right:8px;top:8px;width:32px;height:32px;border-radius:50%;background:#fb7185;color:#fff;font-family:"Baloo 2";font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .empty-note{margin-top:24px;background:#fff;border-radius:32px;padding:20px;box-shadow:0 4px 12px rgba(59,42,26,.08);border:2px solid var(--ring-amber);color:var(--ink);}
+  .empty-note p{font-family:"Baloo 2";font-size:20px;font-weight:700;margin:0;}
+  .island-card{background:#fff;border-radius:32px;padding:20px;box-shadow:0 4px 14px rgba(59,42,26,.08);border:2px solid #fef3c7;color:var(--ink);}
+  .island-top{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .island-name{font-family:"Baloo 2";font-size:24px;font-weight:800;margin:0;}
+  .island-stars{font-size:20px;white-space:nowrap;}
+  .island-stars .off{opacity:.25;filter:grayscale(1);}
+  .island-desc{font-weight:600;color:var(--dim);margin:2px 0 0;}
+  .progress-track{margin-top:12px;height:24px;border-radius:999px;background:#fef3c7;overflow:hidden;}
+  .progress-fill{height:100%;border-radius:999px;}
+  .island-stat{margin-top:8px;font-size:14px;font-weight:700;color:var(--dim);}
+  .garden-title{font-family:"Baloo 2";font-size:24px;font-weight:800;margin:28px 0 0;}
+  .garden-sub{font-weight:600;color:var(--dim);margin:2px 0 0;}
+  body.night .garden-sub{color:#c4b5fd;}
+  .level-label{font-family:"Baloo 2";font-size:18px;font-weight:700;color:var(--dim);margin:16px 0 0;}
+  body.night .level-label{color:#c4b5fd;}
+  .word-chips{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;}
+  .word-chip{display:flex;align-items:center;gap:6px;min-height:56px;border-radius:999px;padding:8px 16px;font-family:"Baloo 2";font-size:18px;font-weight:700;box-shadow:0 2px 6px rgba(59,42,26,.06);}
+  .word-chip.new{background:#fff;border:2px solid #fef3c7;color:var(--ink);}
+  .word-chip.practising{background:#fde68a;color:var(--ink);}
+  .word-chip.mastered{background:#2dd4bf;color:#fff;}
+  .stories-grid{margin-top:20px;display:grid;grid-template-columns:1fr;gap:12px;}
+  @media(min-width:640px){.stories-grid{grid-template-columns:1fr 1fr;}}
+  .story-open{display:flex;align-items:center;gap:16px;min-height:110px;width:100%;border-radius:28px;background:#fff;padding:16px;text-align:left;box-shadow:0 4px 14px rgba(59,42,26,.08);border:2px solid #fef3c7;color:var(--ink);}
+  .story-open:active{transform:scale(.98);}
+  .story-tile{width:76px;height:76px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:24px;font-size:44px;}
+  .story-name{font-family:"Baloo 2";font-size:24px;font-weight:800;line-height:1.15;display:block;}
+  .story-sub{font-size:14px;font-weight:600;color:var(--dim);display:block;margin-top:2px;}
+  .bedtime-note{margin-top:24px;background:#fff;border-radius:32px;padding:20px;box-shadow:0 4px 12px rgba(59,42,26,.08);border:2px solid var(--ring-amber);color:var(--ink);}
+  .bedtime-note p{font-family:"Baloo 2";font-size:20px;font-weight:700;margin:0;}
+  .story-page-card{margin-top:20px;background:#fff;border-radius:40px;padding:28px 20px;box-shadow:0 8px 24px rgba(59,42,26,.1);border:4px solid #fef3c7;color:var(--ink);}
+  @media(min-width:640px){.story-page-card{padding:28px 32px;}}
+  .story-words{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;column-gap:6px;row-gap:2px;}
+  .story-word{font-family:"Baloo 2";border-radius:12px;padding:4px 6px;font-size:clamp(26px,5vw,36px);font-weight:700;line-height:1.35;color:var(--ink);}
+  .story-word:hover{background:#fef3c7;}
+  .story-word:active{background:#fde68a;}
+  .read-btn-row{margin-top:24px;display:flex;justify-content:center;}
+  .read-btn{display:flex;align-items:center;gap:8px;min-height:64px;border-radius:999px;background:#0ea5e9;color:#fff;padding:10px 24px;font-family:"Baloo 2";font-size:20px;font-weight:800;box-shadow:0 4px 12px rgba(14,165,233,.4);}
+  .read-btn:active{transform:scale(.95);}
+  .page-nav{margin-top:20px;display:flex;gap:12px;}
+  .page-nav button{flex:1;}
+  .page-count{display:flex;height:64px;min-width:64px;align-items:center;justify-content:center;border-radius:50%;background:#fff;padding:0 12px;font-family:"Baloo 2";font-size:18px;font-weight:800;box-shadow:0 4px 12px rgba(59,42,26,.1);border:2px solid var(--ring-amber);color:var(--ink);}
+
+  /* ── pin & parent ── */
+  .pin-card{margin:32px auto 0;max-width:400px;background:#fff;border-radius:40px;padding:24px;text-align:center;box-shadow:0 8px 24px rgba(59,42,26,.12);border:2px solid var(--ring-amber);color:var(--ink);}
+  .pin-card .pin-title{font-family:"Baloo 2";font-size:20px;font-weight:700;margin:0;}
+  .pin-dots{margin:20px 0;display:flex;justify-content:center;gap:12px;}
+  .pin-dot{width:24px;height:24px;border-radius:50%;background:#fef3c7;}
+  .pin-dot.on{background:#fbbf24;}
+  .pin-dot.err{background:#fb7185;}
+  .pin-error{margin:0 0 12px;font-weight:700;color:#f43f5e;}
+  .pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .pin-key{font-family:"Baloo 2";min-height:72px;display:flex;align-items:center;justify-content:center;border-radius:24px;background:#fffbeb;font-size:30px;font-weight:800;border:2px solid var(--ring-amber);color:var(--ink);}
+  .pin-key:active{transform:scale(.95);}
+  .pin-hint{margin-top:16px;font-size:14px;font-weight:600;color:var(--dim);text-align:center;}
+  .parent-wrap{background:#fffbeb;min-height:100vh;}
+  body.night .parent-wrap{background:#fffbeb;color:var(--ink);}
+  .parent-inner{max-width:880px;margin:0 auto;padding:16px 16px 40px;}
+  .parent-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .parent-head h2{font-family:"Baloo 2";font-size:30px;font-weight:800;margin:0;}
+  .parent-sub{font-weight:600;color:var(--dim);margin-top:4px;}
+  .stat-grid{margin-top:20px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  @media(min-width:640px){.stat-grid{grid-template-columns:repeat(4,1fr);}}
+  .stat-card{background:#fff;border-radius:24px;padding:16px;text-align:center;box-shadow:0 4px 12px rgba(59,42,26,.06);border:2px solid #fef3c7;}
+  .stat-card .st-emoji{font-size:24px;margin:0;}
+  .stat-card .st-val{font-family:"Baloo 2";font-size:30px;font-weight:800;margin:0;}
+  .stat-card .st-lab{font-size:14px;font-weight:700;color:var(--dim);margin:0;}
+  .panel{margin-top:16px;background:#fff;border-radius:32px;padding:20px;box-shadow:0 4px 12px rgba(59,42,26,.06);border:2px solid #fef3c7;}
+  .panel.week{background:linear-gradient(90deg,#f0fdfa,#f0f9ff);border-color:#ccfbf1;}
+  .panel h3{font-family:"Baloo 2";font-size:24px;font-weight:800;margin:0;}
+  .panel .panel-sub{font-weight:600;color:var(--dim);margin-top:4px;}
+  .week-grid{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;}
+  .week-cell{background:#fff;border-radius:16px;padding:12px 8px;box-shadow:0 2px 6px rgba(59,42,26,.05);}
+  .week-cell .wv{font-family:"Baloo 2";font-size:30px;font-weight:800;margin:0;}
+  .week-cell .wl{font-size:14px;font-weight:700;color:var(--dim);margin:0;}
+  .week-note{margin-top:12px;font-weight:600;color:var(--dim);}
+  .word-row{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff1f2;border-radius:16px;padding:12px 16px;margin-top:8px;}
+  .word-row .wr-word{font-family:"Baloo 2";font-size:20px;font-weight:700;}
+  .word-row .wr-stat{font-weight:700;color:#e11d48;font-size:15px;text-align:right;}
+  .tip{margin-top:12px;font-size:14px;font-weight:600;color:var(--dim);}
+  .chip-row{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#ccfbf1;padding:8px 16px;font-family:"Baloo 2";font-size:18px;font-weight:700;}
+  .recent-row{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fffbeb;border-radius:16px;padding:12px 16px;margin-top:8px;font-weight:600;}
+  .recent-row .r-when{color:var(--dim);white-space:nowrap;}
+  .sel-chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#8b5cf6;color:#fff;padding:8px 16px;font-family:"Baloo 2";font-size:18px;font-weight:700;box-shadow:0 3px 8px rgba(139,92,246,.3);}
+  .pick-chip{min-height:44px;border-radius:999px;padding:6px 12px;font-family:"Baloo 2";font-size:16px;font-weight:700;background:#fffbeb;border:2px solid var(--ring-amber);color:var(--ink);}
+  .pick-chip.sel{background:#8b5cf6;color:#fff;border-color:#8b5cf6;}
+  .pick-chip:disabled{opacity:.4;}
+  .save-btn{font-family:"Baloo 2";min-height:56px;border-radius:999px;background:#8b5cf6;padding:10px 24px;font-size:18px;font-weight:800;color:#fff;box-shadow:0 4px 12px rgba(139,92,246,.35);}
+  .save-btn:active{transform:scale(.95);}
+  .save-msg{font-weight:700;color:#0d9488;}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #fef3c7;}
+  .toggle-row:last-of-type{border-bottom:none;}
+  .toggle-row .tg-label{font-family:"Baloo 2";font-size:18px;font-weight:700;margin:0;}
+  .toggle-row .tg-hint{font-size:14px;font-weight:600;color:var(--dim);margin:0;}
+  .switch{position:relative;width:72px;height:40px;flex-shrink:0;border-radius:999px;background:#d6d3d1;transition:background .2s;}
+  .switch .knob{position:absolute;top:4px;left:4px;width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:left .2s;}
+  .switch.on{background:#2dd4bf;}
+  .switch.on .knob{left:36px;}
+  .goal-btns{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;}
+  .goal-opt{font-family:"Baloo 2";min-height:56px;border-radius:16px;padding:10px 20px;font-size:20px;font-weight:800;background:#fffbeb;border:2px solid var(--ring-amber);color:var(--ink);}
+  .goal-opt.sel{background:#2dd4bf;color:#fff;border-color:#2dd4bf;box-shadow:0 4px 10px rgba(45,212,191,.35);}
+  .field-label{font-family:"Baloo 2";font-size:18px;font-weight:700;display:block;}
+  .field-row{margin-top:4px;display:flex;gap:8px;}
+  .field-input{min-height:56px;width:100%;border-radius:16px;border:2px solid var(--ring-amber);background:#fffbeb;padding:8px 12px;font-size:18px;font-weight:700;color:var(--ink);font-family:"Nunito";}
+  .field-input.pin-input{text-align:center;font-family:"Baloo 2";font-size:20px;font-weight:800;letter-spacing:.3em;}
+  .field-save{font-family:"Baloo 2";min-height:56px;flex-shrink:0;border-radius:16px;background:#fbbf24;padding:8px 16px;font-weight:800;color:#fff;}
+  .field-save:active{transform:scale(.95);}
+  .field-msg{margin-top:4px;font-size:14px;font-weight:700;color:#0d9488;}
+  .form-grid{margin-top:16px;display:grid;gap:12px;}
+  @media(min-width:640px){.form-grid{grid-template-columns:1fr 1fr;}}
+  .avatar-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;}
+  .avatar-opt{width:56px;height:56px;border-radius:16px;font-size:30px;display:flex;align-items:center;justify-content:center;background:#f0f9ff;border:2px solid #e0f2fe;}
+  .avatar-opt.sel{background:#bae6fd;border:4px solid #38bdf8;}
+  .danger-zone{margin-top:20px;border-top:1px solid #fef3c7;padding-top:16px;}
+  .btn-danger-soft{font-family:"Baloo 2";min-height:48px;border-radius:999px;background:#fff1f2;padding:8px 20px;font-weight:800;color:#e11d48;border:2px solid #fecdd3;}
+  .btn-danger{font-family:"Baloo 2";min-height:48px;border-radius:999px;background:#f43f5e;padding:8px 20px;font-weight:800;color:#fff;}
+  .btn-keep{font-family:"Baloo 2";min-height:48px;border-radius:999px;background:#e7e5e4;padding:8px 20px;font-weight:800;color:var(--ink);}
+  .reset-confirm{display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
+  .reset-confirm p{font-weight:700;color:#e11d48;margin:0;}
+  .parent-foot{margin-top:20px;text-align:center;font-size:14px;font-weight:600;color:var(--dim);}
+  .stack{display:flex;flex-direction:column;gap:16px;margin-top:20px;}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav class="tabbar hidden" id="tabbar" aria-label="Main">
+  <div class="tabbar-inner">
+    <button type="button" class="tab-btn" data-tab="home" aria-label="Home"><span class="t-ico" aria-hidden="true">🏠</span><span class="t-lab">Home</span></button>
+    <button type="button" class="tab-btn" data-tab="stories" aria-label="Stories"><span class="t-ico" aria-hidden="true">📖</span><span class="t-lab">Stories</span></button>
+    <button type="button" class="tab-btn" data-tab="rewards" aria-label="Rewards"><span class="t-ico" aria-hidden="true">🎁</span><span class="t-lab">Rewards</span></button>
+    <button type="button" class="tab-btn" data-tab="map" aria-label="Map"><span class="t-ico" aria-hidden="true">🗺️</span><span class="t-lab">Map</span></button>
+    <button type="button" class="tab-btn" data-tab="pin" aria-label="Grown-ups"><span class="t-ico" aria-hidden="true">🔒</span><span class="t-lab">Grown-ups</span></button>
+  </div>
+</nav>
+<script>
+"use strict";
+/* ================= data ================= */
+var WORDS=[{"w":"cat","e":"🐱","l":1,"s":["kuh","a","tuh"]},{"w":"dog","e":"🐶","l":1,"s":["duh","o","guh"]},{"w":"bee","e":"🐝","l":1,"s":["buh","ee","ee"]},{"w":"ant","e":"🐜","l":1,"s":["a","nnn","tuh"]},{"w":"sun","e":"☀️","l":1,"s":["sss","uh","nnn"]},{"w":"car","e":"🚗","l":1,"s":["kuh","ah","rrr"]},{"w":"fox","e":"🦊","l":1,"s":["fff","o","ks"]},{"w":"pig","e":"🐷","l":1,"s":["puh","i","guh"]},{"w":"bat","e":"🦇","l":1,"s":["buh","a","tuh"]},{"w":"hen","e":"🐔","l":1,"s":["huh","e","nnn"]},{"w":"egg","e":"🥚","l":1,"s":["e","guh","guh"]},{"w":"cup","e":"🥤","l":1,"s":["kuh","uh","puh"]},{"w":"hat","e":"🎩","l":1,"s":["huh","a","tuh"]},{"w":"pen","e":"🖊️","l":1,"s":["puh","e","nnn"]},{"w":"bed","e":"🛏️","l":1,"s":["buh","e","duh"]},{"w":"map","e":"🗺️","l":1,"s":["mmm","a","puh"]},{"w":"bus","e":"🚌","l":1,"s":["buh","uh","sss"]},{"w":"cow","e":"🐮","l":1,"s":["kuh","ow","wuh"]},{"w":"rat","e":"🐀","l":1,"s":["rrr","a","tuh"]},{"w":"owl","e":"🦉","l":1,"s":["ow","lll","lll"]},{"w":"jam","e":"🫙","l":1,"s":["juh","a","mmm"]},{"w":"net","e":"🥅","l":1,"s":["nnn","e","tuh"]},{"w":"web","e":"🕸️","l":1,"s":["wuh","e","buh"]},{"w":"box","e":"📦","l":1,"s":["buh","o","ks"]},{"w":"top","e":"🌀","l":1,"s":["tuh","o","puh"]},{"w":"red","e":"🔴","l":1,"s":["rrr","e","duh"]},{"w":"leg","e":"🦵","l":1,"s":["lll","e","guh"]},{"w":"arm","e":"💪","l":1,"s":["ah","rrr","mmm"]},{"w":"zip","e":"🤐","l":1,"s":["zzz","i","puh"]},{"w":"van","e":"🚐","l":1,"s":["vvv","a","nnn"]},{"w":"jet","e":"✈️","l":1,"s":["juh","e","tuh"]},{"w":"mud","e":"🟤","l":1,"s":["mmm","uh","duh"]},{"w":"rug","e":"🧶","l":1,"s":["rrr","uh","guh"]},{"w":"tub","e":"🛁","l":1,"s":["tuh","uh","buh"]},{"w":"lip","e":"👄","l":1,"s":["lll","i","puh"]},{"w":"mom","e":"👩","l":1,"s":["mmm","o","mmm"]},{"w":"dad","e":"👨","l":1,"s":["duh","a","duh"]},{"w":"kid","e":"🧒","l":1,"s":["kuh","i","duh"]},{"w":"pie","e":"🥧","l":1,"s":["puh","eye","ee"]},{"w":"log","e":"🪵","l":1,"s":["lll","o","guh"]},{"w":"bug","e":"🐛","l":1,"s":["buh","uh","guh"]},{"w":"bun","e":"🥖","l":1,"s":["buh","uh","nnn"]},{"w":"cap","e":"🧢","l":1,"s":["kuh","a","puh"]},{"w":"cub","e":"🦁","l":1,"s":["kuh","uh","buh"]},{"w":"dot","e":"⚫","l":1,"s":["duh","o","tuh"]},{"w":"fan","e":"🪭","l":1,"s":["fff","a","nnn"]},{"w":"gas","e":"⛽","l":1,"s":["guh","a","sss"]},{"w":"gum","e":"🍬","l":1,"s":["guh","uh","mmm"]},{"w":"hug","e":"🤗","l":1,"s":["huh","uh","guh"]},{"w":"ice","e":"🧊","l":1,"s":["eye","kuh","e"]},{"w":"ink","e":"🖋️","l":1,"s":["i","nnn","kuh"]},{"w":"jug","e":"🏺","l":1,"s":["juh","uh","guh"]},{"w":"key","e":"🔑","l":1,"s":["kuh","ee","ee"]},{"w":"kit","e":"🧰","l":1,"s":["kuh","i","tuh"]},{"w":"lap","e":"🦵","l":1,"s":["lll","a","puh"]},{"w":"man","e":"👨‍🦰","l":1,"s":["mmm","a","nnn"]},{"w":"mat","e":"🧺","l":1,"s":["mmm","a","tuh"]},{"w":"mix","e":"🥣","l":1,"s":["mmm","i","ks"]},{"w":"nap","e":"😴","l":1,"s":["nnn","a","puh"]},{"w":"nod","e":"🙂","l":1,"s":["nnn","o","duh"]},{"w":"nut","e":"🥜","l":1,"s":["nnn","uh","tuh"]},{"w":"pan","e":"🍳","l":1,"s":["puh","a","nnn"]},{"w":"pet","e":"🐹","l":1,"s":["puh","e","tuh"]},{"w":"pin","e":"📌","l":1,"s":["puh","i","nnn"]},{"w":"pit","e":"🕳️","l":1,"s":["puh","i","tuh"]},{"w":"pop","e":"🎈","l":1,"s":["puh","o","puh"]},{"w":"pot","e":"🍲","l":1,"s":["puh","o","tuh"]},{"w":"rib","e":"🦴","l":1,"s":["rrr","i","buh"]},{"w":"rip","e":"📄","l":1,"s":["rrr","i","puh"]},{"w":"run","e":"🏃","l":1,"s":["rrr","uh","nnn"]},{"w":"sad","e":"😢","l":1,"s":["sss","a","duh"]},{"w":"sit","e":"🪑","l":1,"s":["sss","i","tuh"]},{"w":"sip","e":"🥤","l":1,"s":["sss","i","puh"]},{"w":"six","e":"6️⃣","l":1,"s":["sss","i","ks"]},{"w":"tan","e":"☀️","l":1,"s":["tuh","a","nnn"]},{"w":"tap","e":"👆","l":1,"s":["tuh","a","puh"]},{"w":"ten","e":"🔟","l":1,"s":["tuh","e","nnn"]},{"w":"tin","e":"🥫","l":1,"s":["tuh","i","nnn"]},{"w":"toy","e":"🧸","l":1,"s":["tuh","oy","oy"]},{"w":"wag","e":"🐕","l":1,"s":["wuh","a","guh"]},{"w":"frog","e":"🐸","l":2,"s":["fff","rrr","o","guh"]},{"w":"crab","e":"🦀","l":2,"s":["kuh","rrr","a","buh"]},{"w":"star","e":"⭐","l":2,"s":["sss","tuh","ah","rrr"]},{"w":"drum","e":"🥁","l":2,"s":["duh","rrr","uh","mmm"]},{"w":"flag","e":"🚩","l":2,"s":["fff","lll","a","guh"]},{"w":"clip","e":"📎","l":2,"s":["kuh","lll","i","puh"]},{"w":"grin","e":"😁","l":2,"s":["guh","rrr","i","nnn"]},{"w":"plum","e":"🟣","l":2,"s":["puh","lll","uh","mmm"]},{"w":"sled","e":"🛷","l":2,"s":["sss","lll","e","duh"]},{"w":"swim","e":"🏊","l":2,"s":["sss","wuh","i","mmm"]},{"w":"snap","e":"👏","l":2,"s":["sss","nnn","a","puh"]},{"w":"trap","e":"🪤","l":2,"s":["tuh","rrr","a","puh"]},{"w":"nest","e":"🪺","l":2,"s":["nnn","e","sss","tuh"]},{"w":"milk","e":"🥛","l":3,"s":["mmm","i","lll","kuh"]},{"w":"hand","e":"✋","l":3,"s":["huh","a","nnn","duh"]},{"w":"sand","e":"🏖️","l":2,"s":["sss","a","nnn","duh"]},{"w":"lamp","e":"💡","l":2,"s":["lll","a","mmm","puh"]},{"w":"belt","e":"👖","l":2,"s":["buh","e","lll","tuh"]},{"w":"tent","e":"⛺","l":2,"s":["tuh","e","nnn","tuh"]},{"w":"ship","e":"🚢","l":2,"s":["shh","i","puh","puh"]},{"w":"tree","e":"🌳","l":2,"s":["tuh","rrr","ee","ee"]},{"w":"rain","e":"🌧️","l":3,"s":["rrr","ay","nnn","nnn"]},{"w":"snow","e":"❄️","l":2,"s":["sss","nnn","oh","wuh"]},{"w":"wind","e":"💨","l":2,"s":["wuh","i","nnn","duh"]},{"w":"moon","e":"🌙","l":2,"s":["mmm","oo","nnn","nnn"]},{"w":"king","e":"👑","l":2,"s":["kuh","i","nng","guh"]},{"w":"ring","e":"💍","l":2,"s":["rrr","i","nng","guh"]},{"w":"sing","e":"🎤","l":2,"s":["sss","i","nng","guh"]},{"w":"sock","e":"🧦","l":3,"s":["sss","o","kuh","kuh"]},{"w":"rock","e":"🪨","l":2,"s":["rrr","o","kuh","kuh"]},{"w":"leaf","e":"🍃","l":2,"s":["lll","ee","fff","fff"]},{"w":"goat","e":"🐐","l":3,"s":["guh","oh","tuh","tuh"]},{"w":"wolf","e":"🐺","l":3,"s":["wuh","oo","lll","fff"]},{"w":"deer","e":"🦌","l":3,"s":["duh","eer","rrr","rrr"]},{"w":"seal","e":"🦭","l":3,"s":["sss","ee","lll","lll"]},{"w":"clam","e":"🐚","l":2,"s":["kuh","lll","a","mmm"]},{"w":"glue","e":"🧴","l":2,"s":["guh","lll","oo","e"]},{"w":"blue","e":"🔵","l":2,"s":["buh","lll","oo","e"]},{"w":"green","e":"🟢","l":2,"s":["guh","rrr","ee","ee","nnn"]},{"w":"pink","e":"🩷","l":2,"s":["puh","i","nng","kuh"]},{"w":"black","e":"⬛","l":2,"s":["buh","lll","a","kuh","kuh"]},{"w":"white","e":"⬜","l":2,"s":["wuh","wuh","eye","tuh","e"]},{"w":"brown","e":"🟤","l":2,"s":["buh","rrr","ow","wuh","nnn"]},{"w":"gold","e":"🥇","l":2,"s":["guh","oh","lll","duh"]},{"w":"brick","e":"🧱","l":2,"s":["buh","rrr","i","kuh","kuh"]},{"w":"brush","e":"🖌️","l":2,"s":["buh","rrr","uh","shh","shh"]},{"w":"clock","e":"🕐","l":2,"s":["kuh","lll","o","kuh","kuh"]},{"w":"cloud","e":"☁️","l":2,"s":["kuh","lll","ow","wuh","duh"]},{"w":"crown","e":"👑","l":2,"s":["kuh","rrr","ow","wuh","nnn"]},{"w":"dress","e":"👗","l":2,"s":["duh","rrr","e","sss","sss"]},{"w":"drink","e":"🥤","l":2,"s":["duh","rrr","i","nng","kuh"]},{"w":"fresh","e":"🌿","l":2,"s":["fff","rrr","e","shh","shh"]},{"w":"glass","e":"🥛","l":2,"s":["guh","lll","a","sss","sss"]},{"w":"grass","e":"🌱","l":2,"s":["guh","rrr","a","sss","sss"]},{"w":"smile","e":"😊","l":2,"s":["sss","mmm","eye","lll","e"]},{"w":"snail","e":"🐌","l":2,"s":["sss","nnn","ay","lll","lll"]},{"w":"spoon","e":"🥄","l":2,"s":["sss","puh","oo","nnn","nnn"]},{"w":"stair","e":"🪜","l":2,"s":["sss","tuh","air","rrr","rrr"]},{"w":"stone","e":"🪨","l":2,"s":["sss","tuh","oh","nnn","e"]},{"w":"glad","e":"😊","l":2,"s":["guh","lll","a","duh"]},{"w":"fish","e":"🐟","l":2,"s":["fff","i","shh","shh"]},{"w":"bird","e":"🐦","l":3,"s":["buh","er","duh","duh"]},{"w":"bear","e":"🐻","l":3,"s":["buh","air","rrr","rrr"]},{"w":"cake","e":"🎂","l":3,"s":["kuh","ay","kuh","e"]},{"w":"ball","e":"⚽","l":2,"s":["buh","aw","lll","lll"]},{"w":"book","e":"📖","l":3,"s":["buh","oo","kuh","kuh"]},{"w":"door","e":"🚪","l":3,"s":["duh","or","rrr","rrr"]},{"w":"duck","e":"🦆","l":2,"s":["duh","uh","kuh","kuh"]},{"w":"lion","e":"🦁","l":3,"s":["lll","eye","uh","nnn"]},{"w":"zebra","e":"🦓","l":3,"s":["zzz","ee","buh","rrr","uh"]},{"w":"panda","e":"🐼","l":3,"s":["puh","a","nnn","duh","uh"]},{"w":"koala","e":"🐨","l":3,"s":["kuh","oh","ah","lll","uh"]},{"w":"whale","e":"🐳","l":3,"s":["wuh","wuh","ay","lll","e"]},{"w":"shark","e":"🦈","l":3,"s":["shh","shh","ah","rrr","kuh"]},{"w":"apple","e":"🍎","l":3,"s":["a","puh","puh","lll","e"]},{"w":"banana","e":"🍌","l":3,"s":["buh","a","nnn","a","nnn","uh"]},{"w":"orange","e":"🍊","l":3,"s":["or","rrr","a","nnn","juh","e"]},{"w":"grapes","e":"🍇","l":3,"s":["guh","rrr","ay","puh","e","sss"]},{"w":"lemon","e":"🍋","l":3,"s":["lll","e","mmm","uh","nnn"]},{"w":"melon","e":"🍉","l":3,"s":["mmm","e","lll","uh","nnn"]},{"w":"peach","e":"🍑","l":3,"s":["puh","ee","ee","chh","chh"]},{"w":"cherry","e":"🍒","l":3,"s":["chh","chh","e","rrr","rrr","ee"]},{"w":"bread","e":"🍞","l":3,"s":["buh","rrr","e","e","duh"]},{"w":"cheese","e":"🧀","l":3,"s":["chh","chh","ee","ee","zzz","e"]},{"w":"pizza","e":"🍕","l":3,"s":["puh","ee","zzz","zzz","uh"]},{"w":"pasta","e":"🍝","l":3,"s":["puh","ah","sss","tuh","uh"]},{"w":"rice","e":"🍚","l":3,"s":["rrr","eye","sss","e"]},{"w":"soup","e":"🍜","l":3,"s":["sss","oo","oo","puh"]},{"w":"juice","e":"🧃","l":3,"s":["juh","oo","oo","sss","e"]},{"w":"candy","e":"🍭","l":3,"s":["kuh","a","nnn","duh","ee"]},{"w":"cookie","e":"🍪","l":3,"s":["kuh","oo","oo","kuh","ee","ee"]},{"w":"muffin","e":"🧁","l":3,"s":["mmm","uh","fff","fff","i","nnn"]},{"w":"train","e":"🚂","l":3,"s":["tuh","rrr","ay","nnn","nnn"]},{"w":"plane","e":"✈️","l":3,"s":["puh","lll","ay","nnn","e"]},{"w":"boat","e":"🚤","l":3,"s":["buh","oh","tuh","tuh"]},{"w":"bike","e":"🚲","l":3,"s":["buh","eye","kuh","e"]},{"w":"house","e":"🏠","l":3,"s":["huh","ow","wuh","sss","e"]},{"w":"school","e":"🏫","l":3,"s":["sss","kuh","kuh","oo","oo","lll"]},{"w":"garden","e":"🌷","l":3,"s":["guh","ah","rrr","duh","e","nnn"]},{"w":"beach","e":"🏖️","l":3,"s":["buh","ee","ee","chh","chh"]},{"w":"forest","e":"🌲","l":3,"s":["fff","or","rrr","e","sss","tuh"]},{"w":"river","e":"🏞️","l":3,"s":["rrr","i","vvv","er","rrr"]},{"w":"kite","e":"🪁","l":2,"s":["kuh","eye","tuh","e"]},{"w":"castle","e":"🏰","l":3,"s":["kuh","a","sss","tuh","lll","e"]},{"w":"bridge","e":"🌉","l":3,"s":["buh","rrr","i","juh","juh","e"]},{"w":"tower","e":"🗼","l":3,"s":["tuh","ow","wuh","er","rrr"]},{"w":"farm","e":"🚜","l":3,"s":["fff","ah","rrr","mmm"]},{"w":"market","e":"🛒","l":3,"s":["mmm","ah","rrr","kuh","e","tuh"]},{"w":"doctor","e":"🩺","l":3,"s":["duh","o","kuh","tuh","or","rrr"]},{"w":"rope","e":"🪢","l":3,"s":["rrr","oh","puh","e"]},{"w":"friend","e":"🧑‍🤝‍🧑","l":3,"s":["fff","rrr","e","e","nnn","duh"]},{"w":"family","e":"👨‍👩‍👧‍👦","l":3,"s":["fff","a","mmm","i","lll","ee"]},{"w":"happy","e":"😊","l":3,"s":["huh","a","puh","puh","ee"]},{"w":"sunny","e":"☀️","l":3,"s":["sss","uh","nnn","nnn","ee"]},{"w":"sleep","e":"😴","l":3,"s":["sss","lll","ee","puh","puh"]},{"w":"dream","e":"💭","l":3,"s":["duh","rrr","ee","ee","mmm"]},{"w":"dance","e":"💃","l":3,"s":["duh","a","nnn","sss","e"]},{"w":"music","e":"🎵","l":3,"s":["mmm","yoo","zzz","i","kuh"]},{"w":"tiger","e":"🐯","l":3,"s":["tuh","eye","guh","er","rrr"]},{"w":"monkey","e":"🐵","l":3,"s":["mmm","uh","nnn","kuh","ee","ee"]},{"w":"bell","e":"🔔","l":2,"s":["buh","e","lll","lll"]},{"w":"gift","e":"🎁","l":2,"s":["guh","i","fff","tuh"]},{"w":"swan","e":"🦢","l":2,"s":["sss","wuh","a","nnn"]},{"w":"nose","e":"👃","l":3,"s":["nnn","oh","zzz","e"]},{"w":"shoe","e":"👟","l":3,"s":["shh","oo","e","e"]},{"w":"pear","e":"🍐","l":3,"s":["puh","air","rrr","rrr"]},{"w":"corn","e":"🌽","l":3,"s":["kuh","or","nnn","nnn"]},{"w":"kiwi","e":"🥝","l":3,"s":["kuh","ee","wuh","ee"]}];
+var VOWELS=["a","e","i","o","u"];
+var STICKERS=[
+ {id:"star",emoji:"⭐",label:"Super Star"},{id:"rainbow",emoji:"🌈",label:"Rainbow Reader"},
+ {id:"rocket",emoji:"🚀",label:"Word Rocket"},{id:"flower",emoji:"🌸",label:"Blooming Brain"},
+ {id:"sun",emoji:"🌞",label:"Sunny Speller"},{id:"heart",emoji:"💖",label:"Kind Heart"},
+ {id:"butterfly",emoji:"🦋",label:"Butterfly Wings"},{id:"apple",emoji:"🍎",label:"Smart Apple"},
+ {id:"crown",emoji:"👑",label:"Spelling Royal"},{id:"balloon",emoji:"🎈",label:"Up, Up, Away!"},
+ {id:"gem",emoji:"💎",label:"Bright Gem"},{id:"trophy",emoji:"🏆",label:"Champion Cup"},
+ {id:"music",emoji:"🎵",label:"Rhyme Star"},{id:"puzzle",emoji:"🧩",label:"Memory Master"},
+ {id:"book",emoji:"📚",label:"Story Explorer"},{id:"sun2",emoji:"🌻",label:"Word of the Day Star"}
+];
+var GAME_META={
+ spell:{name:"Spell the Word",color:"#FF6B6B",skill:"Build the whole word, letter by letter",tileBg:"#ffe3e3",glyph:"abc"},
+ pick:{name:"Pick the Letter",color:"#14B8A6",skill:"Hear the first sound of the word",tileBg:"#ccfbf1",glyph:"👉"},
+ sound:{name:"Sound Out",color:"#8B5CF6",skill:"Put the letter sounds together",tileBg:"#ede9fe",glyph:"🧩"},
+ match:{name:"Match the Picture",color:"#F59E0B",skill:"Read the word, find its picture",tileBg:"#fef3c7",glyph:"🖼️"},
+ vowel:{name:"Fill the Vowel",color:"#38BDF8",skill:"Find the missing middle sound",tileBg:"#e0f2fe",glyph:"A"},
+ rhyme:{name:"Rhyme Time",color:"#EC4899",skill:"Find the word that sounds the same at the end",tileBg:"#fce7f3",glyph:"🎵"},
+ memory:{name:"Memory Match",color:"#06B6D4",skill:"Flip the cards and find the pairs",tileBg:"#cffafe",glyph:"🧠"}
+};
+var GAME_ORDER=["spell","pick","sound","match","vowel","rhyme","memory"];
+var RHYME_FAMILIES=[["cat","hat","bat","rat","mat"],["dog","log","frog"],["sun","run","bun"],["cap","map","nap","tap"],["van","fan","man","pan","tan"],["hen","pen","ten"],["net","jet","pet"],["bug","hug","rug","jug"],["lip","sip","rip"],["top","pop"],["bed","red"],["fox","box"],["car","star"],["hand","sand"],["king","ring","sing"],["sock","rock","clock"],["moon","spoon"],["ice","rice"]];
+var STORIES=[
+ {id:"picnic",title:"The Big Picnic",emoji:"🧺",color:"#F59E0B",pages:["Leo and Bella pack a big picnic. They put a cake and a pie in the box.","Oh no! An ant wants the cake. Two ants, three ants… a lot of ants!","A bee hums by the flowers. Bella gives the bee a tiny bit of jam.","The sun is warm. Leo and Bella eat the cake under a big tree. Yum!"]},
+ {id:"rainy",title:"The Rainy Day",emoji:"🌧️",color:"#38BDF8",pages:["Rain taps on the roof. Leo and Bella watch the rain from the door.","A frog hops in the wet grass. Hop, hop! The frog loves the rain.","A duck splashes in a big puddle. Quack, quack! What a fun bath!","The rain stops. A rainbow shines in the sky, and the sun comes out to play."]},
+ {id:"boat",title:"The Little Boat",emoji:"🚤",color:"#14B8A6",pages:["Leo has a little red boat. Bella helps him push it to the sea.","A fish jumps by the boat. Then two fish, then three! Hello, fish!","A seal waves a flipper at the boat. Leo and Bella wave back.","The sun goes down. The little boat sails home. What a happy day!"]},
+ {id:"moon",title:"The Moon Picnic",emoji:"🌙",color:"#8B5CF6",pages:["An owl hoots in the night. Leo and Bella look up at the moon and the stars.","The moon looks like a big round cheese! Leo laughs. Silly moon!","Bella pours warm milk. They sip and count the stars. One, two, three…","Time for bed. The moon sings a soft song, and Leo and Bella fall asleep."]}
+];
+var PRAISE=["Well done!","Great job!","You are a star!","Wonderful!","Hooray!","Super spelling!"];
+var AVATARS=["🦁","🐰","🦊","🐼","🦉","🐨","🦄","🐙"];
+var ROUNDS=6;
+
+/* ================= state (this visit only) ================= */
+var profile={name:"Hadi",age:5,avatar:"🐼",pin:"1234",soundOn:true,rewardsOn:true,bedtimeMode:false,dailyGoal:10,focusWords:[]};
+var stickers=[{id:"star",emoji:"⭐",label:"Super Star"},{id:"rainbow",emoji:"🌈",label:"Rainbow Reader"}];
+var attempts=[]; /* {word, gameType, attempts, correct} */
+var sessions=[]; /* {id, gameType, durationSeconds, createdAt} */
+var parentUnlocked=false;
+var screen={kind:"home"};
+
+/* ================= helpers ================= */
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function shuffle(a){var x=a.slice();for(var i=x.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=x[i];x[i]=x[j];x[j]=t;}return x;}
+function byWord(w){for(var i=0;i<WORDS.length;i++)if(WORDS[i].w===w)return WORDS[i];return null;}
+function maxLevel(){var age=profile.age;var base=age<=3?1:age===4?2:2;if(age>=6)base=3;var t=0,c=0;attempts.forEach(function(a){t+=a.attempts;c+=a.correct;});if(t>=10&&c/t>=0.8)base=Math.min(3,base+1);return base;}
+function pickWords(n,lvl){var pool=WORDS.filter(function(w){return w.l<=lvl;});return shuffle(pool).slice(0,n);}
+function pickGameWords(game,n,lvl){
+  if(game==="rhyme"){var fams=RHYME_FAMILIES.filter(function(f){return f.filter(function(w){var e=byWord(w);return e&&e.l<=lvl;}).length>=2;});var out=[];
+    shuffle(fams).forEach(function(f){if(out.length>=n)return;var inL=f.filter(function(w){var e=byWord(w);return e&&e.l<=lvl;});var p=inL[Math.floor(Math.random()*inL.length)];var e=p?byWord(p):null;if(e&&!out.some(function(t){return t.w===e.w;}))out.push(e);});return out;}
+  return pickWords(n,lvl);
+}
+function wordOfTheDay(){var d=new Date();var dayNum=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);return WORDS[dayNum%WORDS.length];}
+function vowelIndex(w){var i;for(i=1;i<w.length-1;i++)if(VOWELS.indexOf(w[i])>=0)return i;for(i=0;i<w.length;i++)if(VOWELS.indexOf(w[i])>=0)return i;return 1;}
+function todaySeconds(){var t=new Date();t.setHours(0,0,0,0);return sessions.filter(function(s){return s.createdAt>=t.getTime();}).reduce(function(s,x){return s+x.durationSeconds;},0);}
+function weekSeconds(){var t=Date.now()-7*86400000;return sessions.filter(function(s){return s.createdAt>=t;}).reduce(function(s,x){return s+x.durationSeconds;},0);}
+function weekSessions(){var t=Date.now()-7*86400000;return sessions.filter(function(s){return s.createdAt>=t;}).length;}
+function totalSeconds(){return sessions.reduce(function(s,x){return s+x.durationSeconds;},0);}
+function sessionDays(){var set={},out=[];sessions.forEach(function(s){var d=new Date(s.createdAt);var k=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();if(!set[k]){set[k]=1;out.push(k);}});return out;}
+function playStreak(){var days={};sessionDays().forEach(function(k){days[k]=1;});function key(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}var d=new Date();if(!days[key(d)]){d.setDate(d.getDate()-1);if(!days[key(d)])return 0;}var n=0;while(days[key(d)]){n++;d.setDate(d.getDate()-1);}return n;}
+function recordSession(gameType,dur,atts){
+  sessions.push({id:Date.now()+"-"+Math.random(),gameType:gameType,durationSeconds:Math.max(1,dur),createdAt:Date.now()});
+  atts.forEach(function(a){attempts.push({word:a.word,gameType:gameType,attempts:1,correct:a.correct?1:0});});
+  var sticker=null;
+  if(profile.rewardsOn){var owned={};stickers.forEach(function(s){owned[s.id]=1;});sticker=null;for(var i=0;i<STICKERS.length;i++){if(!owned[STICKERS[i].id]){sticker=STICKERS[i];break;}}if(!sticker)sticker=STICKERS[Math.floor(Math.random()*STICKERS.length)];stickers.push({id:sticker.id,emoji:sticker.emoji,label:sticker.label});}
+  return sticker;
+}
+
+/* ================= sound & speech ================= */
+var AC=null;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){AC=null;}}if(AC&&AC.state==="suspended")AC.resume();return AC;}
+function tone(f,t0,dur,type,vol){if(!profile.soundOn)return;var ctx=ac();if(!ctx)return;var o=ctx.createOscillator(),g=ctx.createGain();o.type=type||"sine";o.frequency.value=f;var t=ctx.currentTime+t0;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.12,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+dur+0.05);}
+function popSnd(){tone(620,0,0.09,"sine",0.08);}
+function chime(){tone(660,0,0.16);tone(880,0.09,0.22);}
+function nudgeSnd(){tone(220,0,0.15,"triangle",0.07);}
+function fanfare(){tone(523,0,0.18);tone(659,0.12,0.18);tone(784,0.24,0.3);}
+function speak(text){if(!profile.soundOn)return;try{if(!("speechSynthesis" in window))return;window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.rate=0.92;u.pitch=1.05;window.speechSynthesis.speak(u);}catch(e){}}
+
+/* ================= navigation ================= */
+var TAB_KINDS=["home","stories","story","rewards","map"];
+function go(s){screen=s;render();window.scrollTo(0,0);}
+function setTabbar(){
+  var bar=$("tabbar");if(!bar)return;
+  if(TAB_KINDS.indexOf(screen.kind)>=0){bar.classList.remove("hidden");
+    var active=screen.kind==="story"?"stories":screen.kind;
+    var btns=bar.querySelectorAll(".tab-btn");for(var i=0;i<btns.length;i++){var b=btns[i];var on=b.getAttribute("data-tab")===active;b.classList.toggle("on",on);if(on)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");}
+  } else bar.classList.add("hidden");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var btns=document.querySelectorAll(".tab-btn");
+  for(var i=0;i<btns.length;i++){btns[i].addEventListener("click",function(){popSnd();var t=this.getAttribute("data-tab");if(t==="pin")go({kind:"pin"});else go({kind:t});});}
+  render();
+});
+
+/* ================= shared bits ================= */
+function shell(inner,tabbed){
+  document.body.classList.toggle("night",!!profile.bedtimeMode);
+  return '<div class="wrap'+(tabbed?"":" nopad-tab")+'">'+inner+"</div>";
+}
+function backBtn(target,label){return '<button type="button" class="back-btn" data-go="'+target+'" aria-label="'+esc(label||"Back home")+'">🏠</button>';}
+function picCard(word,sizeCls){return '<div class="pic-card '+(sizeCls||"")+'"><span class="pic-emoji" role="img" aria-label="'+esc(word.w)+'">'+word.e+"</span></div>";}
+function speakerBtn(word,label){return '<button type="button" class="speaker-btn" data-speak="'+esc(word)+'" aria-label="'+esc(label||("Hear the word "+word))+'">🔊</button>';}
+function roundDots(idx,total){var h='<div class="round-dots" aria-label="Round '+(idx+1)+" of "+total+'">';for(var i=0;i<total;i++)h+='<span class="'+(i<=idx?"":"off")+'">⭐</span>';return h+"</div>";}
+function gameHead(game,idx,total){
+  var meta=GAME_META[game];
+  return '<div class="game-head">'+backBtn("home","Stop playing and go home")+'<div><p class="g-title" style="color:'+meta.color+'">'+meta.glyph+" "+meta.name+"</p>"+(total?roundDots(idx,total):"")+'</div><span class="avatar-mini" aria-hidden="true">'+profile.avatar+"</span></div>";
+}
+
+/* ================= home ================= */
+function homeHTML(){
+  var wotd=wordOfTheDay();
+  var goal=profile.dailyGoal, played=todaySeconds()/60, pct=Math.min(1,played/Math.max(1,goal));
+  var circ=(pct*163.4).toFixed(1);
+  var h='<div class="toprow"><div class="profile-pill"><span class="avatar-circle" aria-hidden="true">'+profile.avatar+'</span><div><p class="pname" style="margin:0">Hi, '+esc(profile.name)+'!</p><p class="pstars" style="margin:0">⭐ '+stickers.length+" sticker"+(stickers.length===1?"":"s")+' collected</p></div></div>'
+    +'<button type="button" class="grown-btn" data-go="pin" aria-label="Grown-ups area">🔒 <span>Grown-ups</span></button></div>';
+  h+='<div class="leo-card"><p class="leo-title">Leo says: “Let\'s spell some words!”</p><p class="leo-sub">Pick a game below — every game ends with a sticker.</p></div>';
+  h+='<div class="wotd-row"><div class="wotd-card"><span class="wotd-emoji" role="img" aria-label="'+esc(wotd.w)+'">'+wotd.e+'</span><div><p class="wotd-label">⭐ Word of the Day</p><p class="wotd-word">'+esc(wotd.w)+'</p><div class="wotd-btns"><button type="button" class="btn-hear" data-speak="'+esc(wotd.w)+'" aria-label="Hear the word of the day, '+esc(wotd.w)+'">🔊 Hear it</button><button type="button" class="btn-spell" data-wotd="1" aria-label="Spell the word of the day, '+esc(wotd.w)+'">Spell it! ✏️</button></div></div></div>'
+    +'<div class="goal-card"><svg viewBox="0 0 64 64" style="width:72px;height:72px;flex-shrink:0" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="none" stroke="#ccfbf1" stroke-width="9"/><circle cx="32" cy="32" r="26" fill="none" stroke="#14b8a6" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+circ+' 163.4" transform="rotate(-90 32 32)"/><text x="32" y="38" text-anchor="middle" font-size="17" font-weight="800" fill="#3b2a1a">'+Math.floor(played)+'m</text></svg><div><p class="g-title">Today\'s goal</p><p class="g-sub">'+(pct>=1?"Goal reached — amazing! 🎉":Math.floor(played)+" of "+goal+" minutes played")+"</p></div></div></div>";
+  if(profile.focusWords.length>0){
+    h+='<button type="button" class="starwords-btn" data-focus="1" aria-label="Practise my star words chosen by a grown-up"><span class="sw-ico" aria-hidden="true">⭐</span><span><span class="sw-name">My Star Words</span><span class="sw-sub">Special practice: '+esc(profile.focusWords.join(" · "))+"</span></span></button>";
+  }
+  h+='<div class="games-grid">';
+  GAME_ORDER.forEach(function(g){var m=GAME_META[g];
+    var glyph=m.glyph==="abc"?'<span class="abc-tile">abc</span>':(m.glyph==="A"?'<span class="a-tile">A</span>':m.glyph);
+    h+='<button type="button" class="game-card" data-game="'+g+'" aria-label="Play '+m.name+'"><span class="game-tile" style="background:'+m.tileBg+'" aria-hidden="true">'+glyph+'</span><span><span class="game-name">'+m.name+'</span><span class="game-skill">'+m.skill+"</span></span></button>";
+  });
+  h+='<button type="button" class="game-card reward-card" data-go="rewards" aria-label="Open my sticker reward box"><span class="game-tile tile-light" aria-hidden="true">🎁</span><span><span class="game-name">My Reward Box</span><span class="game-skill">'+stickers.length+" sticker"+(stickers.length===1?"":"s")+' inside</span></span></button>';
+  h+='<button type="button" class="game-card map-card" data-go="map" aria-label="Open my learning map"><span class="game-tile tile-light" aria-hidden="true">🗺️</span><span><span class="game-name">My Learning Map</span><span class="game-skill">See the islands you\'ve mastered</span></span></button>';
+  h+='<button type="button" class="game-card story-card" data-go="stories" aria-label="Open story time"><span class="game-tile tile-light" aria-hidden="true">📖</span><span><span class="game-name">Story Time with Leo &amp; Bella</span><span class="game-skill">Four read-aloud stories — tap any word to hear it</span></span></button>';
+  h+="</div>";
+  h+='<p class="home-foot">Made for ages 3–6 · No timers, no scores to beat — just gentle practice 💛</p>';
+  return shell(h,true);
+}
+
+/* ================= game runner ================= */
+var G=null; /* current game session */
+function startGame(game,opts){
+  opts=opts||{};
+  var words;
+  if(opts.singleWord){var e=byWord(opts.singleWord);words=e?[e]:pickGameWords(game,ROUNDS,maxLevel());}
+  else if(opts.focus&&profile.focusWords.length){var pool=profile.focusWords.map(byWord).filter(Boolean);var sh=shuffle(pool);words=[];for(var i=0;i<ROUNDS;i++)words.push(sh[i%sh.length]);}
+  else if(game==="memory"){startMemory();return;}
+  else words=pickGameWords(game,ROUNDS,maxLevel());
+  G={game:game,words:words,round:0,atts:[],start:Date.now(),roundState:null};
+  screen={kind:"game"};
+  render();
+}
+function roundDone(correct){
+  if(!G)return;
+  var cur=G.words[G.round];
+  G.atts.push({word:cur.w,correct:!!correct});
+  if(G.round+1<G.words.length){G.round++;G.roundState=null;render();return;}
+  var cc=G.atts.filter(function(a){return a.correct;}).length;
+  var game=G.game,total=G.words.length;
+  recordSession(game,Math.round((Date.now()-G.start)/1000),G.atts);
+  G=null;
+  go({kind:"celebrate",game:game,correct:cc,total:total});
+}
+function praiseWord(){return PRAISE[Math.floor(Math.random()*PRAISE.length)];}
+
+/* ---- Spell the Word ---- */
+function spellRoundHTML(word){
+  var letters=word.w.split("");
+  var st=G.roundState;
+  if(!st){
+    var tiles=letters.map(function(ch,i){return{id:"l"+i,ch:ch};});
+    if(letters.length===3){var pool="bcdfghjklmnpqrstvwxz".split("").filter(function(c){return letters.indexOf(c)<0;});tiles.push({id:"extra",ch:pool[Math.floor(Math.random()*pool.length)]||"z"});}
+    st=G.roundState={tiles:shuffle(tiles),placed:letters.map(function(){return null;}),used:{},wrong:0,done:false,praise:praiseWord()};
+    setTimeout(function(){speak(word.w);},350);
+  }
+  var cls=letters.length>=6?"sm":letters.length===5?"md":"";
+  var hint=st.wrong>=2;
+  var h='<div class="round-col"><div class="pic-row">'+picCard(word)+speakerBtn(word.w)+'</div><p class="round-prompt">Tap the letters to spell the word</p><div class="slots-row" role="group" aria-label="Spelling slots">';
+  st.placed.forEach(function(ch,i){
+    var c="slot "+cls+(st.done?" done":ch?" filled":(hint&&i===0?" hintslot":""));
+    var label=ch?("Slot "+(i+1)+": "+ch+". Tap to remove"):("Empty slot "+(i+1));
+    var txt=ch||(hint&&i===0?letters[0]:"·");
+    h+='<button type="button" class="'+c+'" data-slot="'+i+'" aria-label="'+label+'">'+txt+"</button>";
+  });
+  h+="</div>";
+  if(hint&&!st.done)h+='<p class="hint-pill">Psst — it starts with “'+letters[0].toUpperCase()+'”! 🦁</p>';
+  if(st.done)h+='<p class="praise">'+st.praise+"</p>";
+  else{h+='<div class="tiles-row" role="group" aria-label="Letter tiles">';
+    st.tiles.forEach(function(t){h+='<button type="button" class="letter-tile'+(st.used[t.id]?" used":"")+'" data-tile="'+t.id+'" aria-label="Letter '+t.ch+'" '+(st.used[t.id]?"disabled":"")+">"+t.ch+"</button>";});
+    h+="</div>";}
+  return h+"</div>";
+}
+function spellPlace(tileId){
+  var st=G.roundState,word=G.words[G.round];if(!st||st.done)return;
+  var tile=null;st.tiles.forEach(function(t){if(t.id===tileId)tile=t;});if(!tile||st.used[tileId])return;
+  var idx=st.placed.indexOf(null);if(idx<0)return;
+  popSnd();speak(tile.ch);
+  st.placed[idx]=tile.ch;st.used[tileId]=tileId;
+  if(st.placed.every(function(v){return v!==null;})){
+    if(st.placed.join("")===word.w){st.done=true;render();chime();speak(st.praise+" "+word.w+"!");setTimeout(function(){roundDone(st.wrong===0);},1600);return;}
+    nudgeSnd();speak("Try again, you can do it!");st.wrong++;
+    render();setTimeout(function(){if(G&&G.roundState===st){st.placed=word.w.split("").map(function(){return null;});st.used={};render();}},650);return;
+  }
+  render();
+}
+function spellRemove(i){
+  var st=G.roundState;if(!st||st.done)return;var ch=st.placed[i];if(!ch)return;
+  var cand=st.tiles.filter(function(t){return t.ch===ch&&st.used[t.id];});
+  var before=0;for(var j=0;j<i;j++)if(st.placed[j]===ch)before++;
+  var tile=cand[Math.min(before,cand.length-1)];st.placed[i]=null;if(tile)delete st.used[tile.id];render();
+}
+
+/* ---- Pick the Letter ---- */
+function pickRoundHTML(word){
+  var st=G.roundState;
+  if(!st){var first=word.w[0];var others=shuffle(WORDS.filter(function(w){return w.w[0]!==first;}).map(function(w){return w.w[0];}));var dis=[];others.forEach(function(c){if(dis.indexOf(c)<0&&dis.length<2)dis.push(c);});st=G.roundState={choices:shuffle([first].concat(dis)),wrong:0,done:false,praise:praiseWord(),wrongPick:null};setTimeout(function(){speak(word.w+". What letter does "+word.w+" start with?");},350);}
+  var h='<div class="round-col"><div class="pic-row">'+picCard(word)+speakerBtn(word.w)+'</div><p class="round-prompt big">“'+esc(word.w)+'” starts with…</p>';
+  if(st.done)h+='<p class="praise">'+st.praise+"</p>";
+  else{h+='<div class="tiles-row" role="group" aria-label="Letter choices">';
+    st.choices.forEach(function(ch){h+='<button type="button" class="choice-lg'+(st.wrongPick===ch?" wiggle":"")+'" data-pick="'+ch+'" aria-label="Letter '+ch+'">'+ch+"</button>";});
+    h+="</div>";}
+  return h+"</div>";
+}
+function pickChoose(ch){
+  var st=G.roundState,word=G.words[G.round];if(!st||st.done)return;
+  if(ch===word.w[0]){st.done=true;render();chime();speak(st.praise+" "+word.w+" starts with "+ch+"!");setTimeout(function(){roundDone(st.wrong===0);},1600);}
+  else{nudgeSnd();st.wrongPick=ch;st.wrong++;speak("Try again!");render();setTimeout(function(){if(G&&G.roundState===st){st.wrongPick=null;render();}},600);}
+}
+
+/* ---- Sound Out ---- */
+function soundRoundHTML(word){
+  var st=G.roundState;
+  if(!st){st=G.roundState={pieces:shuffle(word.w.split("").map(function(ch,i){return{id:i,ch:ch};})),next:0,wrong:0,done:false,praise:praiseWord(),wig:null};setTimeout(function(){speak("Let's sound out "+word.w);},350);}
+  var sz=word.w.length>=6?"width:40px;height:56px;font-size:24px":word.w.length===5?"width:48px;height:64px;font-size:28px":"width:56px;height:64px;font-size:28px";
+  var h='<div class="round-col"><div class="pic-row">'+picCard(word)+speakerBtn(word.w)+'</div><p class="round-prompt">Tap each sound piece in order — listen as you go!</p><div class="slots-row" aria-label="Sounds placed so far">';
+  word.w.split("").forEach(function(ch,i){h+='<span class="sound-slot'+(i<st.next?" on":"")+'" style="'+sz+'">'+(i<st.next?ch:"?")+"</span>";});
+  h+="</div>";
+  if(st.done)h+='<p class="praise">'+st.praise+"</p>";
+  else{h+='<div class="tiles-row" role="group" aria-label="Sound pieces">';
+    st.pieces.forEach(function(p){h+='<button type="button" class="sound-piece'+(p.id<st.next?" used":"")+(st.wig===p.id?" wiggle":"")+'" data-piece="'+p.id+'" aria-label="Sound piece '+p.ch+'" '+(p.id<st.next?"disabled":"")+">"+p.ch+"</button>";});
+    h+="</div>";}
+  h+='<p class="sounds-line">Sounds: '+esc(word.s.join(" · "))+"</p>";
+  return h+"</div>";
+}
+function soundTap(id){
+  var st=G.roundState,word=G.words[G.round];if(!st||st.done)return;id=parseInt(id,10);
+  var piece=null;st.pieces.forEach(function(p){if(p.id===id)piece=p;});if(!piece||id<st.next)return;
+  if(id===st.next){popSnd();speak(word.s[id]||piece.ch);st.next++;
+    if(st.next===word.w.length){st.done=true;render();chime();setTimeout(function(){speak(word.w+"! "+st.praise);},500);setTimeout(function(){roundDone(st.wrong===0);},1900);return;}
+    render();}
+  else{nudgeSnd();st.wrong++;st.wig=id;render();setTimeout(function(){if(G&&G.roundState===st){st.wig=null;render();}},450);}
+}
+
+/* ---- Match the Picture ---- */
+function matchRoundHTML(word){
+  var st=G.roundState;
+  if(!st){st=G.roundState={options:shuffle([word].concat(shuffle(WORDS.filter(function(w){return w.w!==word.w;})).slice(0,3))),wrong:0,done:false,praise:praiseWord(),wrongId:null};}
+  var h='<div class="round-col"><div class="pic-row"><div class="match-word"><span>'+esc(word.w)+'</span></div>'+speakerBtn(word.w,"Hear the word "+word.w+" if you need help")+'</div><p class="round-prompt">Tap the picture that matches the word</p>';
+  if(st.done)h+='<p class="praise">'+st.praise+"</p>";
+  else{h+='<div class="match-grid" role="group" aria-label="Picture choices">';
+    st.options.forEach(function(w){h+='<button type="button" class="match-opt'+(st.wrongId===w.w?" wiggle":"")+'" data-match="'+esc(w.w)+'" aria-label="Picture of '+esc(w.w)+'"><span role="img" aria-hidden="true">'+w.e+"</span></button>";});
+    h+="</div>";}
+  return h+"</div>";
+}
+function matchChoose(w){
+  var st=G.roundState,word=G.words[G.round];if(!st||st.done)return;
+  if(w===word.w){st.done=true;render();chime();speak(st.praise+" That's "+word.w+"!");setTimeout(function(){roundDone(st.wrong===0);},1600);}
+  else{nudgeSnd();st.wrongId=w;st.wrong++;speak("Look again!");render();setTimeout(function(){if(G&&G.roundState===st){st.wrongId=null;render();}},600);}
+}
+
+/* ---- Fill the Vowel ---- */
+function vowelRoundHTML(word){
+  var st=G.roundState;
+  if(!st){st=G.roundState={vi:vowelIndex(word.w),picked:null,wrong:0,done:false,praise:praiseWord(),wrongPick:null};setTimeout(function(){speak("Which vowel is missing in "+word.w+"?");},350);}
+  var h='<div class="round-col"><div class="pic-row">'+picCard(word)+speakerBtn(word.w)+'</div><div class="slots-row" aria-label="Word with a missing vowel">';
+  word.w.split("").forEach(function(ch,i){
+    if(i===st.vi)h+='<span class="vowel-slot '+(st.done?"found":"missing")+'">'+(st.picked||"_")+"</span>";
+    else h+='<span class="vowel-slot">'+ch+"</span>";
+  });
+  h+='</div><p class="round-prompt">Pick the missing vowel</p>';
+  if(st.done)h+='<p class="praise">'+st.praise+"</p>";
+  else{h+='<div class="tiles-row" role="group" aria-label="Vowel choices">';
+    VOWELS.forEach(function(v){h+='<button type="button" class="vowel-btn'+(st.wrongPick===v?" wiggle":"")+'" data-vowel="'+v+'" aria-label="Vowel '+v+'">'+v+"</button>";});
+    h+="</div>";}
+  return h+"</div>";
+}
+function vowelChoose(v){
+  var st=G.roundState,word=G.words[G.round];if(!st||st.done)return;
+  if(v===word.w[st.vi]){st.picked=v;st.done=true;render();chime();speak(st.praise+" "+word.w+"!");setTimeout(function(){roundDone(st.wrong===0);},1700);}
+  else{nudgeSnd();st.wrongPick=v;st.wrong++;speak("Try another vowel!");render();setTimeout(function(){if(G&&G.roundState===st){st.wrongPick=null;render();}},600);}
+}
+
+/* ---- Rhyme Time ---- */
+function rhymeRoundHTML(word){
+  var st=G.roundState;
+  if(!st){var fam=RHYME_FAMILIES.filter(function(f){return f.indexOf(word.w)>=0;})[0]||[word.w];
+    var answerName=shuffle(fam.filter(function(w){return w!==word.w;}))[0]||word.w;
+    var others=shuffle(WORDS.filter(function(w){return fam.indexOf(w.w)<0&&Math.abs(w.w.length-word.w.length)<=1;})).slice(0,2);
+    var ans=byWord(answerName)||word;
+    st=G.roundState={family:fam,options:shuffle([ans].concat(others)),wrong:0,done:false,praise:praiseWord(),wrongId:null};
+    setTimeout(function(){speak("What rhymes with "+word.w+"?");},350);}
+  var h='<div class="round-col"><div class="pic-row">'+picCard(word)+speakerBtn(word.w,"Hear the word "+word.w+" again")+'</div><p class="round-prompt big">What rhymes with “'+esc(word.w)+'”? 🎵</p>';
+  if(st.done)h+='<p class="praise">'+st.praise+"</p>";
+  else{h+='<div class="rhyme-grid" role="group" aria-label="Rhyme choices">';
+    st.options.forEach(function(w){h+='<button type="button" class="rhyme-opt'+(st.wrongId===w.w?" wiggle":"")+'" data-rhyme="'+esc(w.w)+'" aria-label="Picture of '+esc(w.w)+'"><span class="r-emoji" role="img" aria-hidden="true">'+w.e+'</span><span class="r-word">'+esc(w.w)+"</span></button>";});
+    h+="</div>";}
+  h+='<p class="sounds-line">Rhyming words end with the same sound!</p>';
+  return h+"</div>";
+}
+function rhymeChoose(w){
+  var st=G.roundState,word=G.words[G.round];if(!st||st.done)return;
+  if(st.family.indexOf(w)>=0&&w!==word.w){st.done=true;render();chime();speak(st.praise+" "+w+" rhymes with "+word.w+"!");setTimeout(function(){roundDone(st.wrong===0);},1700);}
+  else{nudgeSnd();st.wrongId=w;st.wrong++;speak("Listen… "+word.w+". Try again!");render();setTimeout(function(){if(G&&G.roundState===st){st.wrongId=null;render();}},600);}
+}
+
+function gameHTML(){
+  var word=G.words[G.round];var inner="";
+  if(G.game==="spell")inner=spellRoundHTML(word);
+  else if(G.game==="pick")inner=pickRoundHTML(word);
+  else if(G.game==="sound")inner=soundRoundHTML(word);
+  else if(G.game==="match")inner=matchRoundHTML(word);
+  else if(G.game==="vowel")inner=vowelRoundHTML(word);
+  else if(G.game==="rhyme")inner=rhymeRoundHTML(word);
+  return shell(gameHead(G.game,G.round,G.words.length)+'<div class="game-panel">'+inner+'</div><p class="game-tip">Bella says: “Take your time — there\'s no hurry!”</p>',false);
+}
+
+/* ================= memory match ================= */
+var M=null;
+function startMemory(){
+  var pairWords=pickWords(6,maxLevel());
+  var cards=shuffle(pairWords.reduce(function(acc,w){acc.push({key:w.w+"-w",word:w,face:"word"});acc.push({key:w.w+"-p",word:w,face:"pic"});return acc;},[]));
+  M={pairWords:pairWords,cards:cards,flipped:[],matched:{},busy:false,misses:{},start:Date.now()};
+  screen={kind:"memory"};render();
+}
+function memoryFinish(){
+  var atts=M.pairWords.map(function(w){return{word:w.w,correct:!(M.misses[w.w]>0)};});
+  var cc=atts.filter(function(a){return a.correct;}).length,total=M.pairWords.length;
+  recordSession("memory",Math.round((Date.now()-M.start)/1000),atts);
+  M=null;go({kind:"celebrate",game:"memory",correct:cc,total:total});
+}
+function memoryFlip(key){
+  if(!M||M.busy)return;
+  var card=null;M.cards.forEach(function(c){if(c.key===key)card=c;});if(!card)return;
+  if(M.flipped.indexOf(key)>=0||M.matched[card.word.w])return;
+  popSnd();M.flipped.push(key);
+  if(M.flipped.length<2){render();return;}
+  var a=null,b=null;M.cards.forEach(function(c){if(c.key===M.flipped[0])a=c;if(c.key===M.flipped[1])b=c;});
+  if(!a||!b){M.flipped=[];render();return;}
+  if(a.word.w===b.word.w){chime();speak(a.word.w+"! You found a pair!");M.matched[a.word.w]=1;M.flipped=[];render();
+    if(Object.keys(M.matched).length===M.pairWords.length)setTimeout(memoryFinish,900);}
+  else{nudgeSnd();[a.word.w,b.word.w].forEach(function(w){M.misses[w]=(M.misses[w]||0)+1;});M.busy=true;render();
+    setTimeout(function(){if(M){M.flipped=[];M.busy=false;render();}},1000);}
+}
+function memoryHTML(){
+  var h=gameHead("memory",0,0).replace("🧠 Memory Match","🧠 Memory Match");
+  h=h.replace(/<div class="round-dots"[\s\S]*?<\/div>/,"");
+  h+='<p class="round-prompt" style="margin-top:8px;text-align:center">Pairs found: '+Object.keys(M.matched).length+" of "+M.pairWords.length+'</p><p class="round-prompt" style="margin-top:16px;text-align:center">Flip two cards — match the word with its picture!</p><div class="memory-grid" role="group" aria-label="Memory cards">';
+  M.cards.forEach(function(card){
+    var isUp=M.flipped.indexOf(card.key)>=0||!!M.matched[card.word.w];
+    var matched=!!M.matched[card.word.w];
+    if(isUp){h+='<button type="button" class="mem-card '+(matched?"matched":"up")+'" data-mem="'+card.key+'" '+(matched?"disabled":"")+' aria-label="'+(card.face==="word"?("Word card: "+card.word.w):("Picture card: "+card.word.w))+'">'+(card.face==="word"?('<span class="m-word">'+esc(card.word.w)+"</span>"):('<span class="m-pic" role="img" aria-hidden="true">'+card.word.e+"</span>"))+(matched?'<span class="mem-check" aria-hidden="true">✓</span>':"")+"</button>";}
+    else h+='<button type="button" class="mem-card hidden-card" data-mem="'+card.key+'" aria-label="Hidden card. Tap to flip">?</button>';
+  });
+  h+='</div><p class="game-tip">Leo says: “Look carefully and remember where things hide!”</p>';
+  return shell(h,false);
+}
+
+/* ================= celebrate ================= */
+function celebrateHTML(){
+  var game=screen.game,correct=screen.correct,total=screen.total;
+  var stars=correct>=total-1?3:correct>=Math.ceil(total/2)?2:1;
+  var latest=stickers[stickers.length-1];
+  setTimeout(function(){fanfare();speak("You did it! Great playing!");},60);
+  var h='<div class="celebrate-col"><h2>You did it! 🎉</h2><div class="stars-row" aria-label="You earned '+stars+' stars">';
+  for(var i=1;i<=3;i++)h+='<span class="'+(i<=stars?"":"off")+'">⭐</span>';
+  h+='</div><p class="celebrate-sub">'+(game==="memory"?("You found all "+total+" pairs — "+correct+" of them with no peeking mistakes!"):("You spelled "+correct+" of "+total+" words on the first try — and finished them all!"))+"</p>";
+  if(profile.rewardsOn&&latest)h+='<div class="sticker-new"><p class="sn-label">New sticker for your box!</p><p class="sn-emoji" aria-hidden="true">'+latest.emoji+'</p><p class="sn-name">'+esc(latest.label)+"</p></div>";
+  h+='<div class="big-btns"><button type="button" class="big-btn btn-amber-grad" data-again="'+game+'">Play again 🔁</button><button type="button" class="big-btn btn-white" data-go="rewards">My Reward Box 🎁</button><button type="button" class="big-btn btn-teal" data-go="home">Home 🏠</button></div></div>';
+  return shell(h,false);
+}
+
+/* ================= rewards ================= */
+function rewardsHTML(){
+  var counts={};stickers.forEach(function(s){counts[s.id]=(counts[s.id]||0)+1;});
+  var h='<div class="screen-head">'+backBtn("home")+'<h2>🎁 My Reward Box</h2></div><p class="lead">Every game you finish adds a sticker here. You have '+stickers.length+'!</p><div class="stickers-grid">';
+  STICKERS.forEach(function(s){var n=counts[s.id]||0;var owned=n>0;
+    h+='<div class="sticker-cell '+(owned?"owned":"locked")+'"><span class="s-emoji" aria-hidden="true">'+(owned?s.emoji:"❔")+'</span><span class="s-name">'+(owned?esc(s.label):"Keep playing!")+"</span>"+(n>1?('<span class="sticker-count-badge" aria-label="You have '+n+' of these">×'+n+"</span>"):"")+"</div>";});
+  h+="</div>";
+  if(stickers.length===0)h+='<div class="empty-note"><p>No stickers yet — finish any game and Leo will pop one in your box!</p></div>';
+  return shell(h,true);
+}
+
+/* ================= map ================= */
+function skillStats(games){var a=0,c=0;attempts.forEach(function(x){if(games.indexOf(x.gameType)>=0){a+=x.attempts;c+=x.correct;}});var pct=a===0?0:c/a;var stars=a>=5&&pct>=0.9?3:a>=5&&pct>=0.7?2:a>=3?1:0;return{attempts:a,correct:c,pct:pct,stars:stars};}
+function mapHTML(){
+  var islands=[
+    {name:"Letter Land",emoji:"🔤",desc:"First sounds, letter pieces & rhymes",color:"#14B8A6",stat:skillStats(["pick","sound","rhyme"])},
+    {name:"Vowel Valley",emoji:"🅰️",desc:"Short vowel sounds a · e · i · o · u",color:"#38BDF8",stat:skillStats(["vowel"])},
+    {name:"Word World",emoji:"🏰",desc:"Spelling, reading & remembering whole words",color:"#FF6B6B",stat:skillStats(["spell","match","memory"])}];
+  var wordStatus={};attempts.forEach(function(a){var cur=wordStatus[a.word]||{attempts:0,correct:0};cur.attempts+=a.attempts;cur.correct+=a.correct;wordStatus[a.word]=cur;});
+  var h='<div class="screen-head">'+backBtn("home")+'<h2>🗺️ My Learning Map</h2></div><div class="stack">';
+  islands.forEach(function(isle){
+    var sh="";for(var i=1;i<=3;i++)sh+='<span class="'+(i<=isle.stat.stars?"":"off")+'">⭐</span>';
+    h+='<div class="island-card"><div class="island-top"><p class="island-name"><span aria-hidden="true">'+isle.emoji+"</span> "+isle.name+'</p><span class="island-stars" aria-label="'+isle.stat.stars+' of 3 stars mastered">'+sh+'</span></div><p class="island-desc">'+isle.desc+'</p><div class="progress-track" role="progressbar" aria-valuenow="'+Math.round(isle.stat.pct*100)+'" aria-valuemin="0" aria-valuemax="100" aria-label="'+isle.name+' progress"><div class="progress-fill" style="width:'+Math.max(4,isle.stat.pct*100)+'%;background:'+isle.color+'"></div></div><p class="island-stat">'+(isle.stat.attempts===0?"Not explored yet — pick a game to start!":(isle.stat.correct+" of "+isle.stat.attempts+" words right on the first try"))+"</p></div>";
+  });
+  h+='</div><h3 class="garden-title">🌱 My Word Garden</h3><p class="garden-sub">Words turn green as you master them.</p>';
+  [1,2,3].forEach(function(level){
+    h+='<p class="level-label">'+(level===1?"Level 1 · Little words":level===2?"Level 2 · Blends":"Level 3 · Bigger words")+'</p><div class="word-chips">';
+    WORDS.filter(function(w){return w.l===level;}).forEach(function(w){
+      var st=wordStatus[w.w];var mastered=!!st&&st.correct>0&&st.correct>=st.attempts-st.correct;var practising=!!st&&!mastered;
+      var cls=mastered?"mastered":practising?"practising":"new";
+      var lab=w.w+(mastered?", mastered":practising?", still practising":", not tried yet")+". Tap to hear it.";
+      h+='<button type="button" class="word-chip '+cls+'" data-speak="'+esc(w.w)+'" aria-label="'+esc(lab)+'"><span aria-hidden="true">'+w.e+"</span> "+esc(w.w)+(mastered?" ✓":"")+"</button>";
+    });
+    h+="</div>";
+  });
+  return shell(h,true);
+}
+
+/* ================= stories ================= */
+function storiesHTML(){
+  var h='<div class="screen-head">'+backBtn("home")+'<h2>📖 Story Time</h2></div><p class="lead">Stories with Leo and Bella. Tap “Read to me”, or tap any word in the story to hear it on its own.</p><div class="stories-grid">';
+  STORIES.forEach(function(st){
+    h+='<button type="button" class="story-open" data-story="'+st.id+'" aria-label="Read the story '+esc(st.title)+'"><span class="story-tile" style="background:'+st.color+"26"+'" aria-hidden="true">'+st.emoji+'</span><span><span class="story-name">'+esc(st.title)+'</span><span class="story-sub">'+st.pages.length+' pages · read-aloud 🔊</span></span></button>';
+  });
+  h+='</div><div class="bedtime-note"><p>Bella loves stories before bed — turn on Bedtime Mode in the Grown-ups area for a calm night sky.</p></div>';
+  return shell(h,true);
+}
+var storyPage=0, storyStart=0, storyRecorded=false;
+function storyHTML(){
+  var story=null;STORIES.forEach(function(s){if(s.id===screen.id)story=s;});if(!story)story=STORIES[0];
+  if(storyPage>=story.pages.length){
+    setTimeout(function(){fanfare();},60);
+    if(!storyRecorded){storyRecorded=true;recordSession("story",Math.round((Date.now()-storyStart)/1000),[]);}
+    var h='<div class="celebrate-col"><h2>The End! 📖</h2><p class="celebrate-sub">You finished “'+esc(story.title)+'”. Great reading!</p><div class="big-btns"><button type="button" class="big-btn btn-violet-grad" data-storyagain="1">Read it again 🔁</button><button type="button" class="big-btn btn-white" data-go="stories">More stories 📚</button><button type="button" class="big-btn btn-teal" data-go="home">Home 🏠</button></div></div>';
+    return shell(h,true);
+  }
+  var text=story.pages[storyPage];
+  setTimeout(function(){speak(text);},400);
+  var wordsHtml=text.split(" ").map(function(tok){var clean=tok.replace(/[^A-Za-z']/g,"");return '<button type="button" class="story-word" data-speak="'+esc(clean||tok)+'" aria-label="Hear the word '+esc(clean||tok)+'">'+esc(tok)+"</button>";}).join("");
+  var h='<div class="screen-head" style="justify-content:space-between">'+backBtn("stories","Back to all stories")+'<p class="g-title font-display" style="font-size:24px;font-weight:800;margin:0;color:'+story.color+'">'+story.emoji+" "+esc(story.title)+'</p><span class="page-count">'+(storyPage+1)+" / "+story.pages.length+"</span></div>";
+  h+='<div class="story-page-card"><div class="story-words" aria-label="'+esc(text)+'">'+wordsHtml+'</div><div class="read-btn-row"><button type="button" class="read-btn" data-speak="'+esc(text)+'" aria-label="Read this page to me">🔊 Read to me</button></div></div>';
+  h+='<div class="page-nav"><button type="button" class="big-btn btn-white" data-page="-1" '+(storyPage===0?"disabled style=\"opacity:.4\"":"")+' aria-label="Previous page">⬅ Back</button><button type="button" class="big-btn btn-amber-grad" data-page="1" aria-label="'+(storyPage===story.pages.length-1?"Finish the story":"Next page")+'">'+(storyPage===story.pages.length-1?"Finish 🎉":"Next ➡")+"</button></div>";
+  return shell(h,true);
+}
+
+/* ================= pin ================= */
+var pinDigits="",pinError=false;
+function pinHTML(){
+  var h='<div class="screen-head">'+backBtn("home")+'<h2>🔒 Grown-ups only</h2></div><div class="pin-card"><p class="pin-title">Enter your 4-number PIN</p><div class="pin-dots" aria-label="'+pinDigits.length+' of 4 numbers entered">';
+  for(var i=0;i<4;i++)h+='<span class="pin-dot'+(i<pinDigits.length?" on":"")+(pinError?" err":"")+'"></span>';
+  h+="</div>";
+  if(pinError)h+='<p class="pin-error" role="alert">That PIN didn\'t match — try again.</p>';
+  h+='<div class="pin-grid">';
+  ["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(function(d){
+    if(d==="")h+="<span></span>";
+    else h+='<button type="button" class="pin-key" data-pin="'+d+'" aria-label="'+(d==="⌫"?"Delete last number":"Number "+d)+'">'+d+"</button>";
+  });
+  h+='</div></div><p class="pin-hint">Demo PIN: 1234 — you can change it inside the Grown-ups area.</p>';
+  return shell(h,false);
+}
+function pinPress(d){
+  if(d==="⌫"){pinDigits=pinDigits.slice(0,-1);pinError=false;render();return;}
+  if(pinDigits.length>=4)return;
+  pinDigits+=d;pinError=false;popSnd();
+  if(pinDigits.length===4){
+    if(pinDigits===profile.pin){parentUnlocked=true;pinDigits="";go({kind:"parent"});return;}
+    pinError=true;pinDigits="";nudgeSnd();render();return;
+  }
+  render();
+}
+
+/* ================= parent ================= */
+var focusSel=null, focusMsg="", pinMsg="", nameDraft=null, newPinDraft="", confirmReset=false;
+function parentHTML(){
+  if(focusSel===null)focusSel=profile.focusWords.slice();
+  if(nameDraft===null)nameDraft=profile.name;
+  var minutes=Math.round(totalSeconds()/60);
+  var wordsPractised={};attempts.forEach(function(a){wordsPractised[a.word]=1;});
+  var streak=playStreak(), wkMin=Math.round(weekSeconds()/60), todayMin=Math.floor(todaySeconds()/60);
+  var byWord={};attempts.forEach(function(a){var cur=byWord[a.word]||{attempts:0,correct:0};cur.attempts+=a.attempts;cur.correct+=a.correct;byWord[a.word]=cur;});
+  var list=Object.keys(byWord).map(function(w){return{word:w,attempts:byWord[w].attempts,correct:byWord[w].correct,pct:byWord[w].attempts?byWord[w].correct/byWord[w].attempts:0};});
+  var struggles=list.filter(function(w){return w.attempts>=2&&w.pct<0.7;}).sort(function(a,b){return a.pct-b.pct;});
+  var strengths=list.filter(function(w){return w.attempts>=2&&w.pct>=0.8;}).sort(function(a,b){return b.attempts-a.attempts;});
+  function emojiFor(w){var e=byWord(w);return e?e.e:"🔤";}
+  function gameName(g){return GAME_META[g]?GAME_META[g].name:(g==="story"?"Story Time":g);}
+  function gameEmoji(g){return GAME_META[g]?(GAME_META[g].glyph==="abc"?"🔤":GAME_META[g].glyph==="A"?"🅰️":GAME_META[g].glyph):"📖";}
+  var h='<div class="parent-head"><h2>Parent Dashboard</h2><button type="button" class="btn-teal big-btn" style="min-height:56px;font-size:18px;padding:8px 20px" data-go="home">Back to kids →</button></div><p class="parent-sub">How '+esc(profile.name)+' is getting on — in plain words, no test scores.</p>';
+  h+='<div class="stat-grid">';
+  [{v:minutes,l:"minutes played",e:"⏱️"},{v:sessions.length,l:"games finished",e:"🎮"},{v:Object.keys(wordsPractised).length,l:"words practised",e:"📚"},{v:stickers.length,l:"stickers earned",e:"⭐"}].forEach(function(s){
+    h+='<div class="stat-card"><p class="st-emoji" aria-hidden="true">'+s.e+'</p><p class="st-val">'+s.v+'</p><p class="st-lab">'+s.l+"</p></div>";});
+  h+="</div>";
+  h+='<section class="panel week" aria-labelledby="week-h"><h3 id="week-h">📅 This week with '+esc(profile.name)+'</h3><div class="week-grid"><div class="week-cell"><p class="wv">'+streak+'</p><p class="wl">day streak 🔥</p></div><div class="week-cell"><p class="wv">'+wkMin+'</p><p class="wl">minutes this week</p></div><div class="week-cell"><p class="wv">'+weekSessions()+'</p><p class="wl">games &amp; stories</p></div></div><p class="week-note">'+(weekSessions()===0?"No play yet this week — a five-minute game together is a lovely way to start.":todayMin>=profile.dailyGoal?("Today's "+profile.dailyGoal+"-minute goal is already reached. Short, happy sessions like this are exactly how early readers grow."):esc(profile.name)+" has played "+todayMin+" of the "+profile.dailyGoal+"-minute daily goal today. Little and often beats long sessions at this age.")+"</p></section>";
+  h+='<section class="panel" aria-labelledby="struggles-h"><h3 id="struggles-h">🌱 Words that need a little more practice</h3>';
+  if(struggles.length===0)h+='<p class="panel-sub" style="margin-top:8px">'+(attempts.length===0?"No games played yet — this list fills in as your child plays.":"Nothing here — every practised word is going well. Lovely!")+"</p>";
+  else struggles.forEach(function(w){h+='<div class="word-row"><span class="wr-word">'+emojiFor(w.word)+" "+esc(w.word)+'</span><span class="wr-stat">right first time '+w.correct+" of "+w.attempts+" tries</span></div>";});
+  h+='<p class="tip">Tip: say these words together at breakfast, or spot them on signs and packets. Short and playful beats drilling.</p></section>';
+  h+='<section class="panel" aria-labelledby="strengths-h"><h3 id="strengths-h">🌟 Words '+esc(profile.name)+' knows well</h3>';
+  if(strengths.length===0)h+='<p class="panel-sub" style="margin-top:8px">Words will appear here once they\'re answered right most of the time.</p>';
+  else{h+='<div class="chip-row">';strengths.forEach(function(w){h+='<span class="chip">'+emojiFor(w.word)+" "+esc(w.word)+"</span>";});h+="</div>";}
+  h+="</section>";
+  h+='<section class="panel" aria-labelledby="recent-h"><h3 id="recent-h">🕐 Recent play</h3>';
+  if(sessions.length===0)h+='<p class="panel-sub" style="margin-top:8px">No sessions yet.</p>';
+  else sessions.slice(-8).reverse().forEach(function(s){var d=new Date(s.createdAt);var when=d.toLocaleDateString(undefined,{month:"short",day:"numeric"});h+='<div class="recent-row"><span>'+gameEmoji(s.gameType)+" "+gameName(s.gameType)+'</span><span class="r-when">'+when+" · "+Math.max(1,Math.round(s.durationSeconds/60))+" min</span></div>";});
+  h+="</section>";
+  /* star words */
+  h+='<section class="panel" aria-labelledby="focus-h"><h3 id="focus-h">⭐ Star Words — you choose what to practise</h3><p class="panel-sub">Pick up to 8 words (school spellings, tricky words, family favourites). They appear on the home screen as a special “My Star Words” practice game.</p>';
+  if(focusSel.length>0){h+='<div class="chip-row">';focusSel.forEach(function(w){h+='<button type="button" class="sel-chip" data-focusremove="'+esc(w)+'" aria-label="Remove star word '+esc(w)+'">'+emojiFor(w)+" "+esc(w)+" ✕</button>";});h+="</div>";}
+  [1,2,3].forEach(function(level){
+    h+='<p class="level-label" style="color:var(--dim)">'+(level===1?"Level 1 · Little words":level===2?"Level 2 · Blends":"Level 3 · Bigger words")+'</p><div class="chip-row" style="margin-top:6px">';
+    WORDS.filter(function(w){return w.l===level;}).forEach(function(w){var sel=focusSel.indexOf(w.w)>=0;
+      h+='<button type="button" class="pick-chip'+(sel?" sel":"")+'" data-focuspick="'+esc(w.w)+'" aria-pressed="'+sel+'" aria-label="'+(sel?"Remove":"Add")+" star word "+esc(w.w)+'" '+((!sel&&focusSel.length>=8)?"disabled":"")+">"+w.e+" "+esc(w.w)+"</button>";});
+    h+="</div>";
+  });
+  h+='<div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap"><button type="button" class="save-btn" data-focussave="1">Save Star Words</button>'+(focusMsg?'<p class="save-msg" role="status" style="margin:0">'+esc(focusMsg)+"</p>":"")+"</div></section>";
+  /* settings */
+  function toggle(label,hint,key){return '<div class="toggle-row"><div><p class="tg-label">'+label+'</p><p class="tg-hint">'+hint+'</p></div><button type="button" class="switch'+(profile[key]?" on":"")+'" role="switch" aria-checked="'+!!profile[key]+'" aria-label="'+label+'" data-toggle="'+key+'"><span class="knob"></span></button></div>';}
+  h+='<section class="panel" aria-labelledby="settings-h"><h3 id="settings-h">⚙️ Settings</h3><div>'
+    +toggle("Sounds & voices","Spoken words, letter sounds and gentle chimes","soundOn")
+    +toggle("Sticker rewards","Turn off for a calmer game with no reward box prizes","rewardsOn")
+    +toggle("Bedtime mode","A calm, starry night sky across the children's screens — lovely for evening stories","bedtimeMode")
+    +'</div><div style="margin-top:16px"><span class="field-label" id="goal-label">Daily play goal</span><p class="tg-hint" style="font-size:14px;font-weight:600;color:var(--dim);margin:0">Shown as a friendly ring on the home screen — a goal, never a limit.</p><div class="goal-btns" role="group" aria-labelledby="goal-label">';
+  [5,10,15,20].forEach(function(m){h+='<button type="button" class="goal-opt'+(profile.dailyGoal===m?" sel":"")+'" data-goal="'+m+'" aria-pressed="'+(profile.dailyGoal===m)+'" aria-label="Daily goal '+m+' minutes">'+m+" min</button>";});
+  h+='</div></div><div class="form-grid"><div><label class="field-label" for="edit-name">Child\'s name</label><div class="field-row"><input id="edit-name" class="field-input" value="'+esc(nameDraft)+'" maxlength="30" /><button type="button" class="field-save" data-savename="1" aria-label="Save name">Save</button></div></div>'
+    +'<div><label class="field-label" for="new-pin">Change PIN</label><div class="field-row"><input id="new-pin" class="field-input pin-input" value="'+esc(newPinDraft)+'" placeholder="4 numbers" inputmode="numeric" autocomplete="off" /><button type="button" class="field-save" data-savepin="1" aria-label="Save new PIN">Save</button></div>'+(pinMsg?'<p class="field-msg" role="status">'+esc(pinMsg)+"</p>":"")+"</div></div>";
+  h+='<div style="margin-top:16px"><span class="field-label">Play buddy face</span><div class="avatar-row" role="group" aria-label="Play buddy face">';
+  AVATARS.forEach(function(a){h+='<button type="button" class="avatar-opt'+(profile.avatar===a?" sel":"")+'" data-avatar="'+a+'" aria-pressed="'+(profile.avatar===a)+'" aria-label="Buddy '+a+'">'+a+"</button>";});
+  h+='</div></div><div class="danger-zone">';
+  if(confirmReset)h+='<div class="reset-confirm"><p>Clear all progress, sessions and stickers?</p><button type="button" class="btn-danger" data-reset="2">Yes, clear it</button><button type="button" class="btn-keep" data-reset="0">Keep it</button></div>';
+  else h+='<button type="button" class="btn-danger-soft" data-reset="1">Start fresh — clear all progress</button>';
+  h+="</div></section>";
+  h+='<p class="parent-foot">Spell Pals keeps only your child\'s name, age and play progress, in this app on this visit. No ads, no purchases, no external links.</p>';
+  document.body.classList.remove("night");
+  return '<div class="parent-wrap"><div class="parent-inner">'+h+"</div></div>";
+}
+
+/* ================= render & events ================= */
+function render(){
+  var app=$("app");var html="";
+  if(screen.kind==="home")html=homeHTML();
+  else if(screen.kind==="game"&&G)html=gameHTML();
+  else if(screen.kind==="memory"&&M)html=memoryHTML();
+  else if(screen.kind==="celebrate")html=celebrateHTML();
+  else if(screen.kind==="rewards")html=rewardsHTML();
+  else if(screen.kind==="map")html=mapHTML();
+  else if(screen.kind==="stories")html=storiesHTML();
+  else if(screen.kind==="story")html=storyHTML();
+  else if(screen.kind==="pin")html=parentUnlocked?parentHTML():pinHTML();
+  else if(screen.kind==="parent")html=parentHTML();
+  else html=homeHTML();
+  app.innerHTML=html;
+  if(screen.kind!=="parent"&&screen.kind!=="pin")document.body.classList.toggle("night",!!profile.bedtimeMode);
+  if(screen.kind==="pin"&&parentUnlocked)document.body.classList.remove("night");
+  setTabbar();
+}
+document.addEventListener("click",function(ev){
+  var el=ev.target.closest("[data-go],[data-game],[data-speak],[data-wotd],[data-focus],[data-tile],[data-slot],[data-pick],[data-piece],[data-match],[data-vowel],[data-rhyme],[data-mem],[data-again],[data-story],[data-storyagain],[data-page],[data-pin],[data-toggle],[data-goal],[data-avatar],[data-reset],[data-focuspick],[data-focusremove],[data-focussave],[data-savename],[data-savepin]");
+  if(!el)return;
+  if(el.hasAttribute("data-speak")){speak(el.getAttribute("data-speak"));return;}
+  if(el.hasAttribute("data-go")){var k=el.getAttribute("data-go");G=null;if(k!=="home"&&k!=="pin")M=null;go({kind:k});return;}
+  if(el.hasAttribute("data-game")){popSnd();var g=el.getAttribute("data-game");if(g==="memory")startMemory();else startGame(g);return;}
+  if(el.hasAttribute("data-wotd")){popSnd();startGame("spell",{singleWord:wordOfTheDay().w});return;}
+  if(el.hasAttribute("data-focus")){popSnd();startGame("spell",{focus:true});return;}
+  if(el.hasAttribute("data-tile")){spellPlace(el.getAttribute("data-tile"));return;}
+  if(el.hasAttribute("data-slot")){spellRemove(parseInt(el.getAttribute("data-slot"),10));return;}
+  if(el.hasAttribute("data-pick")){pickChoose(el.getAttribute("data-pick"));return;}
+  if(el.hasAttribute("data-piece")){soundTap(el.getAttribute("data-piece"));return;}
+  if(el.hasAttribute("data-match")){matchChoose(el.getAttribute("data-match"));return;}
+  if(el.hasAttribute("data-vowel")){vowelChoose(el.getAttribute("data-vowel"));return;}
+  if(el.hasAttribute("data-rhyme")){rhymeChoose(el.getAttribute("data-rhyme"));return;}
+  if(el.hasAttribute("data-mem")){memoryFlip(el.getAttribute("data-mem"));return;}
+  if(el.hasAttribute("data-again")){var ag=el.getAttribute("data-again");if(ag==="memory")startMemory();else startGame(ag);return;}
+  if(el.hasAttribute("data-story")){popSnd();storyPage=0;storyStart=Date.now();storyRecorded=false;go({kind:"story",id:el.getAttribute("data-story")});return;}
+  if(el.hasAttribute("data-storyagain")){storyPage=0;storyStart=Date.now();storyRecorded=true;render();window.scrollTo(0,0);return;}
+  if(el.hasAttribute("data-page")){popSnd();storyPage+=parseInt(el.getAttribute("data-page"),10);render();window.scrollTo(0,0);return;}
+  if(el.hasAttribute("data-pin")){pinPress(el.getAttribute("data-pin"));return;}
+  if(el.hasAttribute("data-toggle")){var key=el.getAttribute("data-toggle");var ni=$("edit-name");if(ni)nameDraft=ni.value;var np=$("new-pin");if(np)newPinDraft=np.value;profile[key]=!profile[key];render();return;}
+  if(el.hasAttribute("data-goal")){var ni2=$("edit-name");if(ni2)nameDraft=ni2.value;profile.dailyGoal=parseInt(el.getAttribute("data-goal"),10);render();return;}
+  if(el.hasAttribute("data-avatar")){profile.avatar=el.getAttribute("data-avatar");render();return;}
+  if(el.hasAttribute("data-focuspick")){var w=el.getAttribute("data-focuspick");var i=focusSel.indexOf(w);if(i>=0)focusSel.splice(i,1);else if(focusSel.length<8)focusSel.push(w);focusMsg="";render();return;}
+  if(el.hasAttribute("data-focusremove")){var w2=el.getAttribute("data-focusremove");focusSel=focusSel.filter(function(x){return x!==w2;});focusMsg="";render();return;}
+  if(el.hasAttribute("data-focussave")){profile.focusWords=focusSel.slice();focusMsg="Star Words saved ✓";render();return;}
+  if(el.hasAttribute("data-savename")){var inp=$("edit-name");if(inp&&inp.value.trim()){profile.name=inp.value.trim();nameDraft=profile.name;}render();return;}
+  if(el.hasAttribute("data-savepin")){var pinInp=$("new-pin");var v=pinInp?pinInp.value.replace(/\D/g,"").slice(0,4):"";if(/^\d{4}$/.test(v)){profile.pin=v;newPinDraft="";pinMsg="PIN updated ✓";}else pinMsg="PIN needs exactly 4 numbers.";render();return;}
+  if(el.hasAttribute("data-reset")){var r=el.getAttribute("data-reset");if(r==="1"){confirmReset=true;render();}else if(r==="0"){confirmReset=false;render();}else{attempts=[];sessions=[];stickers=[];confirmReset=false;focusSel=[];profile.focusWords=[];render();}return;}
+});
+document.addEventListener("input",function(ev){
+  if(ev.target.id==="edit-name")nameDraft=ev.target.value;
+  if(ev.target.id==="new-pin"){newPinDraft=ev.target.value.replace(/\D/g,"").slice(0,4);if(ev.target.value!==newPinDraft)ev.target.value=newPinDraft;pinMsg="";}
+});
+</script>
+</body>
+</html>
