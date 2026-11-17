@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useStore, weeklySummary } from '../store/useStore';
 import { WORDS } from '../data/words';
 import { LEVELS, levelInfo } from '../data/levels';
@@ -13,6 +14,7 @@ import BigButton from '../components/BigButton';
 
 /** Grown-ups dashboard — weekly summary, practice/strength words, Star Words picker, settings. Behind PIN 1234. */
 export default function ParentScreen() {
+  const router = useRouter();
   const profile = useStore((s) => s.profile);
   const setProfile = useStore((s) => s.setProfile);
   const attempts = useStore((s) => s.attempts);
@@ -42,7 +44,7 @@ export default function ParentScreen() {
   };
 
   return (
-    <ScreenShell max={820}>
+    <ScreenShell max={820} onBack={() => router.push('/')} backLabel="← Back">
       <ParentGate>
         <Text style={styles.title}>Grown-ups Dashboard</Text>
         <View style={styles.tabs}>

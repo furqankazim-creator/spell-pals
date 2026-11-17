@@ -196,7 +196,7 @@ export default function GameScreen({ game }: { game: GameId }) {
   const smallPics = matchChoices.length > 4;
 
   return (
-    <ScreenShell tabs={false} max={820}>
+    <ScreenShell tabs={false} max={820} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
       <Text style={styles.title}>{TITLES[game]}</Text>
       <Text style={styles.round}>{info.emoji} Level {profile.level} · Round {round + 1} of {TOTAL}{boss === '1' ? ' · Boss stage!' : ''}</Text>
       <View style={styles.bar}><View style={[styles.fill, { width: `${(round / TOTAL) * 100}%` }]} /></View>

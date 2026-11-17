@@ -10,6 +10,7 @@ export default function ParentGate({ children }: { children: React.ReactNode }) 
   const [unlocked, setUnlocked] = useState(false);
   const [wrong, setWrong] = useState(false);
   if (unlocked) return <>{children}</>;
+
   const press = (d: string) => {
     const next = (digits + d).slice(0, 4);
     setDigits(next); setWrong(false);
@@ -18,15 +19,30 @@ export default function ParentGate({ children }: { children: React.ReactNode }) 
       else { setWrong(true); setDigits(''); }
     }
   };
+
+  const remove = () => setDigits((current) => current.slice(0, -1));
+
   return (
     <View style={styles.wrap}>
-      <Text style={styles.title}>🔒 Grown-ups only</Text>
+      <View style={styles.titleRow}>
+        <Text style={styles.lock}>🔒</Text>
+        <Text style={styles.title}>Grown-ups only</Text>
+      </View>
       <Text style={styles.sub}>Enter your 4-number PIN</Text>
-      <View style={styles.dots}>{[0, 1, 2, 3].map((i) => (<View key={i} style={[styles.dot, i < digits.length ? styles.dotOn : null]} />))}</View>
+      <View style={styles.dots}>
+        {[0, 1, 2, 3].map((i) => (
+          <View key={i} style={[styles.dot, i < digits.length ? styles.dotOn : null]} />
+        ))}
+      </View>
       {wrong ? <Text style={styles.wrong}>That PIN did not match. Try again.</Text> : null}
       <View style={styles.pad}>
-        {['1','2','3','4','5','6','7','8','9','','0','⌫'].map((k) => (
-          <Pressable key={k || 'blank'} disabled={!k} onPress={() => (k === '⌫' ? setDigits(digits.slice(0, -1)) : press(k))} style={styles.key}>
+        {['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '⌫'].map((k) => (
+          <Pressable
+            key={k}
+            disabled={k === ''}
+            onPress={() => (k === '⌫' ? remove() : press(k))}
+            style={[styles.key, k === '⌫' ? styles.keyBack : null]}
+          >
             <Text style={styles.keyText}>{k}</Text>
           </Pressable>
         ))}
@@ -34,15 +50,19 @@ export default function ParentGate({ children }: { children: React.ReactNode }) 
     </View>
   );
 }
+
 const styles = StyleSheet.create({
-  wrap: { flex: 1, alignItems: 'center', paddingTop: 48, paddingHorizontal: 24 },
-  title: { fontSize: 26, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
-  sub: { fontSize: 16, color: colors.muted, marginTop: 8 },
-  dots: { flexDirection: 'row', gap: 12, marginVertical: 24 },
-  dot: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: colors.violet },
+  wrap: { flex: 1, alignItems: 'center', paddingTop: 40, paddingHorizontal: 24 },
+  titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  lock: { fontSize: 28 },
+  title: { fontSize: 32, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  sub: { fontSize: 18, color: colors.muted, marginTop: 10, marginBottom: 18 },
+  dots: { flexDirection: 'row', gap: 12, marginBottom: 12 },
+  dot: { width: 14, height: 14, borderRadius: 7, backgroundColor: '#fff', borderWidth: 2, borderColor: colors.violet },
   dotOn: { backgroundColor: colors.violet },
-  wrong: { color: colors.bad, fontWeight: '700', marginBottom: 8 },
-  pad: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 12, maxWidth: 320 },
-  key: { width: 88, height: 64, borderRadius: 20, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
-  keyText: { fontSize: 26, fontWeight: '800', color: colors.ink },
+  wrong: { color: colors.bad, fontWeight: '700', marginBottom: 10, fontSize: 14, textAlign: 'center' },
+  pad: { width: 280, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 12 },
+  key: { width: 82, height: 64, borderRadius: 18, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', shadowColor: '#5B8DB8', shadowOpacity: 0.12, shadowRadius: 8, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  keyBack: { backgroundColor: '#F7F7FF' },
+  keyText: { fontSize: 32, fontWeight: '800', color: colors.ink },
 });
