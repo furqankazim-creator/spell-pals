@@ -11,6 +11,10 @@ import { colors } from '../theme/colors';
 import ScreenShell from '../components/ScreenShell';
 import ParentGate from '../components/ParentGate';
 import BigButton from '../components/BigButton';
+import { STAGES, WORLDS } from '../data/mapStages';
+import ChildTopBar from '../components/ChildTopBar';
+import StarWordImageUpload from '../components/StarWordImageUpload';
+import { useLayout } from '../lib/useLayout';
 
 /** Grown-ups dashboard — weekly summary, practice/strength words, Star Words picker, settings. Behind PIN 1234. */
 export default function ParentScreen() {
@@ -22,7 +26,10 @@ export default function ParentScreen() {
   const resetChild = useStore((s) => s.resetChild);
   const [pinInput, setPinInput] = useState(profile.pin);
   const [confirmReset, setConfirmReset] = useState(false);
-  const [tab, setTab] = useState<'summary' | 'words' | 'settings'>('summary');
+  const [customWord, setCustomWord] = useState('');
+  const [customEmoji, setCustomEmoji] = useState('🧸');
+  const [customImageUri, setCustomImageUri] = useState('');
+  const [tab, setTab] = useState<'summary' | 'words' | 'settings' | 'map'>('summary');
   const summary = weeklySummary(sessions, attempts);
   const storiesRead = useStore((s) => s.storiesRead);
   const storyCount = Object.keys(storiesRead).length;
@@ -43,14 +50,22 @@ export default function ParentScreen() {
     setProfile({ focusWords: next });
   };
 
+  const mapStars = useStore((s) => s.mapStars);
+  const addCustomWord = useStore((s) => s.addCustomWord);
+  const removeCustomWord = useStore((s) => s.removeCustomWord);
+
+  const { width } = useLayout();
+  const compact = width < 700;
+
   return (
-    <ScreenShell max={820} onBack={() => router.push('/')} backLabel="← Back">
+    <ScreenShell max={820} onBack={() => router.replace('/')} backLabel="← Back">
+      <ChildTopBar />
       <ParentGate>
         <Text style={styles.title}>Grown-ups Dashboard</Text>
-        <View style={styles.tabs}>
-          {(['summary', 'words', 'settings'] as const).map((t) => (
-            <Pressable key={t} onPress={() => setTab(t)} style={[styles.tab, tab === t ? styles.tabOn : null]}>
-              <Text style={styles.tabText}>{t === 'summary' ? 'Weekly summary' : t === 'words' ? 'Star Words' : 'Settings'}</Text>
+        <View style={[styles.tabs, compact && styles.tabsCompact]}>
+          {(['summary', 'map', 'words', 'settings'] as const).map((t) => (
+            <Pressable key={t} onPress={() => setTab(t)} style={[styles.tab, compact && styles.tabCompact, tab === t ? styles.tabOn : null]}>
+              <Text style={styles.tabText}>{t === 'summary' ? 'Weekly summary' : t === 'map' ? 'Adventure Map' : t === 'words' ? 'Star Words' : 'Settings'}</Text>
             </Pressable>
           ))}
         </View>
@@ -79,9 +94,81 @@ export default function ParentScreen() {
           </View>
         ) : null}
 
+        {tab === 'map' ? (
+          <View>
+            <View style={styles.card}>
+              <Text style={styles.big}>🗺️ Adventure Map</Text>
+              <Text style={styles.sub}>{STAGES.reduce((n, s) => n + (mapStars[s.id] ?? 0), 0)} of {STAGES.length * 3} stars earned · {STAGES.filter((s) => (mapStars[s.id] ?? 0) > 0).length} of {STAGES.length} stages started</Text>
+              <BigButton label="Open the Map" onPress={() => router.push('/map')} color={colors.amber} />
+            </View>
+            {WORLDS.map((world, wi) => {
+              const stages = STAGES.filter((s) => s.world === wi);
+              const stars = stages.reduce((n, s) => n + (mapStars[s.id] ?? 0), 0);
+              const complete = stages.every((s) => (mapStars[s.id] ?? 0) > 0);
+              return (
+                <View key={world.id} style={styles.card}>
+                  <Text style={styles.big}>{world.emoji} {world.name}</Text>
+                  <Text style={styles.sub}>⭐ {stars} / 15 stars · {complete ? 'World complete!' : 'Keep exploring'}</Text>
+                </View>
+              );
+            })}
+          </View>
+        ) : null}
+
         {tab === 'words' ? (
           <View>
-            <Text style={styles.sub}>Tap up to 8 words to make them Star Words — games will practise them first.</Text>
+            <Text style={styles.sub}>Add a custom Star Word or tap up to 8 words for games to practise first.</Text>
+            <View style={styles.customWordCard}>
+              <View style={styles.customCardHeader}>
+                <View style={styles.customHeaderIcon}><Text style={styles.customHeaderEmoji}>⭐</Text></View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.customTitle}>Create a Star Word</Text>
+                  <Text style={styles.customSubtitle}>Add a word and its own picture</Text>
+                </View>
+              </View>
+
+              <View style={styles.customGrid}>
+                <View style={styles.customForm}>
+                  <Text style={styles.fieldLabel}>Word</Text>
+                  <TextInput value={customWord} onChangeText={setCustomWord} placeholder="Type a word" placeholderTextColor="#9AA3C0" style={styles.customInput} maxLength={20} autoCapitalize="none" />
+                  <Text style={styles.fieldLabel}>Fallback emoji</Text>
+                  <TextInput value={customEmoji} onChangeText={setCustomEmoji} placeholder="🧸" placeholderTextColor="#9AA3C0" style={styles.emojiInput} maxLength={8} />
+                </View>
+
+                <View style={styles.customUploadWrap}>
+                  <Text style={styles.fieldLabel}>Picture</Text>
+                  <StarWordImageUpload value={customImageUri} emoji={customEmoji || '🧸'} onChange={setCustomImageUri} />
+                </View>
+              </View>
+
+              <View style={styles.addWordButtonWrap}>
+                <BigButton label="Add to Star Words" onPress={() => {
+                  const word = customWord.trim().toLowerCase();
+                  if (!word) return;
+                  addCustomWord({ word, emoji: customEmoji.trim() || '🧸', imageUri: customImageUri.trim() || undefined, level: profile.level as 1 | 2 | 3 | 4 | 5, sounds: [] });
+                  setCustomWord(''); setCustomEmoji('🧸'); setCustomImageUri('');
+                }} color={colors.amber} />
+              </View>
+            </View>
+
+            {(profile.customWords ?? []).length ? (
+              <View>
+                <Text style={styles.h}>My custom Star Words</Text>
+                <View style={styles.chips}>
+                  {(profile.customWords ?? []).map((wd) => (
+                    <View key={wd.word} style={[styles.customChip, focus.includes(wd.word) ? styles.chipOn : null]}>
+                      <Pressable onPress={() => toggleFocus(wd.word)} style={styles.customChipMain}>
+                        <Pic emoji={wd.emoji} imageUri={wd.imageUri} size={26} />
+                        <Text style={styles.customChipText}>{wd.word}</Text>
+                      </Pressable>
+                      <Pressable onPress={() => removeCustomWord(wd.word)} accessibilityRole="button" accessibilityLabel={`Remove ${wd.word}`}><Text style={styles.removeText}>✕</Text></Pressable>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            ) : null}
+
+            <Text style={styles.h}>Library Star Words</Text>
             <View style={styles.chips}>
               {WORDS.filter((x) => x.level === profile.level).slice(0, 60).map((wd) => (
                 <Pressable key={wd.word} onPress={() => toggleFocus(wd.word)} style={[styles.chip, focus.includes(wd.word) ? styles.chipOn : null]}>
@@ -98,13 +185,13 @@ export default function ParentScreen() {
             {profile.pin === '1234' ? (
               <View style={styles.warn}><Text style={styles.warnText}>⚠️ The PIN is still the default (1234). Please choose your own PIN below so children cannot open this area.</Text></View>
             ) : null}
-            <View style={styles.row}><Text style={styles.label}>Child&rsquo;s name</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={[styles.label, compact && styles.labelCompact]}>Child&rsquo;s name</Text>
               <TextInput value={profile.name} onChangeText={(v) => setProfile({ name: v })} style={styles.input} /></View>
-            <View style={styles.row}><Text style={styles.label}>Child&rsquo;s age</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={[styles.label, compact && styles.labelCompact]}>{'Child’s age'}</Text>
               <View style={styles.avatars}>{[4, 5, 6, 7, 8, 9].map((a) => (
                 <Pressable key={a} onPress={() => setProfile({ age: a })}><Text style={[styles.av, profile.age === a ? styles.avOn : null]}>{a}</Text></Pressable>
               ))}</View></View>
-            <View style={styles.row}><Text style={styles.label}>Auto level (follows mistakes)</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={[styles.label, compact && styles.labelCompact]}>Auto level (follows mistakes)</Text>
               <Switch value={profile.autoLevel} onValueChange={(v) => setProfile({ autoLevel: v, levelSince: attempts.length })} /></View>
             <Text style={styles.sub}>Level {profile.level} — {levelInfo(profile.level).name}: {levelInfo(profile.level).desc}</Text>
             <View style={styles.avatars}>{LEVELS.map((l) => (
@@ -113,36 +200,62 @@ export default function ParentScreen() {
               </Pressable>
             ))}</View>
             <View style={{ height: 12 }} />
-            <View style={styles.row}><Text style={styles.label}>Buddy</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={styles.label}>Buddy</Text>
               <View style={styles.avatars}>{AVATARS.map((a) => (
                 <Pressable key={a} onPress={() => setProfile({ avatar: a })}><View style={[styles.avPic, profile.avatar === a ? styles.avOn : null]}><Pic emoji={a} size={30} /></View></Pressable>
               ))}</View></View>
-            <View style={styles.row}><Text style={styles.label}>Daily goal (minutes)</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={styles.label}>Daily goal (minutes)</Text>
               <TextInput value={String(profile.dailyGoal)} keyboardType="number-pad" onChangeText={(v) => setProfile({ dailyGoal: parseInt(v, 10) || 10 })} style={styles.input} /></View>
-            <View style={styles.row}><Text style={styles.label}>Sound effects</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={[styles.label, compact && styles.labelCompact]}>Sound effects</Text>
               <Switch value={profile.soundOn} onValueChange={(v) => { setProfile({ soundOn: v }); setSoundOn(v); }} /></View>
-            <View style={styles.row}><Text style={styles.label}>Rewards (stickers)</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={styles.label}>Rewards (stickers)</Text>
               <Switch value={profile.rewardsOn} onValueChange={(v) => setProfile({ rewardsOn: v })} /></View>
-            <View style={styles.row}><Text style={styles.label}>Bedtime Mode (soft lavender sky)</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={styles.label}>Bedtime Mode (soft lavender sky)</Text>
               <Switch value={profile.bedtimeMode} onValueChange={(v) => setProfile({ bedtimeMode: v })} /></View>
-            <View style={styles.row}><Text style={styles.label}>Change PIN</Text>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={[styles.label, compact && styles.labelCompact]}>Publisher</Text>
+              <Pressable onPress={() => router.push('/about-hope-bridge')} style={styles.publisherRow} accessibilityRole="button">
+                <Text style={styles.publisherText}>About Hope Bridge Digital →</Text>
+              </Pressable>
+            </View>
+            <View style={[styles.row, compact && styles.rowCompact]}><Text style={[styles.label, compact && styles.labelCompact]}>Change PIN</Text>
               <TextInput value={pinInput} keyboardType="number-pad" maxLength={4} onChangeText={setPinInput} style={styles.input} /></View>
             <BigButton label="Save new PIN" onPress={() => { if (/^\d{4}$/.test(pinInput)) setProfile({ pin: pinInput }); }} color={colors.violet} />
             <View style={{ height: 16 }} />
             {confirmReset ? (
-              <View style={styles.warn}>
-                <Text style={styles.warnText}>This deletes all stars, stickers, stories read and map progress for this child. Are you sure?</Text>
-                <View style={{ height: 10 }} />
-                <BigButton label="Yes, delete everything" onPress={() => { resetChild(); setConfirmReset(false); }} color={colors.coral} />
-                <View style={{ height: 8 }} />
-                <BigButton label="No, keep it" onPress={() => setConfirmReset(false)} color="#fff" />
+              <View style={styles.resetConfirmCard}>
+                <View style={styles.resetConfirmHeader}>
+                  <View style={styles.resetIconSmall}><Text style={styles.resetIconText}>↻</Text></View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.resetTitle}>Reset this child?</Text>
+                    <Text style={styles.resetDescription}>This clears stars, stickers, stories, custom words and map progress.</Text>
+                  </View>
+                </View>
+                <View style={styles.resetActions}>
+                  <Pressable style={styles.keepButton} onPress={() => setConfirmReset(false)} accessibilityRole="button">
+                    <Text style={styles.keepButtonText}>Keep everything</Text>
+                  </Pressable>
+                  <Pressable style={styles.confirmResetButton} onPress={() => { resetChild(); setConfirmReset(false); }} accessibilityRole="button">
+                    <Text style={styles.confirmResetText}>Yes, reset</Text>
+                  </Pressable>
+                </View>
               </View>
             ) : (
-              <BigButton label="Reset this child (clears progress)" onPress={() => setConfirmReset(true)} color={colors.coral} />
+              <Pressable style={styles.resetButton} onPress={() => setConfirmReset(true)} accessibilityRole="button">
+                <View style={styles.resetIconCircle}><Text style={styles.resetIconText}>↻</Text></View>
+                <View style={styles.resetButtonTextWrap}>
+                  <Text style={styles.resetButtonTitle}>Reset this child</Text>
+                  <Text style={styles.resetButtonSub}>Clears all progress and rewards</Text>
+                </View>
+                <Text style={styles.resetChevron}>›</Text>
+              </Pressable>
             )}
-            <View style={styles.card}>
-              <Text style={styles.big}>🔐 Privacy</Text>
-              <Text style={styles.sub}>Spell Pals has no accounts, no ads and no tracking. It does not use the camera, microphone or location. The name, age and progress you enter stay only on this device and are deleted if you reset the child or remove the app. Voice feedback uses the phone&rsquo;s built-in speech.</Text>
+
+            <View style={styles.privacyCard}>
+              <View style={styles.privacyHeader}>
+                <View style={styles.privacyIcon}><Text style={styles.privacyIconText}>🔐</Text></View>
+                <Text style={styles.privacyTitle}>Privacy</Text>
+              </View>
+              <Text style={styles.privacyText}>Spell Pals has no accounts, ads or tracking. Child details and progress stay on this device. Custom pictures stay on this device and are removed when the child is reset or the app is deleted. Voice feedback uses the phone&rsquo;s built-in speech.</Text>
             </View>
           </View>
         ) : null}
@@ -152,8 +265,10 @@ export default function ParentScreen() {
 }
 const styles = StyleSheet.create({
   title: { fontSize: 26, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink, marginBottom: 12 },
-  tabs: { flexDirection: 'row', gap: 8, marginBottom: 16 },
+  tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 16 },
+  tabsCompact: { flexWrap: 'wrap', gap: 8 },
   tab: { flex: 1, backgroundColor: '#fff', borderRadius: 999, paddingVertical: 12, alignItems: 'center', borderWidth: 2, borderColor: colors.ring },
+  tabCompact: { flexBasis: '48%', flexGrow: 0, minHeight: 44, paddingVertical: 9, paddingHorizontal: 8 },
   tabOn: { borderColor: colors.violet, backgroundColor: colors.violetSoft },
   tabText: { fontWeight: '800', color: colors.ink, fontSize: 13 },
   card: { backgroundColor: '#fff', borderRadius: 24, borderWidth: 2, borderColor: colors.ring, padding: 18, marginBottom: 12 },
@@ -169,7 +284,11 @@ const styles = StyleSheet.create({
   chip: { backgroundColor: '#fff', borderRadius: 999, borderWidth: 2, borderColor: colors.ring, paddingHorizontal: 12, paddingVertical: 8 },
   chipOn: { borderColor: colors.amber, backgroundColor: colors.amberSoft },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 },
+  rowCompact: { alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, backgroundColor: '#FFFFFF', borderRadius: 16, borderWidth: 2, borderColor: colors.ring, padding: 12 },
+  publisherRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  publisherText: { fontSize: 15, color: colors.violetText, fontWeight: '800' },
   label: { fontSize: 16, fontWeight: '800', color: colors.ink, flex: 1 },
+  labelCompact: { flexBasis: '100%', marginBottom: 2 },
   input: { backgroundColor: '#fff', borderRadius: 14, borderWidth: 2, borderColor: colors.ring, paddingHorizontal: 14, paddingVertical: 10, fontSize: 16, minWidth: 120, textAlign: 'center' },
   warn: { backgroundColor: '#FFF1C2', borderRadius: 18, padding: 14, marginBottom: 12 },
   warnText: { fontSize: 14, color: colors.ink },
@@ -177,4 +296,51 @@ const styles = StyleSheet.create({
   avatars: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, maxWidth: 220, justifyContent: 'flex-end' },
   av: { fontSize: 26, padding: 4, borderRadius: 12 },
   avOn: { backgroundColor: colors.amberSoft },
+  stage: { flex: 1, alignItems: 'center' },
+  stageLocked: { opacity: 0.4 },
+  stageText: { fontSize: 28 },
+  stageTextCompleted: { color: colors.teal },
+  completed: { color: colors.teal, fontWeight: '800' },
+  locked: { color: colors.muted, fontWeight: '800' },
+  customWordCard: { backgroundColor: '#FFFFFF', borderRadius: 24, borderWidth: 2, borderColor: '#E7EAF3', padding: 16, marginBottom: 16, shadowColor: '#5B8DB8', shadowOpacity: 0.08, shadowRadius: 10, shadowOffset: { width: 0, height: 5 }, elevation: 2 },
+  customCardHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 14 },
+  customHeaderIcon: { width: 44, height: 44, borderRadius: 14, backgroundColor: '#FFF1C2', alignItems: 'center', justifyContent: 'center' },
+  customHeaderEmoji: { fontSize: 22 },
+  customTitle: { fontSize: 20, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  customSubtitle: { fontSize: 12, color: colors.muted, marginTop: 1 },
+  customGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  customForm: { flexGrow: 1, flexBasis: 190 },
+  customUploadWrap: { flexGrow: 1, flexBasis: 190 },
+  fieldLabel: { fontSize: 13, fontWeight: '900', color: colors.ink, marginBottom: 7 },
+  customInput: { height: 52, backgroundColor: '#F8FAFF', borderRadius: 14, borderWidth: 2, borderColor: '#E5EAF4', paddingHorizontal: 14, fontSize: 16, color: colors.ink, marginBottom: 12 },
+  emojiInput: { height: 52, width: 72, backgroundColor: '#F8FAFF', borderRadius: 14, borderWidth: 2, borderColor: '#E5EAF4', textAlign: 'center', fontSize: 24, color: colors.ink },
+  addWordButtonWrap: { marginTop: 12 },
+  customChip: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: 999, borderWidth: 2, borderColor: colors.ring, paddingLeft: 8, paddingRight: 10, paddingVertical: 6 },
+  customChipMain: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  customChipText: { fontSize: 14, color: colors.ink, fontWeight: '800' },
+  removeText: { fontSize: 16, color: colors.coral, fontWeight: '900', marginLeft: 8 },
+  resetButton: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFF0F1', borderWidth: 2, borderColor: '#FFD0D4', borderRadius: 20, paddingVertical: 12, paddingHorizontal: 14, marginTop: 4, marginBottom: 14 },
+  resetIconCircle: { width: 42, height: 42, borderRadius: 21, backgroundColor: '#FF646D', alignItems: 'center', justifyContent: 'center', marginRight: 10 },
+  resetIconText: { color: '#FFFFFF', fontSize: 20, fontWeight: '900' },
+  resetButtonTextWrap: { flex: 1 },
+  resetButtonTitle: { color: '#A92F3C', fontSize: 16, fontWeight: '900' },
+  resetButtonSub: { color: '#A45B63', fontSize: 12, marginTop: 2 },
+  resetChevron: { color: '#A92F3C', fontSize: 28, fontWeight: '900', marginLeft: 8 },
+  resetConfirmCard: { backgroundColor: '#FFF5F5', borderWidth: 2, borderColor: '#FFD0D4', borderRadius: 20, padding: 14, marginBottom: 14 },
+  resetConfirmHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 12 },
+  resetIconSmall: { width: 38, height: 38, borderRadius: 19, backgroundColor: '#FF646D', alignItems: 'center', justifyContent: 'center' },
+  resetTitle: { color: '#822633', fontSize: 17, fontWeight: '900' },
+  resetDescription: { color: '#95636A', fontSize: 12, lineHeight: 17, marginTop: 2 },
+  resetActions: { flexDirection: 'row', gap: 8 },
+  keepButton: { flex: 1, height: 44, borderRadius: 14, backgroundColor: '#FFFFFF', borderWidth: 2, borderColor: '#E3E7F0', alignItems: 'center', justifyContent: 'center' },
+  keepButtonText: { color: colors.ink, fontSize: 14, fontWeight: '900' },
+  confirmResetButton: { flex: 1, height: 44, borderRadius: 14, backgroundColor: '#FF646D', alignItems: 'center', justifyContent: 'center' },
+  confirmResetText: { color: '#FFFFFF', fontSize: 14, fontWeight: '900' },
+  privacyCard: { backgroundColor: '#F8FBFF', borderWidth: 2, borderColor: '#DFE9F5', borderRadius: 20, padding: 14, marginBottom: 12 },
+  privacyHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 6 },
+  privacyIcon: { width: 34, height: 34, borderRadius: 12, backgroundColor: '#EAF3FF', alignItems: 'center', justifyContent: 'center' },
+  privacyIconText: { fontSize: 17 },
+  privacyTitle: { color: '#26344D', fontSize: 17, fontWeight: '900' },
+  privacyText: { color: '#5F6B7C', fontSize: 13, lineHeight: 19 },
+  settingsCompact: { width: '100%' },
 });

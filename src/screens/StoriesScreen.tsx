@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { STORIES, storiesForLevel } from '../data/stories';
-import { LEVELS, levelInfo } from '../data/levels';
+import { ageToLevel, levelInfo } from '../data/levels';
 import { useStore } from '../store/useStore';
 import { personalize } from '../lib/personalize';
 import { colors } from '../theme/colors';
@@ -10,35 +9,27 @@ import { useLayout } from '../lib/useLayout';
 import ScreenShell from '../components/ScreenShell';
 import Pic from '../components/Pic';
 import Grid from '../components/Grid';
+import ChildTopBar from '../components/ChildTopBar';
 
 /** Story library: stories grouped by level; the child's own level opens first. */
 export default function StoriesScreen() {
   const router = useRouter();
   const { wide, cols } = useLayout();
-  const level = useStore((s) => s.profile.level);
+  const age = useStore((s) => s.profile.age);
+  const level = ageToLevel(age);
   const name = useStore((s) => s.profile.name);
   const avatar = useStore((s) => s.profile.avatar);
   const read = useStore((s) => s.storiesRead);
-  const [shown, setShown] = useState(level);
-  const list = storiesForLevel(shown).map((s) => personalize(s, name, avatar));
-  const info = levelInfo(shown);
+  const list = storiesForLevel(level).map((s) => personalize(s, name, avatar));
+  const info = levelInfo(level);
   const readCount = Object.keys(read).length;
   return (
-    <ScreenShell>
+    <ScreenShell onBack={() => router.replace('/')} backLabel="← Back">
+      <ChildTopBar />
       <Text style={styles.title}>📖 Story Time</Text>
       <Text style={styles.sub}>
         Read, listen, then answer the questions. You have read {readCount} of {STORIES.length} stories.
       </Text>
-
-      <View style={styles.levels}>
-        {LEVELS.map((l) => (
-          <Pressable key={l.level} onPress={() => setShown(l.level)} style={[styles.chip, shown === l.level ? styles.chipOn : null]} accessibilityRole="button">
-            <Text style={styles.chipText}>{l.emoji} Level {l.level}</Text>
-            {l.level === level ? <Text style={styles.you}>your level</Text> : null}
-          </Pressable>
-        ))}
-      </View>
-      <Text style={styles.levelDesc}>{info.emoji} {info.name} · {info.ages}</Text>
 
       <Grid cols={wide ? 2 : cols > 1 ? 2 : 1} gap={wide ? 16 : 12}>
         {list.map((s) => {
@@ -66,8 +57,8 @@ export default function StoriesScreen() {
 const styles = StyleSheet.create({
   title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink, marginBottom: 4 },
   sub: { fontSize: 15, color: colors.ink, marginBottom: 14 },
-  levels: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 8 },
-  chip: { backgroundColor: '#fff', borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8, borderBottomWidth: 4, borderBottomColor: '#DCE8F5', alignItems: 'center' },
+  levels: { flexDirection: 'row', marginBottom: 8 },
+  chip: { backgroundColor: '#fff', borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8, marginRight: 8, borderBottomWidth: 4, borderBottomColor: '#DCE8F5', alignItems: 'center' },
   chipOn: { backgroundColor: '#FFC93C', borderBottomColor: '#E0A820' },
   chipText: { fontSize: 15, color: colors.ink, fontFamily: 'Baloo2_800ExtraBold' },
   you: { fontSize: 10, color: colors.ink },

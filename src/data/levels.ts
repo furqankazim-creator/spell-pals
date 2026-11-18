@@ -28,8 +28,8 @@ export function rulesFor(level: number): Rules {
     case 1: return { pickChoices: 2, matchChoices: 3, rhymeDistractors: 1, memoryPairs: 3, decoyLetters: 0, hintAfter: 1 };
     case 2: return { pickChoices: 3, matchChoices: 4, rhymeDistractors: 2, memoryPairs: 4, decoyLetters: 0, hintAfter: 2 };
     case 3: return { pickChoices: 4, matchChoices: 4, rhymeDistractors: 2, memoryPairs: 6, decoyLetters: 0, hintAfter: 2 };
-    case 4: return { pickChoices: 4, matchChoices: 6, rhymeDistractors: 3, memoryPairs: 6, decoyLetters: 1, hintAfter: 2 };
-    default: return { pickChoices: 5, matchChoices: 6, rhymeDistractors: 3, memoryPairs: 8, decoyLetters: 2, hintAfter: 3 };
+    case 4: return { pickChoices: 4, matchChoices: 6, rhymeDistractors: 3, memoryPairs: 8, decoyLetters: 2, hintAfter: 2 };
+    default: return { pickChoices: 6, matchChoices: 8, rhymeDistractors: 4, memoryPairs: 10, decoyLetters: 3, hintAfter: 3 };
   }
 }
 export type { Word };

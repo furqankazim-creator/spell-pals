@@ -6,6 +6,7 @@ import { colors } from '../theme/colors';
 import { useLayout } from '../lib/useLayout';
 import BottomTabs from './BottomTabs';
 import TopNav from './TopNav';
+import HopeBridgeTicker from './HopeBridgeTicker';
 
 /**
  * Light, still sky background. Phones: content + bottom tabs. Wide screens (web/tablet): top menu bar and
@@ -14,10 +15,12 @@ import TopNav from './TopNav';
 export default function ScreenShell({ children, tabs = true, max, backLabel, onBack }: { children: React.ReactNode; tabs?: boolean; max?: number; backLabel?: string; onBack?: () => void }) {
   const bedtime = useStore((s) => s.profile.bedtimeMode);
   const { wide, width } = useLayout();
-  const limit = max ?? (wide ? 1100 : 680);
+  const limit = max ?? (wide ? 1100 : width < 440 ? 420 : 680);
+  const mobilePad = width < 420 ? 10 : 16;
   return (
     <LinearGradient colors={bedtime ? [colors.nightTop, colors.nightBottom] : [colors.skyTop, colors.skyBottom]} style={styles.safe}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
+        {tabs ? <HopeBridgeTicker /> : null}
         {wide ? <TopNav links={tabs} /> : null}
         {onBack ? (
           <View style={styles.backWrap}>
@@ -27,7 +30,7 @@ export default function ScreenShell({ children, tabs = true, max, backLabel, onB
           </View>
         ) : null}
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-          <View style={[styles.inner, { maxWidth: limit, paddingHorizontal: wide ? 24 : 16, paddingTop: wide ? 24 : 12 }]}>{children}</View>
+          <View style={[styles.inner, { maxWidth: limit, paddingHorizontal: wide ? 24 : mobilePad, paddingTop: wide ? 24 : 10 }]}>{children}</View>
         </ScrollView>
         {tabs && !wide && width < 900 ? <BottomTabs /> : null}
       </SafeAreaView>

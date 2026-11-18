@@ -37,9 +37,8 @@ export default function SetupScreen() {
 
   const save = () => {
     const finalName = name.trim() || 'Friend';
-    const ageChanged = !editing || age !== profile.age;
     const newPin = /^\d{4}$/.test(pin) ? { pin } : {};
-    setProfile({ name: finalName, avatar, dailyGoal: goal, onboarded: true, ...newPin, ...(ageChanged ? { age } : { age, level: profile.level }) });
+    setProfile({ name: finalName, avatar, dailyGoal: goal, onboarded: true, age, level: ageToLevel(age), ...newPin });
     speak(`Hi ${finalName}! Let us start. Your level is ${info.name}.`, { delay: 300 });
     router.replace('/');
   };

@@ -9,7 +9,6 @@ const LINKS = [
   { label: 'Home', icon: 'home', route: '/' },
   { label: 'Stories', icon: 'stories', route: '/stories' },
   { label: 'Rewards', icon: 'rewards', route: '/rewards' },
-  { label: 'Map', icon: 'map', route: '/map' },
   { label: 'Grown-ups', icon: 'parent', route: '/parent' },
 ];
 
@@ -45,6 +44,7 @@ export default function TopNav({ links = true }: { links?: boolean }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   bar: { backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#E6ECF5', alignItems: 'center', shadowColor: '#5B8DB8', shadowOpacity: 0.12, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 3, zIndex: 5 },
   inner: { width: '100%', maxWidth: 1100, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 24, paddingVertical: 4 },

@@ -116,7 +116,7 @@ export default function StoryReaderScreen() {
   // ───────────────────────── QUESTIONS ─────────────────────────
   if (phase === 'quiz') {
     return (
-      <ScreenShell max={820}>
+      <ScreenShell max={820} onBack={() => router.replace('/stories')} backLabel="← All stories">
         <Text style={styles.title}>{story.emoji} {story.title}</Text>
         <Text style={styles.page}>Question {qi + 1} of {story.questions.length}</Text>
         <View style={styles.qCard}>
@@ -150,7 +150,7 @@ export default function StoryReaderScreen() {
   // ───────────────────────── FINISHED ─────────────────────────
   if (phase === 'done') {
     return (
-      <ScreenShell max={820}>
+      <ScreenShell max={820} onBack={() => router.replace('/stories')} backLabel="← All stories">
         <View style={styles.doneWrap}>
           <Pic emoji={story.emoji} size={140} />
           <Text style={styles.doneTitle}>You finished {story.title}!</Text>
@@ -170,7 +170,7 @@ export default function StoryReaderScreen() {
   // ───────────────────────── READING ─────────────────────────
   const picSize = pg.pics.length === 1 ? (wide ? 200 : 160) : pg.pics.length === 2 ? (wide ? 150 : 120) : (wide ? 120 : 92);
   return (
-    <ScreenShell max={820}>
+    <ScreenShell max={820} onBack={() => router.replace('/stories')} backLabel="← All stories">
       <Text style={styles.title}>{story.emoji} {story.title}</Text>
       <View style={styles.dots}>
         {story.pages.map((_, i) => (<View key={i} style={[styles.dot, i === page ? styles.dotOn : i < page ? styles.dotDone : null]} />))}
@@ -190,7 +190,7 @@ export default function StoryReaderScreen() {
       </View>
 
       <View style={styles.row}>
-        <BigButton label={reading ? 'Stop' : 'Read to me'} icon="volume-high" onPress={readThisPage} color={reading ? colors.coral : colors.violet} />
+        <BigButton label={reading ? 'Stop' : 'Read to me' } icon="volume-high" onPress={readThisPage} color={reading ? colors.coral : colors.violet} />
       </View>
       <Text style={styles.hint}>Tap any word to hear it.</Text>
 

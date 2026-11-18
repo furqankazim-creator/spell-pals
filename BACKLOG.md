@@ -257,3 +257,80 @@
     - `src/screens/HomeScreen.tsx`
     - `src/screens/GameScreen.tsx`
     - `src/screens/ParentScreen.tsx`
+
+- **14:45:41 – 14:54:29** ⏱️ Active Coding Session (**9 min**)
+  - 📁 **Files Worked On (2):**
+    - `src/components/ScreenShell.tsx`
+    - `src/screens/HomeScreen.tsx`
+
+- **14:58:14 – 15:09:17** ⏱️ Active Coding Session (**11 min**)
+  - 📁 **Files Worked On (6):**
+    - `src/screens/HomeScreen.tsx`
+    - `src/components/TopNav.tsx`
+    - `src/data/hopeBridge.ts`
+    - `src/screens/HopeBridgePromo.tsx`
+    - `app/about-hope-bridge.tsx`
+    - `src/screens/ParentScreen.tsx`
+
+- **15:17:36 – 15:44:37** ⏱️ Active Coding Session (**27 min**)
+  - 📁 **Files Worked On (14):**
+    - `src/data/hopeBridge.ts`
+    - `src/components/TopNav.tsx`
+    - `src/components/BloomLearnPromoCard.tsx`
+    - `src/screens/BloomLearnShowcase.tsx`
+    - `app/bloom-learn.tsx`
+    - `src/screens/HomeScreen.tsx`
+    - `src/components/BloomFocusPromoCard.tsx`
+    - `src/screens/BloomFocusShowcase.tsx`
+    - `app/bloom-focus.tsx`
+    - `src/components/AngelTalkPromoCard.tsx`
+    - `src/components/HopeBridgePublisherCard.tsx`
+    - `app/angel-talk.tsx`
+    - `src/screens/HopeBridgePromo.tsx`
+    - `src/components/BottomTabs.tsx`
+
+## 2026-11-18
+
+- **09:48:43 – 09:58:10** ⏱️ Active Coding Session (**9 min**)
+  - 📁 **Files Worked On (2):**
+    - `vercel.json`
+    - `src/screens/BloomFocusShowcase.tsx`
+
+- **10:20:58 – 10:25:51** ⏱️ Active Coding Session (**5 min**)
+  - 📁 **Files Worked On (1):**
+    - `src/screens/BloomFocusShowcase.tsx`
+
+- **10:30:53 – 12:34:46** ⏱️ Active Coding Session (**124 min**)
+  - 📁 **Files Worked On (23):**
+    - `src/screens/MapScreen.tsx`
+    - `src/screens/ParentScreen.tsx`
+    - `src/screens/HomeScreen.tsx`
+    - `src/components/BottomTabs.tsx`
+    - `src/components/TopNav.tsx`
+    - `src/components/ChildTopBar.tsx`
+    - `src/screens/StoriesScreen.tsx`
+    - `src/screens/RewardsScreen.tsx`
+    - `src/screens/SetupScreen.tsx`
+    - `src/components/HopeBridgeTicker.tsx`
+    - `src/components/ScreenShell.tsx`
+    - `src/screens/HopeBridgePromo.tsx`
+    - `src/store/useStore.ts`
+    - `src/data/words.ts`
+    - `src/components/Pic.tsx`
+    - `src/lib/game.ts`
+    - `src/screens/GameScreen.tsx`
+    - `src/screens/MemoryMatchScreen.tsx`
+    - `app/games.tsx`
+    - `src/screens/StoryReaderScreen.tsx`
+    - `src/components/Celebration.tsx`
+    - `package.json`
+    - `src/components/StarWordImageUpload.tsx`
+
+- **14:32:44 – 14:32:44** ⏱️ Active Coding Session (**1 min**)
+  - 📁 **Files Worked On (1):**
+    - `src/data/levels.ts`
+
+- **14:41:08 – 14:47:28** ⏱️ Active Coding Session (**6 min**)
+  - 📁 **Files Worked On (2):**
+    - `src/lib/game.ts`
+    - `src/screens/GameScreen.tsx`

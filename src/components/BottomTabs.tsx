@@ -7,7 +7,6 @@ const TABS = [
   { label: 'Home', icon: 'home', route: '/' },
   { label: 'Stories', icon: 'stories', route: '/stories' },
   { label: 'Rewards', icon: 'rewards', route: '/rewards' },
-  { label: 'Map', icon: 'map', route: '/map' },
   { label: 'Grown-ups', icon: 'parent', route: '/parent' },
 ];
 
@@ -29,9 +28,9 @@ export default function BottomTabs() {
   );
 }
 const styles = StyleSheet.create({
-  bar: { flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#E6ECF5', paddingVertical: 6, paddingBottom: 18 },
-  tab: { flex: 1, alignItems: 'center', gap: 2, minHeight: 56 },
-  icon: { fontSize: 24 },
-  label: { fontSize: 12, fontWeight: '700', color: colors.ink },
+  bar: { flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#E6ECF5', paddingTop: 4, paddingBottom: 6 },
+  tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 0, minHeight: 46, paddingVertical: 2 },
+  icon: { fontSize: 22 },
+  label: { fontSize: 11, lineHeight: 13, fontWeight: '700', color: colors.ink },
   active: { color: '#3B4BDB' },
 });

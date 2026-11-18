@@ -6,12 +6,18 @@ import ScreenShell from '../components/ScreenShell';
 import Pic from '../components/Pic';
 import Grid from '../components/Grid';
 import { useLayout } from '../lib/useLayout';
+import ChildTopBar from '../components/ChildTopBar';
+import { useRouter } from 'expo-router';
 
 export default function RewardsScreen() {
-  const earned = useStore((s) => s.stickers);
+  const stored = useStore((s) => s.stickers);
+  const earned = stored.filter((id) => STICKERS.some((s) => s.id === id));
   const { wide } = useLayout();
+  const router = useRouter();
+
   return (
-    <ScreenShell>
+    <ScreenShell onBack={() => router.replace('/')} backLabel="← Back">
+      <ChildTopBar />
       <Text style={styles.title}>🎁 My Reward Box</Text>
       <Text style={styles.sub}>{earned.length} of {STICKERS.length} stickers collected</Text>
       <Grid cols={wide ? 6 : 3} gap={wide ? 16 : 10}>
@@ -28,6 +34,7 @@ export default function RewardsScreen() {
     </ScreenShell>
   );
 }
+
 const styles = StyleSheet.create({
   title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
   sub: { fontSize: 15, color: colors.muted, marginBottom: 16 },

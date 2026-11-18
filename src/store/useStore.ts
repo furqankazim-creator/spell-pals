@@ -5,11 +5,12 @@ import { ageToLevel, levelInfo } from '../data/levels';
 
 export interface Attempt { word: string; game: GameId; tries: number; correct: number; at: string }
 export interface Session { id: string; game: GameId; durationSeconds: number; at: string }
-export interface Profile { name: string; age: number; avatar: string; pin: string; soundOn: boolean; rewardsOn: boolean; bedtimeMode: boolean; dailyGoal: number; focusWords: string[]; level: number; autoLevel: boolean; levelSince: number; onboarded: boolean }
+export interface Profile { name: string; age: number; avatar: string; pin: string; soundOn: boolean; rewardsOn: boolean; bedtimeMode: boolean; dailyGoal: number; focusWords: string[]; customWords: CustomWord[]; level: number; autoLevel: boolean; levelSince: number; onboarded: boolean }
+export interface CustomWord { word: string; emoji: string; imageUri?: string; level: 1 | 2 | 3 | 4 | 5; sounds: string[] }
 
 export const DEFAULT_PROFILE: Profile = {
   name: 'Hadi', age: 5, avatar: '🐼', pin: '1234',
-  soundOn: true, rewardsOn: true, bedtimeMode: false, dailyGoal: 10, focusWords: [],
+  soundOn: true, rewardsOn: true, bedtimeMode: false, dailyGoal: 10, focusWords: [], customWords: [],
   level: ageToLevel(5), autoLevel: true, levelSince: 0, onboarded: false,
 };
 
@@ -24,12 +25,15 @@ interface State {
   recordStage: (id: string, stars: number) => void;
   storiesRead: Record<string, { stars: number; at: string }>;
   storyWords: string[];
+  customWords: CustomWord[];
   recordStory: (id: string, stars: number) => void;
   addStoryWord: (w: string) => void;
   levelNotice: string | null;
   clearLevelNotice: () => void;
   setProfile: (p: Partial<Profile>) => void;
   earnSticker: (id: string) => void;
+  addCustomWord: (word: CustomWord) => void;
+  removeCustomWord: (word: string) => void;
   recordAttempt: (a: Attempt) => void;
   recordSession: (s: Session) => void;
   addMinutes: (m: number) => void;
@@ -45,6 +49,7 @@ function persist(s: State) {
   saveJSON('storiesRead', s.storiesRead);
   saveJSON('mapStars', s.mapStars);
   saveJSON('storyWords', s.storyWords);
+  saveJSON('customWords', s.customWords);
 }
 
 export const useStore = create<State>((set, get) => ({
@@ -61,6 +66,7 @@ export const useStore = create<State>((set, get) => ({
   },
   storiesRead: {},
   storyWords: [],
+  customWords: [],
   recordStory: (id, stars) => {
     set((s) => {
       const prev = s.storiesRead[id];
@@ -85,6 +91,28 @@ export const useStore = create<State>((set, get) => ({
   },
   earnSticker: (id) => {
     set((s) => ({ stickers: s.stickers.includes(id) ? s.stickers : [...s.stickers, id] }));
+    persist(get());
+  },
+  addCustomWord: (word) => {
+    set((s) => {
+      const customWords = s.profile.customWords ?? [];
+      const exists = customWords.some((w) => w.word.toLowerCase() === word.word.toLowerCase());
+      const nextWords = exists
+        ? customWords.map((w) => w.word.toLowerCase() === word.word.toLowerCase() ? word : w)
+        : [...customWords, word];
+      const focusWords = [...s.profile.focusWords, word.word].filter((v, i, a) => a.indexOf(v) === i).slice(0, 8);
+      return { profile: { ...s.profile, customWords: nextWords, focusWords } };
+    });
+    persist(get());
+  },
+  removeCustomWord: (word) => {
+    set((s) => ({
+      profile: {
+        ...s.profile,
+        customWords: (s.profile.customWords ?? []).filter((w) => w.word !== word),
+        focusWords: s.profile.focusWords.filter((w) => w !== word),
+      },
+    }));
     persist(get());
   },
   recordAttempt: (a) => {
@@ -125,7 +153,8 @@ export const useStore = create<State>((set, get) => ({
     const storiesRead = await loadJSON<Record<string, { stars: number; at: string }>>('storiesRead', {});
     const storyWords = await loadJSON<string[]>('storyWords', []);
     const mapStars = await loadJSON<Record<string, number>>('mapStars', {});
-    set({ profile, stickers, attempts, sessions, storiesRead, storyWords, mapStars, loaded: true });
+    const customWords = await loadJSON<CustomWord[]>('customWords', []);
+    set({ profile, stickers, attempts, sessions, storiesRead, storyWords, mapStars, customWords, loaded: true });
   },
 }));
 

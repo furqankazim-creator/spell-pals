@@ -41,11 +41,11 @@ export function weakWords(attempts: AttemptLike[], limit = 12): string[] {
  * Pick n words for a round set. Mix: the grown-up's Star Words, words the child recently got wrong
  * (so mistakes are practised again), a little review from the level below, then fresh words at the child's level.
  */
-export function pickWords(n: number, level = 1, focus: string[] = [], attempts: AttemptLike[] = [], only?: (w: Word) => boolean): Word[] {
+export function pickWords(n: number, level = 1, focus: string[] = [], attempts: AttemptLike[] = [], only?: (w: Word) => boolean, customWords: Word[] = []): Word[] {
   const ok = (w: Word) => (only ? only(w) : true);
   const out: Word[] = [];
   const add = (w?: Word) => { if (w && ok(w) && !out.includes(w) && out.length < n) out.push(w); };
-  focus.map(wordByName).forEach(add);
+  focus.map((name) => customWords.find((w) => w.word === name) ?? wordByName(name)).forEach(add);
   const weakMax = Math.max(1, Math.ceil(n * 0.34));
   let weakCount = 0;
   for (const name of weakWords(attempts)) {

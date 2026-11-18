@@ -12,7 +12,7 @@ export default function Route() {
   const router = useRouter();
   const { wide, cols } = useLayout();
   return (
-    <ScreenShell>
+    <ScreenShell onBack={() => router.replace('/')} backLabel="← Back">
       <Text style={styles.title}>All games</Text>
       <Grid cols={wide ? 3 : cols} gap={wide ? 16 : 12}>
         {GAMES.map((g) => (

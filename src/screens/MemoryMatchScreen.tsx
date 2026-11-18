@@ -13,7 +13,7 @@ import Celebration from '../components/Celebration';
 import BigButton from '../components/BigButton';
 import Pic from '../components/Pic';
 
-interface Card { key: string; word: string; emoji?: string; text?: string }
+interface Card { key: string; word: string; emoji?: string; imageUri?: string; text?: string }
 
 /** Memory Match — flip cards, find the picture/word pairs. More pairs at higher levels. */
 export default function MemoryMatchScreen() {
@@ -26,10 +26,11 @@ export default function MemoryMatchScreen() {
   const attempts = useStore((s) => s.attempts);
   const pairs = rulesFor(profile.level).memoryPairs;
   const cols = pairs >= 8 ? 4 : 3;
+  const customWords = useStore((s) => s.profile.customWords ?? []);
   const cards: Card[] = useMemo(() => {
-    const words = pickWords(pairs, profile.level, profile.focusWords, attempts, (w) => w.word.length <= 8);
+    const words = pickWords(pairs, profile.level, profile.focusWords, attempts, (w) => w.word.length <= 8, customWords);
     const deck = words.flatMap((w: Word) => [
-      { key: `${w.word}-pic`, word: w.word, emoji: w.emoji },
+      { key: `${w.word}-pic`, word: w.word, emoji: w.emoji, imageUri: w.imageUri },
       { key: `${w.word}-word`, word: w.word, text: w.word.toUpperCase() },
     ]);
     return shuffle(deck);
@@ -53,12 +54,12 @@ export default function MemoryMatchScreen() {
         setMatched(m);
         recordAttempt({ word: cards[a].word, game: 'memory', tries: 1, correct: 1, at: new Date().toISOString() });
         if (m.length === pairs) cheerWin('You found all the pairs! You are a memory master!'); else cheerPair(cards[a].word);
-        if (profile.rewardsOn) earnSticker(STICKERS[Math.floor(Math.random() * STICKERS.length)].id);
         if (m.length === pairs) {
           const t = tries + 1;
           if (stage) recordStage(stage, t <= pairs + 2 ? 3 : t <= pairs * 2 ? 2 : 1);
           setTimeout(() => setDone(true), 600);
         }
+        if (m.length === pairs && profile.rewardsOn) earnSticker(STICKERS[Math.floor(Math.random() * STICKERS.length)].id);
       } else {
         recordAttempt({ word: cards[a].word, game: 'memory', tries: 1, correct: 0, at: new Date().toISOString() });
         cheerNoPair();
@@ -69,20 +70,26 @@ export default function MemoryMatchScreen() {
 
   if (done) {
     return (
-      <ScreenShell tabs={false} max={820}>
+      <ScreenShell
+        tabs={false}
+        max={820}
+        onBack={() => router.replace(stage ? '/map' : '/')}
+        backLabel="← Back"
+      >
         <Celebration
           stickerEmoji="🧩" stickerLabel="Memory Master"
           stars={stage ? (tries <= pairs + 2 ? 3 : tries <= pairs * 2 ? 2 : 1) : undefined}
           doneLabel={stage ? 'Back to the map' : 'Back to Home'}
           onDone={() => router.replace(stage ? '/map' : '/')}
           onAgain={() => router.replace(stage ? ({ pathname: '/memory', params: { stage } } as never) : '/memory')}
+          rewardsOn={profile.rewardsOn}
         />
       </ScreenShell>
     );
   }
   const cardW = cols === 4 ? '22%' : '30%';
   return (
-    <ScreenShell tabs={false} max={820}>
+    <ScreenShell tabs={false} max={820} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
       <Text style={styles.title}>Memory Match</Text>
       <Text style={styles.sub}>Find the {pairs} pairs: a picture and its word. Tries: {tries}</Text>
       <View style={styles.grid}>
@@ -90,7 +97,7 @@ export default function MemoryMatchScreen() {
           const open = flipped.includes(i) || matched.includes(c.word);
           return (
             <Pressable key={c.key} onPress={() => flip(i)} style={[styles.card, { width: cardW }, open ? styles.open : null]} accessibilityRole="button">
-              {open ? (c.emoji ? <Pic emoji={c.emoji} size={cols === 4 ? 56 : 84} /> : <Text style={[styles.face, cols === 4 || (c.text ?? '').length > 6 ? { fontSize: 15 } : null]}>{c.text}</Text>) : <Text style={styles.q}>?</Text>}
+              {open ? (c.emoji || c.imageUri ? <Pic emoji={c.emoji ?? c.word} imageUri={c.imageUri} size={cols === 4 ? 56 : 84} /> : <Text style={[styles.face, cols === 4 || (c.text ?? '').length > 6 ? { fontSize: 15 } : null]}>{c.text}</Text>) : <Text style={styles.q}>?</Text>}
             </Pressable>
           );
         })}

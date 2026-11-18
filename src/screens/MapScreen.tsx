@@ -124,9 +124,11 @@ export default function MapScreen() {
   const cardW = (W - 20) / 3;
 
   return (
-    <ScreenShell max={560}>
-      <Text style={styles.title}>🗺️ My Adventure Map</Text>
-      <Text style={styles.sub}>Pick a world, then play each stage to open the next one.</Text>
+    <ScreenShell max={560} onBack={() => router.replace('/')} backLabel="← Back">
+      <View>
+        <Text style={styles.title}>🗺️ My Adventure Map</Text>
+        <Text style={styles.sub}>Pick a world, then play each stage to open the next one.</Text>
+      </View>
 
       <View style={styles.summary}>
         <View style={styles.sumBox}><Pic emoji="⭐" size={34} /><Text style={styles.sumNum}>{total}<Text style={styles.sumOf}> / {STAGES.length * 3}</Text></Text><Text style={styles.sumLabel}>stars</Text></View>
@@ -240,6 +242,7 @@ export default function MapScreen() {
 const styles = StyleSheet.create({
   title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
   sub: { fontSize: 15, color: colors.ink, marginBottom: 14 },
+
   summary: { flexDirection: 'row', gap: 10, marginBottom: 16, alignItems: 'stretch' },
   sumBox: { flex: 1, backgroundColor: '#fff', borderRadius: 22, paddingVertical: 8, alignItems: 'center' },
   sumNum: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },

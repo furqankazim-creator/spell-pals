@@ -46,6 +46,8 @@ export default function GameScreen({ game }: { game: GameId }) {
   const rules = rulesFor(profile.level);
   const info = levelInfo(profile.level);
 
+  const customWords = useStore((s) => s.profile.customWords ?? []);
+
   // Build the rounds once per play: words at the child's level, with missed words coming back.
   const rounds: Round[] = useMemo(() => {
     const first = forced ? wordByName(forced) : undefined;
@@ -57,7 +59,7 @@ export default function GameScreen({ game }: { game: GameId }) {
       });
     }
     const only = game === 'sound' ? (w: Word) => w.word.length <= 7 : undefined;
-    const rest = pickWords(TOTAL, profile.level, [...profile.focusWords, ...storyWords.slice(-3)], attempts, only);
+    const rest = pickWords(TOTAL, profile.level, [...profile.focusWords, ...storyWords.slice(-3)], attempts, only, customWords);
     const list = first ? [first, ...rest.filter((w) => w.word !== first.word)].slice(0, TOTAL) : rest;
     return list.map((w) => ({
       word: w,
@@ -135,9 +137,10 @@ export default function GameScreen({ game }: { game: GameId }) {
     recordAttempt({ word: word.word, game, tries: tries + 1, correct: correct ? 1 : 0, at: new Date().toISOString() });
     if (correct) {
       setFeedback('🎉 Well done!');
-      if (round + 1 >= TOTAL) cheerWin(`Amazing, ${profile.name}! You finished the game and earned a sticker!`);
-      else cheerCorrect(profile.name);
-      if (profile.rewardsOn) earnSticker(STICKERS[Math.floor(Math.random() * STICKERS.length)].id);
+      if (round + 1 >= TOTAL) {
+        cheerWin(profile.rewardsOn ? `Amazing, ${profile.name}! You finished the game and earned a sticker!` : `Amazing, ${profile.name}! You finished the game!`);
+        if (profile.rewardsOn) earnSticker(STICKERS[Math.floor(Math.random() * STICKERS.length)].id);
+      } else cheerCorrect(profile.name);
       setTimeout(() => {
         if (round + 1 >= TOTAL) {
           if (stage) recordStage(stage, sessionWrong.current === 0 ? 3 : sessionWrong.current <= 3 ? 2 : 1);
@@ -177,13 +180,14 @@ export default function GameScreen({ game }: { game: GameId }) {
 
   if (done) {
     return (
-      <ScreenShell tabs={false} max={820}>
+      <ScreenShell tabs={false} max={820} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
         <Celebration
           stickerEmoji="⭐" stickerLabel="Super Star"
           stars={stage ? (sessionWrong.current === 0 ? 3 : sessionWrong.current <= 3 ? 2 : 1) : undefined}
           doneLabel={stage ? 'Back to the map' : 'Back to Home'}
           onDone={() => router.replace(stage ? '/map' : '/')}
           onAgain={() => { sessionWrong.current = 0; setRound(0); setTries(0); setDone(false); }}
+          rewardsOn={profile.rewardsOn}
         />
       </ScreenShell>
     );
@@ -208,7 +212,7 @@ export default function GameScreen({ game }: { game: GameId }) {
           <View style={styles.grid}>
             {matchChoices.map((c) => (
               <Pressable key={c.word} onPress={() => tapChoice(c.word)} style={[styles.picChoice, smallPics ? styles.picSmall : null]}>
-                <Pic emoji={c.emoji} size={smallPics ? 96 : 124} />
+                <Pic emoji={c.emoji} imageUri={c.imageUri} size={smallPics ? 96 : 124} />
               </Pressable>
             ))}
           </View>

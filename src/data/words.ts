@@ -1,6 +1,6 @@
 import wordsJson from '../../content/words.json';
 
-export interface Word { word: string; emoji: string; level: 1 | 2 | 3 | 4 | 5; sounds: string[] }
+export interface Word { word: string; emoji: string; imageUri?: string; level: 1 | 2 | 3 | 4 | 5; sounds: string[] }
 
 export const WORDS: Word[] = wordsJson as Word[];
 
