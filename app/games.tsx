@@ -29,8 +29,8 @@ export default function Route() {
   );
 }
 const styles = StyleSheet.create({
-  title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink, marginBottom: 12 },
+  title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink, marginBottom: 12 },
   card: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: '#fff', borderRadius: 28, padding: 16, minHeight: 84 },
-  t: { fontSize: 20, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  t: { fontSize: 20, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
   d: { fontSize: 14, color: colors.muted },
 });

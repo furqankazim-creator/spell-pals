@@ -11,4 +11,9 @@ export const colors = {
   amberText: '#C98A10', violetText: '#5B4BDB', tealText: '#16A394',
 };
 export const radius = { card: 28, pill: 999, tile: 20 };
-export const font = { display: 'Baloo2_800ExtraBold', body: 'ComicNeue_700Bold' };
+export const font = {
+  display: 'Baloo2_800ExtraBold',
+  heading: 'Baloo2_700Bold',
+  body: 'Baloo2_700Bold',
+  bodyRegular: 'Baloo2_500Medium',
+};

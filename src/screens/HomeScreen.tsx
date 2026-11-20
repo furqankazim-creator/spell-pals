@@ -1,427 +1,652 @@
+import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useStore } from '../store/useStore';
-import { wordOfTheDay } from '../lib/game';
-import { speak } from '../lib/audio';
-import { GAMES } from '../data/extras';
-import { STORIES } from '../data/stories';
+import { GAMES, GameId } from '../data/extras';
+import { levelInfo } from '../data/levels';
+import { speak, playSfx } from '../lib/audio';
 import BloomFocusPromoCard from '../components/BloomFocusPromoCard';
 import HopeBridgePublisherCard from '../components/HopeBridgePublisherCard';
 import ScreenShell from '../components/ScreenShell';
 import Pic from '../components/Pic';
 import { colors } from '../theme/colors';
 import { useLayout } from '../lib/useLayout';
-import ChildTopBar from '../components/ChildTopBar';
+
+const LEVEL_ACTIVITIES: Record<number, GameId[]> = {
+  1: ['spell', 'pick', 'match'],
+  2: ['spell', 'sound', 'vowel'],
+  3: ['spell', 'rhyme', 'memory'],
+  4: ['pick', 'sound', 'match'],
+  5: ['spell', 'vowel', 'rhyme'],
+};
 
 export default function HomeScreen() {
   const router = useRouter();
   const profile = useStore((s) => s.profile);
   const stickers = useStore((s) => s.stickers);
-  const wotd = wordOfTheDay(profile.level);
+  const mapStars = useStore((s) => s.mapStars);
+  const sessions = useStore((s) => s.sessions);
+  const attempts = useStore((s) => s.attempts);
+
+  const currentLevel = profile.level;
+  const currentLevelInfo = levelInfo(currentLevel);
   const { width } = useLayout();
   const compact = width < 700;
 
-  const items = [
-    ...GAMES.map((g) => ({ key: g.id, title: g.title, desc: g.desc, icon: g.id, route: g.route, color: '#E7F4FF' })),
-  ];
+  const totalMapStars = Object.values(mapStars).reduce((sum, v) => sum + v, 0);
+
+  const hasCompletedGame = (gameId: GameId) => {
+    return (
+      sessions.some((s) => s.game === gameId) ||
+      attempts.some((a) => a.game === gameId && a.correct > 0)
+    );
+  };
+
+  const levelActivityIds = LEVEL_ACTIVITIES[currentLevel] || LEVEL_ACTIVITIES[1];
+  const levelGames = levelActivityIds.map((id) => GAMES.find((g) => g.id === id)!);
+
+  const getGameLevelDetail = (id: GameId, lvl: number) => {
+    switch (id) {
+      case 'spell':
+        return lvl === 1 ? '3 Rounds: 🌱 3-letter CVC · ⚡ Blends · 👑 Star Boss' : '3 Rounds: 🌱 Core Words · ⚡ Power Blends · 👑 Star Boss';
+      case 'pick':
+        return lvl === 1 ? '3 Rounds: 🌱 First Sounds · ⚡ End Sounds · 👑 Speed Pick' : '3 Rounds: 🌱 Key Sounds · ⚡ Tricky Blends · 👑 Decoy Challenge';
+      case 'sound':
+        return lvl === 1 ? '3 Rounds: 🌱 3 Phonemes · ⚡ Sound Blend · 👑 Phonics Master' : '3 Rounds: 🌱 Core Sounds · ⚡ Cluster Blends · 👑 Boss Decoder';
+      case 'match':
+        return lvl === 1 ? '3 Rounds: 🌱 3 Cards · ⚡ 4 Picture Cards · 👑 Boss Match' : '3 Rounds: 🌱 Word Match · ⚡ Fast Cards · 👑 Boss Vocabulary';
+      case 'vowel':
+        return lvl === 1 ? '3 Rounds: 🌱 Middle Vowels · ⚡ 4-Letter Blends · 👑 Mystery Vowel' : '3 Rounds: 🌱 Vowel Pairs · ⚡ Long Vowels · 👑 Boss Vowels';
+      case 'rhyme':
+        return lvl === 1 ? '3 Rounds: 🌱 CVC Pairs · ⚡ Rhyme Families · 👑 Boss Distractor' : '3 Rounds: 🌱 Rhyme Pairs · ⚡ Sound Families · 👑 Boss Rhyme';
+      case 'memory':
+        return lvl === 1 ? '3 Rounds: 🌱 3 Pairs · ⚡ 4 Pairs · 👑 Master Memory' : '3 Rounds: 🌱 Pair Match · ⚡ Fast Memory · 👑 Grand Puzzle';
+      default:
+        return '3 Progressive Rounds with Star Boss';
+    }
+  };
 
   return (
-    <ScreenShell max={compact ? 460 : 820}>
-      <ChildTopBar />
-
-      <View style={styles.speechCard}>
-        <Text style={[styles.speechText, compact && styles.speechTextCompact]}>Leo says: “Let&apos;s spell some words!”</Text>
-        <Text style={[styles.speechSub, compact && styles.speechSubCompact]}>Pick a game below — every game ends with a sticker.</Text>
-      </View>
-
-      <View style={[styles.infoRow, compact && styles.infoRowCompact]}>
-        <View style={[styles.wordCard, compact && styles.wordCardCompact]}>
-          <View style={styles.wordHeader}>
-            <View style={styles.wordIconWrap}><Pic emoji={wotd.emoji} size={compact ? 30 : 42} /></View>
-            <Text style={[styles.wordBadge, compact && styles.wordBadgeCompact]}>WORD OF THE DAY</Text>
+    <ScreenShell max={compact ? 460 : 860}>
+      {/* ─────────────────── PARENT CHILD DETAILS HUB ─────────────────── */}
+      <View style={styles.childHub}>
+        <View style={styles.childHubMain}>
+          <View style={styles.avatarBox}>
+            <Pic emoji={profile.avatar} size={compact ? 46 : 56} />
           </View>
-          <Text style={[styles.wordTitle, compact && styles.wordTitleCompact]}>{wotd.word}</Text>
-          <View style={[styles.wordActions, compact && styles.wordActionsCompact]}>
-            <Pressable onPress={() => speak(wotd.word)} style={[styles.button, styles.buttonPurple, compact && styles.buttonCompact]}>
-              <Text style={[styles.buttonText, compact && styles.buttonTextCompact]}>Hear it</Text>
+          <View style={styles.childInfoBox}>
+            <View style={styles.childNameRow}>
+              <Text style={styles.childName} numberOfLines={1}>
+                {profile.name || 'Your Child'}
+              </Text>
+              <View style={styles.agePill}>
+                <Text style={styles.agePillText}>Age {profile.age}</Text>
+              </View>
+            </View>
+            <Text style={styles.levelActiveBadge}>
+              {currentLevelInfo.emoji} Level {currentLevel}: {currentLevelInfo.name}
+            </Text>
+          </View>
+          <View style={styles.childActionsRow}>
+            <Pressable
+              onPress={() => router.push('/map')}
+              style={styles.mapBtn}
+              accessibilityRole="button"
+              accessibilityLabel="Open Adventure Map"
+            >
+              <Text style={styles.mapBtnIcon}>🗺️</Text>
+              <Text style={styles.mapBtnText}>Map</Text>
             </Pressable>
-            <Pressable onPress={() => router.push({ pathname: '/spell', params: { word: wotd.word } } as never)} style={[styles.button, styles.buttonGold, compact && styles.buttonCompact]}>
-              <Text style={[styles.buttonText, compact && styles.buttonTextCompact]}>Spell it!</Text>
+            <Pressable
+              onPress={() => router.push('/setup')}
+              style={styles.editProfileBtn}
+              accessibilityRole="button"
+              accessibilityLabel="Edit child details"
+            >
+              <Text style={styles.editProfileIcon}>✏️</Text>
+              <Text style={styles.editProfileText}>Edit</Text>
             </Pressable>
+          </View>
+        </View>
+
+        {/* Quick Stats Pill Row */}
+        <View style={styles.statsRow}>
+          <View style={styles.statPill}>
+            <Text style={styles.statIcon}>⭐</Text>
+            <Text style={styles.statNum}>{totalMapStars} Stars</Text>
+          </View>
+          <View style={styles.statPill}>
+            <Text style={styles.statIcon}>🎁</Text>
+            <Text style={styles.statNum}>{stickers.length} Stickers</Text>
+          </View>
+          <View style={styles.statPill}>
+            <Text style={styles.statIcon}>⏱️</Text>
+            <Text style={styles.statNum}>{profile.dailyGoal}m Goal</Text>
           </View>
         </View>
       </View>
 
-      <View style={[styles.grid, compact && styles.gridCompact]}>
-        {items.map((item) => (
-          <Pressable
-            key={item.key}
-            onPress={() => router.push(item.route as never)}
-            accessibilityRole="button"
-            style={[styles.gameCard, { backgroundColor: item.color }, compact && styles.gameCardCompact]}
-          >
-            <View style={[styles.gameIcon, compact && styles.gameIconCompact]}>
-              <Pic emoji={
-                item.icon === 'spell' ? '🔤' :
-                item.icon === 'pick' ? '👆' :
-                item.icon === 'sound' ? '🔊' :
-                item.icon === 'match' ? '🖼️' :
-                item.icon === 'vowel' ? 'A' :
-                item.icon === 'rhyme' ? '🎵' :
-                item.icon === 'memory' ? '🧠' :
-                item.icon === 'rewards' ? '🎁' :
-                item.icon === 'map' ? '🗺️' :
-                item.icon === 'stories' ? '📚' : '🎈'
-              } size={compact ? 26 : 34} />
-            </View>
-            <View style={styles.gameTextBox}>
-              <Text style={[styles.gameTitle, compact && styles.gameTitleCompact]}>{item.title}</Text>
-              <Text style={[styles.gameDesc, compact && styles.gameDescCompact]}>{item.desc}</Text>
-            </View>
-          </Pressable>
-        ))}
+      {/* ─────────────────── CHILD'S ACTIVE LEVEL BANNER ─────────────────── */}
+      <View style={styles.levelBanner}>
+        <View style={styles.levelBannerHeader}>
+          <Text style={styles.levelBannerEmoji}>{currentLevelInfo.emoji}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.levelBannerTitle}>
+              {profile.name || 'Child'}’s Level: {currentLevelInfo.name} ({currentLevelInfo.ages})
+            </Text>
+            <Text style={styles.levelBannerDesc}>{currentLevelInfo.desc}</Text>
+          </View>
+        </View>
       </View>
 
+      {/* ─────────────────── LEVEL-SPECIFIC ACTIVITIES ─────────────────── */}
+      <View style={styles.sectionHeader}>
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionTitle}>🎮 Level {currentLevel} Core Activities</Text>
+          <View style={styles.activityProgressPill}>
+            <Text style={styles.activityProgressText}>
+              {levelGames.filter((g) => hasCompletedGame(g.id)).length}/3 Done
+            </Text>
+          </View>
+        </View>
+        <Text style={styles.sectionSub}>
+          Play in order: complete each challenge to unlock the next for {currentLevelInfo.name}!
+        </Text>
+      </View>
+
+      <View style={[styles.grid, compact && styles.gridCompact]}>
+        {levelGames.map((item, idx) => {
+          const detail = getGameLevelDetail(item.id, currentLevel);
+          const isDone = hasCompletedGame(item.id);
+          const prevGame = idx > 0 ? levelGames[idx - 1] : null;
+          const isUnlocked = idx === 0 || (prevGame ? hasCompletedGame(prevGame.id) : true);
+
+          const handlePress = () => {
+            if (!isUnlocked) {
+              playSfx('wrong');
+              speak(`Complete ${prevGame?.title} first to unlock ${item.title}!`);
+              return;
+            }
+            playSfx('tap');
+            router.push(item.route as never);
+          };
+
+          return (
+            <Pressable
+              key={item.id}
+              onPress={handlePress}
+              accessibilityRole="button"
+              accessibilityLabel={`${item.title}, ${isUnlocked ? (isDone ? 'Completed' : 'Ready') : 'Locked'}`}
+              style={[
+                styles.gameCard,
+                { backgroundColor: isUnlocked ? item.color : '#F1F5F9' },
+                isDone && styles.gameCardDone,
+                !isUnlocked && styles.gameCardLocked,
+                compact && styles.gameCardCompact,
+              ]}
+            >
+              <View style={[styles.gameIcon, !isUnlocked && styles.gameIconLocked, compact && styles.gameIconCompact]}>
+                <Pic
+                  emoji={
+                    !isUnlocked ? '🔒' :
+                    item.id === 'spell' ? '🔤' :
+                    item.id === 'pick' ? '👉' :
+                    item.id === 'sound' ? '🔊' :
+                    item.id === 'match' ? '🖼️' :
+                    item.id === 'vowel' ? '🅰️' :
+                    item.id === 'rhyme' ? '🎵' : '🧠'
+                  }
+                  size={compact ? 28 : 36}
+                />
+              </View>
+              <View style={styles.gameTextBox}>
+                <View style={styles.gameTitleRow}>
+                  <Text style={[styles.gameTitle, !isUnlocked && styles.gameTitleLocked, compact && styles.gameTitleCompact]}>
+                    {idx + 1}. {item.title}
+                  </Text>
+                  {isDone ? (
+                    <Text style={styles.doneCheck}>✓</Text>
+                  ) : null}
+                </View>
+                <Text style={[styles.gameDesc, !isUnlocked && styles.gameDescLocked, compact && styles.gameDescCompact]}>
+                  {isUnlocked ? detail : `Complete ${prevGame?.title} first to unlock`}
+                </Text>
+                <View style={styles.activityBadgeRow}>
+                  {isDone ? (
+                    <View style={styles.activityBadgeDone}>
+                      <Text style={styles.activityBadgeDoneText}>✓ Completed · Replay</Text>
+                    </View>
+                  ) : isUnlocked ? (
+                    <>
+                      <View style={styles.activityBadge}>
+                        <Text style={styles.activityBadgeText}>Level {currentLevel} Fit</Text>
+                      </View>
+                      <View style={styles.roundBadge}>
+                        <Text style={styles.roundBadgeText}>3 Rounds ➔</Text>
+                      </View>
+                    </>
+                  ) : (
+                    <View style={styles.activityBadgeLocked}>
+                      <Text style={styles.activityBadgeLockedText}>🔒 Locked</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      {/* Practice Library Link */}
+      <Pressable
+        onPress={() => router.push('/games')}
+        style={styles.browseAllGamesBar}
+        accessibilityRole="button"
+      >
+        <Text style={styles.browseAllGamesText}>
+          🕹️ Practice Library (Explore All 7 Activities) ➔
+        </Text>
+      </Pressable>
+
       <BloomFocusPromoCard onPress={() => router.push('/bloom-focus')} />
-
       <HopeBridgePublisherCard onPress={() => router.push('/about-hope-bridge')} />
-
     </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  topRow: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 18,
-  },
-  topRowCompact: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 12,
-  },
-  profilePill: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F7F7F7',
-    borderRadius: 999,
-    borderWidth: 2,
-    borderColor: 'rgba(43,42,82,0.12)',
-    paddingHorizontal: 16,
-    paddingVertical: 11,
-    minHeight: 62,
-  },
-  profilePillCompact: {
-    flex: 1,
-    minHeight: 54,
-    paddingVertical: 8,
-  },
-  avatarWrap: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F7F7F7',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
-  },
-  profileTextWrap: {
-    flex: 1,
-  },
-  hello: {
-    fontSize: 20,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: colors.ink,
-    lineHeight: 24,
-  },
-  helloCompact: {
-    fontSize: 18,
-    lineHeight: 22,
-  },
-  stickerText: {
-    fontSize: 14,
-    color: colors.ink,
-    fontWeight: '700',
-  },
-  stickerTextCompact: {
-    fontSize: 12,
-  },
-  grownPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F7F7F7',
-    borderRadius: 999,
-    borderWidth: 2,
-    borderColor: 'rgba(43,42,82,0.12)',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    minHeight: 62,
-    minWidth: 150,
-  },
-  grownPillCompact: {
-    minWidth: 110,
-    minHeight: 54,
-    paddingVertical: 8,
-  },
-  grownIcon: { fontSize: 20, marginRight: 8 },
-  grownText: {
-    fontSize: 20,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: colors.ink,
-  },
-  grownTextCompact: {
-    fontSize: 18,
-  },
-  hopeCard: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F7F7F7',
-    borderRadius: 22,
-    borderWidth: 2,
-    borderColor: 'rgba(43,42,82,0.12)',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    marginBottom: 12,
-    gap: 12,
-  },
-  hopeCardCompact: { paddingVertical: 8 },
-  hopeBadge: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#D7EEFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  hopeInfo: { flex: 1 },
-  hopeTitle: {
-    fontSize: 18,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: colors.ink,
-  },
-  hopeTitleCompact: { fontSize: 16 },
-  hopeTagline: { fontSize: 12, color: colors.muted, marginTop: 2 },
-  hopeTaglineCompact: { fontSize: 11 },
-  hopeApps: { fontSize: 11, color: colors.muted, marginTop: 2, fontWeight: '700' },
-  hopeAppsCompact: { fontSize: 10 },
-  hopeButton: {
-    backgroundColor: '#F7C94C',
-    borderRadius: 18,
-    borderBottomWidth: 4,
-    borderBottomColor: '#00000033',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    minHeight: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  hopeButtonCompact: { paddingVertical: 6, minHeight: 36 },
-  hopeButtonText: { fontSize: 14, fontWeight: '800', color: '#2B2A52' },
-  hopeButtonTextCompact: { fontSize: 13 },
-  speechCard: {
-    width: '100%',
-    backgroundColor: '#F7F7F7',
-    borderRadius: 28,
-    borderWidth: 2,
-    borderColor: 'rgba(43,42,82,0.12)',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-    marginBottom: 14,
-  },
-  speechText: {
-    fontSize: 28,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: colors.ink,
-    textAlign: 'center',
-    lineHeight: 34,
-  },
-  speechTextCompact: {
-    fontSize: 20,
-    lineHeight: 26,
-  },
-  speechSub: {
-    marginTop: 8,
-    fontSize: 16,
-    color: colors.muted,
-    textAlign: 'center',
-  },
-  speechSubCompact: {
-    fontSize: 13,
-  },
-  infoRow: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 12,
-    marginBottom: 22,
-  },
-  infoRowCompact: {
-    flexDirection: 'column',
-    gap: 12,
-    marginBottom: 16,
-  },
-  wordCard: {
-    flex: 1,
-    backgroundColor: '#F7F7F7',
+  /* Child Profile Hub */
+  childHub: {
+    backgroundColor: '#FFFFFF',
     borderRadius: 26,
     borderWidth: 2,
-    borderColor: 'rgba(43,42,82,0.12)',
+    borderColor: '#FDE68A',
     padding: 16,
+    marginBottom: 16,
+    shadowColor: '#5B8DB8',
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
   },
-  wordCardCompact: {
-    padding: 10,
-  },
-  wordHeader: {
+  childHubMain: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    marginBottom: 10,
+    gap: 12,
   },
-  wordIconWrap: {
-    width: 42,
-    height: 42,
-    borderRadius: 14,
-    backgroundColor: '#D9F0FF',
+  avatarBox: {
+    width: 62,
+    height: 62,
+    borderRadius: 22,
+    backgroundColor: '#FEF9C3',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FDE047',
   },
-  wordBadge: {
-    fontSize: 18,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: colors.ink,
-    letterSpacing: 0.5,
+  childInfoBox: {
+    flex: 1,
   },
-  wordBadgeCompact: {
-    fontSize: 14,
-  },
-  wordTitle: {
-    fontSize: 46,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: colors.ink,
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  wordTitleCompact: {
-    fontSize: 32,
-    marginBottom: 8,
-  },
-  wordActions: {
+  childNameRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 10,
-  },
-  wordActionsCompact: {
+    alignItems: 'center',
     gap: 8,
   },
-  button: {
-    minWidth: 122,
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 18,
+  childName: {
+    fontSize: 24,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+  },
+  agePill: {
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
+  },
+  agePillText: {
+    fontSize: 12,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#4F46E5',
+  },
+  levelActiveBadge: {
+    fontSize: 14,
+    color: '#059669',
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    marginTop: 2,
+  },
+  childActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  mapBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFBEB',
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderColor: '#FDE68A',
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    gap: 4,
+  },
+  mapBtnIcon: {
+    fontSize: 14,
+  },
+  mapBtnText: {
+    fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#92400E',
+  },
+  editProfileBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F8FAFC',
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderColor: '#CBD5E1',
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    gap: 4,
+  },
+  editProfileIcon: {
+    fontSize: 13,
+  },
+  editProfileText: {
+    fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#F1F5F9',
+  },
+  statPill: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 4,
-    borderBottomColor: '#00000033',
+    backgroundColor: '#F8FAFC',
+    borderRadius: 12,
+    paddingVertical: 7,
+    gap: 5,
   },
-  buttonCompact: {
-    flex: 1,
-    minWidth: 0,
-    paddingVertical: 8,
+  statIcon: {
+    fontSize: 14,
   },
-  buttonPurple: {
-    backgroundColor: '#C89AEF',
-  },
-  buttonGold: {
-    backgroundColor: '#F7C94C',
-  },
-  buttonText: {
-    fontSize: 20,
+  statNum: {
+    fontSize: 13,
     fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
-    color: '#2B2A52',
+    fontWeight: '800',
+    color: colors.ink,
   },
-  buttonTextCompact: {
+
+  /* Section Headers */
+  sectionHeader: {
+    marginTop: 8,
+    marginBottom: 10,
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+  },
+  sectionSub: {
+    fontSize: 14,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: colors.muted,
+    marginTop: 2,
+  },
+
+  /* Level Banner */
+  levelBanner: {
+    backgroundColor: '#ECFDF5',
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: '#A7F3D0',
+    padding: 14,
+    marginBottom: 16,
+    shadowColor: '#10B981',
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  levelBannerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  levelBannerEmoji: {
+    fontSize: 30,
+  },
+  levelBannerTitle: {
     fontSize: 17,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#065F46',
   },
+  levelBannerDesc: {
+    fontSize: 13,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: '#047857',
+    marginTop: 2,
+    lineHeight: 17,
+  },
+
+  /* Activities Grid */
   grid: {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     gap: 12,
+    marginBottom: 18,
   },
   gridCompact: {
     gap: 10,
+    marginBottom: 14,
   },
   gameCard: {
     width: '48%',
-    minHeight: 120,
-    borderRadius: 24,
+    minHeight: 110,
+    borderRadius: 22,
     borderWidth: 2,
     borderColor: 'rgba(43,42,82,0.10)',
     padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   gameCardCompact: {
     width: '100%',
-    minHeight: 78,
-    padding: 10,
+    minHeight: 76,
+    padding: 12,
   },
   gameIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 18,
+    width: 50,
+    height: 50,
+    borderRadius: 16,
     backgroundColor: '#ffffffdd',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: 10,
   },
   gameIconCompact: {
     width: 42,
     height: 42,
     borderRadius: 14,
-    marginRight: 10,
+    marginRight: 8,
   },
   gameTextBox: {
     flex: 1,
     alignItems: 'flex-start',
   },
   gameTitle: {
-    fontSize: 22,
+    fontSize: 19,
     fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '900',
+    fontWeight: '800',
     color: colors.ink,
-    lineHeight: 28,
+    lineHeight: 23,
   },
   gameTitleCompact: {
-    fontSize: 18,
-    lineHeight: 22,
+    fontSize: 17,
+    lineHeight: 21,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
   },
   gameDesc: {
-    fontSize: 14,
-    color: colors.ink,
-    lineHeight: 18,
-    marginTop: 3,
+    fontSize: 13,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: colors.muted,
+    lineHeight: 16,
+    marginTop: 2,
   },
   gameDescCompact: {
     fontSize: 12,
-    lineHeight: 16,
+    lineHeight: 15,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+  },
+  activityBadgeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 6,
+    flexWrap: 'wrap',
+  },
+  activityBadge: {
+    backgroundColor: '#ffffffbb',
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(43,42,82,0.08)',
+  },
+  activityBadgeText: {
+    fontSize: 11,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+  },
+  roundBadge: {
+    backgroundColor: '#FEF3C7',
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#FDE68A',
+  },
+  roundBadgeText: {
+    fontSize: 11,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#B45309',
+  },
+  activityProgressPill: {
+    backgroundColor: '#DCFCE7',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#86EFAC',
+  },
+  activityProgressText: {
+    fontSize: 11,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#15803D',
+  },
+  gameCardDone: {
+    borderColor: '#86EFAC',
+  },
+  gameCardLocked: {
+    opacity: 0.72,
+    borderColor: '#CBD5E1',
+  },
+  gameIconLocked: {
+    backgroundColor: '#E2E8F0',
+  },
+  gameTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  doneCheck: {
+    fontSize: 15,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#16A34A',
+  },
+  gameTitleLocked: {
+    color: colors.muted,
+  },
+  gameDescLocked: {
+    color: '#94A3B8',
+  },
+  activityBadgeDone: {
+    backgroundColor: '#DCFCE7',
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#86EFAC',
+  },
+  activityBadgeDoneText: {
+    fontSize: 11,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#15803D',
+  },
+  activityBadgeLocked: {
+    backgroundColor: '#E2E8F0',
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+  },
+  activityBadgeLockedText: {
+    fontSize: 11,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#64748B',
+  },
+  browseAllGamesBar: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    borderWidth: 2,
+    borderColor: '#E2E8F0',
+    borderBottomWidth: 4,
+    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+    shadowColor: '#5B8DB8',
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  browseAllGamesText: {
+    fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
   },
 });

@@ -58,6 +58,22 @@ export function pickWords(n: number, level = 1, focus: string[] = [], attempts: 
   return shuffle(out.slice(0, n));
 }
 
+/**
+ * Pick n words sorted progressively by difficulty (word length & complexity) across rounds.
+ * Round 1 starts gentler with foundational words, building up to the most complex challenge words.
+ */
+export function pickProgressiveWords(
+  n: number,
+  level = 1,
+  focus: string[] = [],
+  attempts: AttemptLike[] = [],
+  only?: (w: Word) => boolean,
+  customWords: Word[] = []
+): Word[] {
+  const words = pickWords(n, level, focus, attempts, only, customWords);
+  return [...words].sort((a, b) => a.word.length - b.word.length);
+}
+
 export function rhymeChoices(word: string, families: string[][]): string[] {
   const fam = families.find((f) => f.includes(word)) ?? [word];
   return shuffle(fam.filter((w) => w !== word)).slice(0, 2);

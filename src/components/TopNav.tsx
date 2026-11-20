@@ -1,22 +1,22 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
-import { colors } from '../theme/colors';
 import { useStore } from '../store/useStore';
 import { TabIcon } from './AppIcon';
 import Logo from './Logo';
 
 const LINKS = [
-  { label: 'Home', icon: 'home', route: '/' },
-  { label: 'Stories', icon: 'stories', route: '/stories' },
-  { label: 'Rewards', icon: 'rewards', route: '/rewards' },
-  { label: 'Grown-ups', icon: 'parent', route: '/parent' },
+  { label: 'Home', icon: 'home', route: '/', activeColor: '#4F46E5', activeBg: '#EEF2FF' },
+  { label: 'Stories', icon: 'stories', route: '/stories', activeColor: '#7C3AED', activeBg: '#F3E8FF' },
+  { label: 'Rewards', icon: 'rewards', route: '/rewards', activeColor: '#D97706', activeBg: '#FEF3C7' },
+  { label: 'Grown-ups', icon: 'parent', route: '/parent', activeColor: '#334155', activeBg: '#F1F5F9' },
 ];
 
-/** Desktop header: logo on the left, menu on the right (replaces the bottom tabs on wide screens). */
+/** Desktop header: logo on the left, menu on the right with soft, polished pills. */
 export default function TopNav({ links = true }: { links?: boolean }) {
   const router = useRouter();
   const path = usePathname();
   const onboarded = useStore((s) => s.profile.onboarded);
+
   return (
     <View style={styles.bar}>
       <View style={styles.inner}>
@@ -28,16 +28,42 @@ export default function TopNav({ links = true }: { links?: boolean }) {
             {LINKS.map((l) => {
               const active = path === l.route || (l.route === '/' && path === '/index');
               return (
-                <Pressable key={l.label} onPress={() => router.push(l.route as never)} style={[styles.link, active ? styles.linkOn : null]} accessibilityRole="button">
-                  <TabIcon id={l.icon} active />
-                  <Text style={[styles.label, active ? styles.labelOn : null]}>{l.label}</Text>
+                <Pressable
+                  key={l.label}
+                  onPress={() => router.push(l.route as never)}
+                  style={[
+                    styles.link,
+                    active
+                      ? { backgroundColor: l.activeBg, borderColor: l.activeColor + '40' }
+                      : null,
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: active }}
+                >
+                  <TabIcon id={l.icon} active={active} size={19} />
+                  <Text
+                    style={[
+                      styles.label,
+                      active
+                        ? { color: l.activeColor, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800' }
+                        : null,
+                    ]}
+                  >
+                    {l.label}
+                  </Text>
                 </Pressable>
               );
             })}
           </View>
         ) : !onboarded ? null : (
-          <Pressable onPress={() => router.replace('/' as never)} style={[styles.link, styles.linkOn]} accessibilityRole="button">
-            <Text style={styles.labelOn}>← Home</Text>
+          <Pressable
+            onPress={() => router.replace('/' as never)}
+            style={[styles.link, { backgroundColor: '#EEF2FF', borderColor: '#C7D2FE' }]}
+            accessibilityRole="button"
+          >
+            <Text style={[styles.label, { color: '#4F46E5', fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800' }]}>
+              ← Home
+            </Text>
           </Pressable>
         )}
       </View>
@@ -46,11 +72,46 @@ export default function TopNav({ links = true }: { links?: boolean }) {
 }
 
 const styles = StyleSheet.create({
-  bar: { backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#E6ECF5', alignItems: 'center', shadowColor: '#5B8DB8', shadowOpacity: 0.12, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 3, zIndex: 5 },
-  inner: { width: '100%', maxWidth: 1100, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 24, paddingVertical: 4 },
-  links: { flexDirection: 'row', gap: 6 },
-  link: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, paddingVertical: 10, borderRadius: 999 },
-  linkOn: { backgroundColor: '#FFF1C2' },
-  label: { fontSize: 16, color: colors.ink },
-  labelOn: { fontSize: 16, color: colors.ink, fontFamily: 'Baloo2_800ExtraBold' },
+  bar: {
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1.5,
+    borderBottomColor: '#E2E8F0',
+    alignItems: 'center',
+    shadowColor: '#1E1B4B',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
+    zIndex: 5,
+  },
+  inner: {
+    width: '100%',
+    maxWidth: 1100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingVertical: 6,
+  },
+  links: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  link: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 999,
+    backgroundColor: '#F8FAFC',
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
+  },
+  label: {
+    fontSize: 15,
+    color: '#475569',
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+  },
 });

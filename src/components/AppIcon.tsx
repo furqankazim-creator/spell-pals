@@ -25,7 +25,7 @@ export function IconTile({ id, size = 64 }: { id: string; size?: number }) {
   );
 }
 
-export function TabIcon({ id, active }: { id: string; active: boolean }) {
+export function TabIcon({ id, active, size = 18 }: { id: string; active: boolean; size?: number }) {
   const g = GAME_ICONS[id] ?? GAME_ICONS.home;
-  return <Text style={{ fontSize: 26, opacity: active ? 1 : 0.65 }}>{g.icon}</Text>;
+  return <Text style={{ fontSize: size, textAlign: 'center', opacity: active ? 1 : 0.65 }}>{g.icon}</Text>;
 }

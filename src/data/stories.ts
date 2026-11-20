@@ -1,22 +1,87 @@
 /**
- * Spell Pals story library — 5 levels (ages 4–9), 5 stories per level.
- * Level 1 = very short CVC sentences; level 5 = longer, richer stories.
- * Every page has a scene (pictures); every story ends with comprehension questions.
+ * Spell Pals story library — 5 levels (ages 4–9).
+ * Categories/Topics: animals, adventure, nature, magic, science.
+ * Every page has a scene with interactive narrating icons; every story ends with comprehension questions.
  */
+
+export type StoryTopic = 'animals' | 'adventure' | 'nature' | 'magic' | 'science';
+
 export interface Option { emoji: string; label: string }
 export interface Question { q: string; options: Option[]; answer: number }
 export interface Page { text: string; pics: string[] }
 export interface Story {
   id: string; title: string; emoji: string; color: string; level: 1 | 2 | 3 | 4 | 5;
+  topic: StoryTopic;
   pages: Page[]; questions: Question[]; keywords: string[];
 }
+
+export interface TopicInfo {
+  id: StoryTopic | 'all';
+  name: string;
+  emoji: string;
+  color: string;
+  tagline: string;
+}
+
+export const STORY_TOPICS: TopicInfo[] = [
+  { id: 'all', name: 'All Stories', emoji: '🌟', color: '#4F46E5', tagline: 'Explore all adventures' },
+  { id: 'animals', name: 'Animals & Friends', emoji: '🐾', color: '#F59E0B', tagline: 'Playful animal companions' },
+  { id: 'adventure', name: 'Space & Quests', emoji: '🚀', color: '#0EA5E9', tagline: 'Rockets, treasures & journeys' },
+  { id: 'nature', name: 'Nature & Farm', emoji: '🌻', color: '#10B981', tagline: 'Gardens, farms & weather' },
+  { id: 'magic', name: 'Magic & Wonder', emoji: '✨', color: '#8B5CF6', tagline: 'Dragons, wishes & fantasy' },
+  { id: 'science', name: 'Science & Mystery', emoji: '🔬', color: '#EC4899', tagline: 'Inventions, stars & clues' },
+];
+
+/** Human-friendly narration name for interactive scene icons */
+export const EMOJI_NAMES: Record<string, string> = {
+  '🐱': 'Cat', '🎩': 'Red Hat', '🐀': 'Rat', '🐷': 'Pig', '🐔': 'Hen', '🛁': 'Bath Tub',
+  '🚌': 'Big Bus', '🐶': 'Puppy', '☀️': 'Warm Sun', '🐜': 'Ant', '🥜': 'Acorn Nut', '🏠': 'Cozy House',
+  '🦁': 'Leo the Lion', '🐰': 'Bella the Bunny', '🍓': 'Sweet Berries', '🍞': 'Warm Bun', '🐛': 'Little Bug',
+  '🧺': 'Picnic Basket', '🍰': 'Party Cake', '🐝': 'Busy Bee', '🌸': 'Blossom Flower', '🍯': 'Golden Honey',
+  '🌳': 'Tall Tree', '🌧️': 'Rain Cloud', '🚪': 'Door', '🐸': 'Happy Frog', '🦆': 'Duck', '💧': 'Water Puddle',
+  '🌈': 'Bright Rainbow', '🚤': 'Little Boat', '🐟': 'Shiny Fish', '🦭': 'Friendly Seal', '👋': 'Friendly Wave', '🌅': 'Sunset',
+  '⛵': 'Sailboat', '🦉': 'Wise Owl', '🌙': 'Glowing Moon', '⭐': 'Star', '🧀': 'Cheese', '🥛': 'Fresh Milk',
+  '🛏️': 'Cozy Bed', '🪁': 'Flying Kite', '💨': 'Gentle Breeze', '🚜': 'Farm Tractor', '🌄': 'Morning Sun', '🐮': 'Spotted Cow',
+  '🥚': 'Egg', '🐵': 'Curious Monkey', '🍌': 'Sweet Banana', '😢': 'Sad Face', '🦓': 'Zebra', '🌊': 'Sea Waves',
+  '😊': 'Big Smile', '🎂': 'Birthday Cake', '🔥': 'Oven', '😟': 'Worried Face', '🍒': 'Cherries',
+  '🍬': 'Candy', '🎶': 'Sweet Melody', '🎉': 'Celebration', '🚂': 'Beach Train', '🌉': 'Bridge', '🌲': 'Green Pine',
+  '🏖️': 'Sandy Beach', '🏰': 'Castle', '🦀': 'Little Crab', '🦈': 'Shark Fin', '🐬': 'Playful Dolphin',
+  '🐼': 'Pip the Panda', '🥱': 'Yawn', '🔊': 'Forest Sounds', '🎵': 'Music Tune', '😴': 'Sweet Sleep', '🎋': 'Green Bamboo',
+  '🚀': 'Rainbow Rocket', '📷': 'Camera', '☁️': 'Fluffy Cloud', '🪐': 'Purple Planet', '👽': 'Friendly Alien',
+  '🥕': 'Crunchy Carrot', '🧲': 'Blue Magnet', '🎁': 'Special Present', '🐧': 'Pablo the Penguin', '🏝️': 'Island',
+  '🐦': 'Singing Bird', '❄️': 'Falling Snow', '🐢': 'Timmy the Turtle', '🎈': 'Red Balloon', '😄': 'Cheerful Smile',
+  '🎃': 'Giant Pumpkin', '🛴': 'Scooter', '🧑‍🌾': 'Scarecrow', '🛒': 'Wheelbarrow', '🕯️': 'Glowing Candle',
+  '🎸': 'Magic Guitar', '✨': 'Glitter Sparkles', '🎹': 'Grand Piano', '🌷': 'Tulip', '👏': 'Applause',
+  '🐇': 'Rosie the Rabbit', '👣': 'Footprints', '🏁': 'Finish Line', '🏆': 'Golden Trophy',
+  '🦋': 'Luna Butterfly', '🌻': 'Giant Sunflower', '⛈️': 'Rainstorm', '☂️': 'Bright Umbrella', '💰': 'Treasure Chest',
+  '🗺️': 'Secret Map', '🎒': 'Adventure Backpack', '🔭': 'Stargazer Telescope', '🥪': 'Picnic Sandwich', '🌴': 'Palm Tree',
+  '⛰️': 'Rocky Hill', '📦': 'Chest', '💌': 'Friendship Note', '🤝': 'Best Friends', '📅': 'Calendar',
+  '📓': 'Science Notebook', '🌠': 'Shooting Star', '🎆': 'Colourful Fireworks', '🏙️': 'Town Lights', '🐘': 'Ellie the Elephant',
+  '🍉': 'Watermelon', '💪': 'Strong Helper', '🦔': 'Baby Hedgehog', '👩‍👧': 'Mother', '🏅': 'Medal of Kindness',
+  '❤️': 'Heart', '🔬': 'Microscope', '⚡': 'Lightning', '💻': 'Computer', '💡': 'Bright Idea',
+  '🥇': 'First Prize', '🚲': 'Shiny Bicycle', '🍊': 'Sweet Orange', '🔍': 'Magnifying Glass', '🌰': 'Acorn',
+  '🏫': 'School Hall', '🦕': 'Toby the Dino', '🐲': 'Friendly Dragon', '🫧': 'Sparkle Bubbles', '🔔': 'Chime Bell',
+  '🌹': 'Red Rose', '👑': 'Flower Crown', '🚢': 'Old Shipwreck', '🪸': 'Coral Reef', '🐠': 'Clownfish',
+  '🐡': 'Pufferfish', '🫐': 'Blueberries', '🐻': 'Benny the Bear', '🥣': 'Mixing Bowl', '👩‍🍳': 'Baker Chef',
+  '🧁': 'Berry Cupcake', '😋': 'Yummy', '🏡': 'Sunny Cottage',
+};
 
 type PageT = [string, string];                 // [text, 'emoji,emoji']
 type QT = [string, number, string[]];           // [question, correct index, ['🎩 hat', ...]]
 
-function story(id: string, level: Story['level'], title: string, emoji: string, color: string, keywords: string[], pages: PageT[], qs: QT[]): Story {
+function story(
+  id: string,
+  level: Story['level'],
+  title: string,
+  emoji: string,
+  color: string,
+  topic: StoryTopic,
+  keywords: string[],
+  pages: PageT[],
+  qs: QT[]
+): Story {
   return {
-    id, level, title, emoji, color, keywords,
+    id, level, title, emoji, color, topic, keywords,
     pages: pages.map(([text, pics]) => ({ text, pics: pics.split(',') })),
     questions: qs.map(([q, answer, opts]) => ({
       q, answer,
@@ -27,7 +92,7 @@ function story(id: string, level: Story['level'], title: string, emoji: string, 
 
 export const STORIES: Story[] = [
   // ───────────────────────── LEVEL 1 · age 4 · short 3-letter words ─────────────────────────
-  story('cat-hat', 1, 'The Cat and the Hat', '🐱', '#FFE29A', ['cat', 'hat', 'rat'], [
+  story('cat-hat', 1, 'The Cat and the Hat', '🐱', '#FFE29A', 'animals', ['cat', 'hat', 'rat'], [
     ['A cat sat on a mat.', '🐱'],
     ['The cat had a red hat.', '🐱,🎩'],
     ['A rat ran to the cat. The rat sat in the hat!', '🐀,🎩'],
@@ -36,7 +101,7 @@ export const STORIES: Story[] = [
     ['What did the cat have?', 1, ['🚗 car', '🎩 hat', '🥚 egg']],
     ['Who sat in the hat?', 0, ['🐀 rat', '🐶 dog', '🐝 bee']],
   ]),
-  story('pig-mud', 1, 'Pig in the Mud', '🐷', '#FFB8CC', ['pig', 'hen', 'mud'], [
+  story('pig-mud', 1, 'Pig in the Mud', '🐷', '#FFB8CC', 'nature', ['pig', 'hen', 'mud'], [
     ['A big pig is in the mud.', '🐷'],
     ['The pig has fun. Mud, mud, mud!', '🐷'],
     ['A hen sees the pig. The hen will not step in the mud.', '🐔,🐷'],
@@ -45,7 +110,7 @@ export const STORIES: Story[] = [
     ['What did the pig get in?', 2, ['🛏️ bed', '🚌 bus', '🛁 tub']],
     ['Who saw the pig?', 0, ['🐔 hen', '🐮 cow', '🦊 fox']],
   ]),
-  story('dan-bus', 1, 'Dan and the Bus', '🚌', '#BAE6FD', ['bus', 'dog', 'hug'], [
+  story('dan-bus', 1, 'Dan and the Bus', '🚌', '#BAE6FD', 'adventure', ['bus', 'dog', 'hug'], [
     ['Dan is on a bus. The bus is red.', '🚌'],
     ['Dan has a dog. The dog is on the bus.', '🐶,🚌'],
     ['The bus stops. Dan and the dog get off.', '🚌'],
@@ -54,7 +119,7 @@ export const STORIES: Story[] = [
     ['What did Dan ride?', 0, ['🚌 bus', '🚗 car', '✈️ jet']],
     ['Who is with Dan?', 1, ['🐱 cat', '🐶 dog', '🐷 pig']],
   ]),
-  story('sun-ant', 1, 'The Sun and the Ant', '🐜', '#FFE29A', ['sun', 'ant', 'nut'], [
+  story('sun-ant', 1, 'The Sun and the Ant', '🐜', '#FFE29A', 'nature', ['sun', 'ant', 'nut'], [
     ['The sun is up. An ant is up too.', '☀️,🐜'],
     ['The ant has a nut. The nut is big!', '🐜,🥜'],
     ['The ant can not lift the nut. Ten ants can!', '🐜'],
@@ -63,7 +128,7 @@ export const STORIES: Story[] = [
     ['What did the ant have?', 0, ['🥜 nut', '🥚 egg', '☕ cup']],
     ['Who helped the ant?', 2, ['🐝 bees', '🐀 rats', '🐜 ants']],
   ]),
-  story('jam-bun', 1, 'Jam on the Bun', '🍞', '#FFB8CC', ['jam', 'bun', 'bug'], [
+  story('jam-bun', 1, 'Jam on the Bun', '🍞', '#FFB8CC', 'animals', ['jam', 'bun', 'bug'], [
     ['Leo and Bella sit in the sun.', '🦁,🐰,☀️'],
     ['Bella has a pot of jam. Leo has a bun.', '🍓,🍞'],
     ['Leo and Bella put the jam on the bun. Yum, yum!', '🍞,🍓'],
@@ -74,7 +139,7 @@ export const STORIES: Story[] = [
   ]),
 
   // ───────────────────────── LEVEL 2 · age 5 · 4–5 letter words ─────────────────────────
-  story('picnic', 2, 'The Big Picnic', '🧺', '#FFE29A', ['cake', 'ant', 'bee', 'jam'], [
+  story('picnic', 2, 'The Big Picnic', '🧺', '#FFE29A', 'nature', ['cake', 'ant', 'bee', 'jam'], [
     ['Leo and Bella pack a big picnic. They put a cake and a pie in the box.', '🧺,🍰'],
     ['Oh no! An ant wants the cake. Two ants, three ants… a lot of ants!', '🐜,🍰'],
     ['A bee hums by the flowers. Bella gives the bee a tiny bit of jam.', '🐝,🌸,🍯'],
@@ -83,7 +148,29 @@ export const STORIES: Story[] = [
     ['What did the ant want?', 0, ['🍰 cake', '🥧 pie', '🍯 jam']],
     ['Who got a bit of jam?', 1, ['🐜 ant', '🐝 bee', '🐸 frog']],
   ]),
-  story('rainy', 2, 'The Rainy Day', '🌧️', '#BAE6FD', ['frog', 'duck', 'rain'], [
+  story('friendly-dino', 2, 'The Friendly Dinosaur', '🦕', '#99F0E3', 'animals', ['dino', 'bird', 'berry'], [
+    ['Toby the little green dinosaur loves to run and play in the sun.', '🦕,☀️'],
+    ['The big dinosaurs are stomping. Stomp, stomp! Toby wants a gentle friend.', '🦕,🌲'],
+    ['A cheerful blue bird lands on Toby\'s nose. Chirp, chirp! Hello, Toby!', '🐦,🦕'],
+    ['They share a big bowl of sweet purple berries. Yummy, yummy berries!', '🫐,🦕,🐦'],
+    ['Toby and the bird are best buddies. What a lovely, happy day!', '🦕,❤️,🐦'],
+  ], [
+    ['Who landed on Toby\'s nose?', 1, ['🐸 a frog', '🐦 a cheerful bird', '🐱 a cat']],
+    ['What did Toby and the bird eat?', 0, ['🫐 sweet berries', '🍕 pizza', '🥕 carrots']],
+    ['What color was the little dinosaur?', 2, ['🔴 red', '🔵 blue', '🟢 green']],
+  ]),
+  story('cupcake-bake', 2, 'The Great Cupcake Bake-Off', '🧁', '#FFE29A', 'nature', ['cupcake', 'honey', 'panda'], [
+    ['Pip the panda and Benny the bear join the forest baking party.', '🐼,🐻,🧁'],
+    ['Pip stirs the flour and milk. Benny adds sweet golden honey.', '🥣,🍯'],
+    ['They bake six fluffy cupcakes with pink strawberry frosting on top.', '🧁,🍓'],
+    ['The woodland judges taste every treat. Mmm, so delicious and sweet!', '🦉,😋,🧁'],
+    ['Pip and Benny win the Golden Spoon award and share with everyone!', '🏆,🐼,🐻,🧁'],
+  ], [
+    ['What treat did Pip and Benny bake?', 0, ['🧁 fluffy cupcakes', '🍞 bread', '🥧 pie']],
+    ['What kind of frosting was on top?', 1, ['🍫 chocolate', '🍓 strawberry', '🍋 lemon']],
+    ['What award did they win?', 2, ['🏅 a ribbon', '⭐ a star', '🏆 the Golden Spoon']],
+  ]),
+  story('rainy', 2, 'The Rainy Day', '🌧️', '#BAE6FD', 'nature', ['frog', 'duck', 'rain'], [
     ['Rain taps on the roof. Leo and Bella watch the rain from the door.', '🌧️,🚪'],
     ['A frog hops in the wet grass. Hop, hop! The frog loves the rain.', '🐸'],
     ['A duck splashes in a big puddle. Quack, quack! What a fun bath!', '🦆,💧'],
@@ -92,7 +179,7 @@ export const STORIES: Story[] = [
     ['Who hops in the grass?', 1, ['🦆 duck', '🐸 frog', '🐱 cat']],
     ['What shines in the sky at the end?', 0, ['🌈 rainbow', '⭐ star', '🌙 moon']],
   ]),
-  story('boat', 2, 'The Little Boat', '🚤', '#99F0E3', ['fish', 'seal', 'boat'], [
+  story('boat', 2, 'The Little Boat', '🚤', '#99F0E3', 'adventure', ['fish', 'seal', 'boat'], [
     ['Leo has a little red boat. Bella helps him push it to the sea.', '🚤,🦁,🐰'],
     ['A fish jumps by the boat. Then two fish, then three! Hello, fish!', '🐟'],
     ['A seal waves a flipper at the boat. Leo and Bella wave back.', '🦭,👋'],
@@ -101,7 +188,7 @@ export const STORIES: Story[] = [
     ['What color is the boat?', 2, ['🔵 blue', '🟢 green', '🔴 red']],
     ['Who jumps by the boat?', 0, ['🐟 fish', '🐸 frog', '🐦 bird']],
   ]),
-  story('moon', 2, 'The Moon Picnic', '🌙', '#D4C9FF', ['moon', 'star', 'milk'], [
+  story('moon', 2, 'The Moon Picnic', '🌙', '#D4C9FF', 'magic', ['moon', 'star', 'milk'], [
     ['An owl hoots in the night. Leo and Bella look up at the moon and the stars.', '🦉,🌙,⭐'],
     ['The moon looks like a big round cheese! Leo laughs. Silly moon!', '🌙,🧀'],
     ['Bella pours warm milk. They sip and count the stars. One, two, three…', '🥛,⭐'],
@@ -110,7 +197,7 @@ export const STORIES: Story[] = [
     ['What does the moon look like to Leo?', 1, ['🍪 a cookie', '🧀 a cheese', '🍕 a pizza']],
     ['What do they drink?', 0, ['🥛 milk', '🧃 juice', '☕ tea']],
   ]),
-  story('kite', 2, 'The Red Kite', '🪁', '#FFB4BA', ['kite', 'wind', 'tree'], [
+  story('kite', 2, 'The Red Kite', '🪁', '#FFB4BA', 'adventure', ['kite', 'wind', 'tree'], [
     ['Leo has a red kite. Bella has a blue kite.', '🪁,🦁,🐰'],
     ['The wind blows. Up, up, up go the kites!', '🪁,💨'],
     ['Oh no! The red kite gets stuck in a tree.', '🌳,🪁'],
@@ -121,7 +208,7 @@ export const STORIES: Story[] = [
   ]),
 
   // ───────────────────────── LEVEL 3 · age 6 · everyday words ─────────────────────────
-  story('farm-day', 3, 'A Day at the Farm', '🚜', '#FFE29A', ['farm', 'cow', 'bread'], [
+  story('farm-day', 3, 'A Day at the Farm', '🚜', '#FFE29A', 'nature', ['farm', 'cow', 'bread'], [
     ['Leo and Bella wake up early. Today they visit a farm.', '🦁,🐰,🌄'],
     ['The farmer shows them a cow. The cow gives milk every day.', '🐮,🥛'],
     ['In the barn, a hen sits on her eggs. Bella must be very quiet.', '🐔,🥚'],
@@ -132,7 +219,29 @@ export const STORIES: Story[] = [
     ['What did the hen sit on?', 2, ['🍞 bread', '🍎 apples', '🥚 eggs']],
     ['Where did Leo and Bella go?', 1, ['🏫 school', '🚜 a farm', '🏖️ the beach']],
   ]),
-  story('monkey-banana', 3, 'The Monkey and the Banana', '🐵', '#FFE29A', ['monkey', 'banana', 'tree'], [
+  story('flower-dragon', 3, 'The Dragon Who Loved Flowers', '🐲', '#FFB8CC', 'magic', ['dragon', 'flower', 'valley'], [
+    ['Barnaby is a gentle green dragon who lives in a peaceful sunlit valley.', '🐲,🌲'],
+    ['Other dragons breathe fire, but Barnaby loves planting red roses and yellow tulips.', '🌹,🐲'],
+    ['One cold evening, frost covers the village garden. The poor flowers shiver and droop.', '❄️,🥀'],
+    ['Barnaby gently blows warm, cozy breath across the garden beds. Whoosh!', '🐲,💨,🌸'],
+    ['The flowers blossom with sweet fragrance! The villagers cheer and crown Barnaby King of Flowers.', '👑,🌸,🐲'],
+  ], [
+    ['What does Barnaby love to plant?', 1, ['🌲 pine trees', '🌸 roses and flowers', '🥕 carrots']],
+    ['What happened to the flowers on the cold evening?', 0, ['❄️ frost made them shiver', '🐜 bugs ate them', '🌧️ rain washed them away']],
+    ['What did the villagers crown Barnaby?', 2, ['👑 King of the Mountain', '⭐ Star Dragon', '👑 King of Flowers']],
+  ]),
+  story('star-castle', 3, 'Journey to the Star Castle', '🏰', '#D4C9FF', 'adventure', ['castle', 'rocket', 'dragon'], [
+    ['Leo and Bella build a silver spaceship out of shiny foil and colourful buttons.', '🚀,✨'],
+    ['3, 2, 1, blast off! They soar past the moon to a glowing floating castle.', '🚀,🌙,🏰'],
+    ['A friendly baby dragon with sparkling star wings welcomes them at the gate.', '🐲,⭐'],
+    ['The dragon blows bubbles made of soft starlight that chime like fairy bells.', '🫧,✨,🔔'],
+    ['Leo and Bella slide down a giant rainbow bridge all the way home to bed.', '🌈,🛏️,😴'],
+  ], [
+    ['Where was the glowing floating castle?', 0, ['⭐ in outer space', '🌊 in the ocean', '🌲 in the forest']],
+    ['Who welcomed them at the castle gate?', 1, ['🦉 an owl', '🐲 a friendly baby dragon', '🤖 a robot']],
+    ['What did they slide down on the way home?', 2, ['🎿 a ski slope', '🎢 a rollercoaster', '🌈 a giant rainbow bridge']],
+  ]),
+  story('monkey-banana', 3, 'The Monkey and the Banana', '🐵', '#FFE29A', 'animals', ['monkey', 'banana', 'tree'], [
     ['A little monkey lives in a tall tree. He loves to eat bananas.', '🐵,🌳,🍌'],
     ['One morning, he cannot find a single banana. The monkey is sad.', '🐵,😢'],
     ['A kind zebra says, "Look by the river!" The monkey runs and runs.', '🦓,🌊'],
@@ -143,7 +252,7 @@ export const STORIES: Story[] = [
     ['Who told the monkey where to look?', 0, ['🦓 a zebra', '🦁 a lion', '🐼 a panda']],
     ['What did the monkey do with the bananas?', 1, ['🙈 hid them', '🤝 shared them', '🗑️ threw them']],
   ]),
-  story('birthday-cake', 3, "Bella's Birthday Cake", '🎂', '#FFB8CC', ['cake', 'candy', 'house'], [
+  story('birthday-cake', 3, "Bella's Birthday Cake", '🎂', '#FFB8CC', 'magic', ['cake', 'candy', 'house'], [
     ['Today is Bella\'s birthday. Leo wants to make her a surprise.', '🎂,🐰,🦁'],
     ['Leo mixes the flour, the eggs, and the sugar. He puts the cake in the oven.', '🥚,🍰'],
     ['Oh no! The cake is a little burnt. Leo feels sorry.', '🔥,😟'],
@@ -154,7 +263,7 @@ export const STORIES: Story[] = [
     ['What went wrong with the cake?', 0, ['🔥 It got burnt', '🥛 It was cold', '🐜 Ants ate it']],
     ['What did Bella put on top?', 2, ['🍌 bananas', '🍕 pizza', '🍒 cherries']],
   ]),
-  story('train-beach', 3, 'The Train to the Beach', '🚂', '#BAE6FD', ['train', 'beach', 'shark'], [
+  story('train-beach', 3, 'The Train to the Beach', '🚂', '#BAE6FD', 'adventure', ['train', 'beach', 'shark'], [
     ['Toot, toot! Leo and Bella climb on the train. It is going to the beach.', '🚂,🦁,🐰'],
     ['The train goes over a bridge and past a green forest.', '🌉,🌲'],
     ['At last they see the sea. They run to the sand and build a castle.', '🏖️,🏰'],
@@ -165,7 +274,7 @@ export const STORIES: Story[] = [
     ['What did they build in the sand?', 2, ['🏠 a house', '🌉 a bridge', '🏰 a castle']],
     ['What was in the water?', 1, ['🦈 a shark', '🐬 a dolphin', '🐳 a whale']],
   ]),
-  story('sleepy-panda', 3, 'The Sleepy Panda', '🐼', '#D4C9FF', ['panda', 'sleep', 'dream'], [
+  story('sleepy-panda', 3, 'The Sleepy Panda', '🐼', '#D4C9FF', 'animals', ['panda', 'sleep', 'dream'], [
     ['Pip the panda is very sleepy. He yawns a big yawn.', '🐼,🥱'],
     ['But Pip cannot sleep. The forest is too noisy tonight.', '🌲,🔊'],
     ['An owl says, "Close your eyes and count the stars." Pip counts one, two, three.', '🦉,⭐'],
@@ -178,7 +287,18 @@ export const STORIES: Story[] = [
   ]),
 
   // ───────────────────────── LEVEL 4 · age 7 · longer words ─────────────────────────
-  story('rocket-planet', 4, 'The Rocket to the Planet', '🚀', '#BAE6FD', ['rocket', 'planet', 'camera'], [
+  story('deep-sea', 4, 'The Deep Sea Secret', '🌊', '#BAE6FD', 'adventure', ['turtle', 'coral', 'ocean'], [
+    ['Coral the baby sea turtle swims through the sparkling turquoise water.', '🐢,🌊'],
+    ['She glides past colourful coral reefs where clownfish play hide and seek.', '🪸,🐠'],
+    ['Inside an old shipwreck, Coral spots a golden chest glowing softly in the dark.', '🚢,📦,✨'],
+    ['The chest is not filled with gold, but with sea crystals and three tiny baby seahorses!', '💎,🫧'],
+    ['Coral guides the happy seahorse family back to their safe, warm kelp garden.', '🐢,🪸,❤️'],
+  ], [
+    ['Who is Coral in the story?', 0, ['🐢 a baby sea turtle', '🐬 a dolphin', '🦈 a shark']],
+    ['Where did Coral find the glowing chest?', 1, ['🏖️ on the beach', '🚢 inside an old shipwreck', '⛰️ on a mountain']],
+    ['Who was inside the chest?', 2, ['💰 pirate coins', '🦀 crabs', '🫧 baby seahorses']],
+  ]),
+  story('rocket-planet', 4, 'The Rocket to the Planet', '🚀', '#BAE6FD', 'adventure', ['rocket', 'planet', 'camera'], [
     ['Leo built a rocket in the garden. It had shiny wings and a round window. Bella packed a basket of snacks and a camera.', '🚀,🧺,📷'],
     ['Three, two, one — blast off! The rocket zoomed past the clouds and into the dark sky.', '🚀,☁️'],
     ['Soon they landed on a purple planet. The ground sparkled like glitter, and tiny glowing flowers grew everywhere.', '🪐,🌸'],
@@ -190,7 +310,7 @@ export const STORIES: Story[] = [
     ['What color was the planet?', 0, ['🟣 purple', '🔴 red', '🟢 green']],
     ['What did the alien give them?', 2, ['🥕 a carrot', '🎈 a balloon', '🧲 a magnet']],
   ]),
-  story('penguin-fly', 4, 'The Penguin Who Wanted to Fly', '🐧', '#BAE6FD', ['penguin', 'island', 'balloon'], [
+  story('penguin-fly', 4, 'The Penguin Who Wanted to Fly', '🐧', '#BAE6FD', 'animals', ['penguin', 'island', 'balloon'], [
     ['Pablo the penguin lived on a snowy island. Every day he watched the birds fly high above him.', '🐧,🏝️,🐦'],
     ['"I wish I could fly," he sighed. He flapped his flippers as fast as he could, but he only fell in the snow.', '🐧,❄️'],
     ['A wise old turtle swam by. "Penguins cannot fly in the sky," he said, "but you are a champion in the sea."', '🐢,🌊'],
@@ -202,7 +322,7 @@ export const STORIES: Story[] = [
     ['What is Pablo great at?', 2, ['🏃 running', '🧗 climbing', '🏊 swimming']],
     ['What lesson did Pablo learn?', 1, ['🍕 Eat more fish', '⭐ Everyone is good at something special', '😴 Sleep all day']],
   ]),
-  story('pumpkin-patch', 4, 'The Pumpkin Patch', '🎃', '#FFE29A', ['pumpkin', 'scooter', 'candle'], [
+  story('pumpkin-patch', 4, 'The Pumpkin Patch', '🎃', '#FFE29A', 'nature', ['pumpkin', 'scooter', 'candle'], [
     ['In October, Leo and Bella rode their scooters to the pumpkin patch. The field was full of big orange pumpkins.', '🛴,🎃'],
     ['Leo wanted the tallest pumpkin. Bella wanted the roundest one. They searched up and down the rows.', '🦁,🐰,🎃'],
     ['At last, they found a giant pumpkin hiding behind a scarecrow. It was too heavy to lift!', '🎃,🧑‍🌾'],
@@ -213,7 +333,7 @@ export const STORIES: Story[] = [
     ['Where was the giant pumpkin hiding?', 0, ['🧑‍🌾 behind a scarecrow', '🌳 behind a tree', '🏠 behind a barn']],
     ['What did Bella put inside the pumpkin?', 1, ['🍬 candy', '🕯️ a candle', '🔦 a torch']],
   ]),
-  story('magic-guitar', 4, 'The Magic Guitar', '🎸', '#D4C9FF', ['guitar', 'piano', 'rainbow'], [
+  story('magic-guitar', 4, 'The Magic Guitar', '🎸', '#D4C9FF', 'magic', ['guitar', 'piano', 'rainbow'], [
     ['Bella found an old guitar in the attic. It was dusty, but when she touched the strings, they glowed softly.', '🎸,✨'],
     ['She played one gentle note, and a tiny rainbow floated out of the guitar.', '🎸,🌈'],
     ['Leo ran to the piano and played along. Together the music made flowers bloom on the windowsill.', '🎹,🌷'],
@@ -224,7 +344,7 @@ export const STORIES: Story[] = [
     ['What came out of the guitar?', 0, ['🌈 a rainbow', '🦋 a butterfly', '🎈 a balloon']],
     ['What did Leo play?', 2, ['🥁 drums', '🎺 a trumpet', '🎹 the piano']],
   ]),
-  story('turtle-race', 4, "The Turtle's Race", '🐢', '#99F0E3', ['turtle', 'rabbit', 'trophy'], [
+  story('turtle-race', 4, "The Turtle's Race", '🐢', '#99F0E3', 'animals', ['turtle', 'rabbit', 'trophy'], [
     ['Timmy the turtle and Rosie the rabbit decided to have a race to the old lighthouse.', '🐢,🐇'],
     ['"Ha! I will win easily," laughed Rosie, hopping far ahead. Timmy walked slowly and steadily.', '🐇,🐢'],
     ['Halfway there, Rosie got tired. She lay down under a tree and fell fast asleep.', '🌳,😴'],
@@ -238,7 +358,7 @@ export const STORIES: Story[] = [
   ]),
 
   // ───────────────────────── LEVEL 5 · age 8–9 · rich vocabulary ─────────────────────────
-  story('butterfly-journey', 5, "The Butterfly's Journey", '🦋', '#FFB8CC', ['butterfly', 'sunflower', 'umbrella'], [
+  story('butterfly-journey', 5, "The Butterfly's Journey", '🦋', '#FFB8CC', 'nature', ['butterfly', 'sunflower', 'umbrella'], [
     ['Once upon a time, a tiny caterpillar named Luna lived on a sunflower leaf. She spent her days eating and dreaming about the sky.', '🐛,🌻'],
     ['One chilly morning, Luna spun a silky cocoon around herself. Inside it was dark and quiet, so she slept for many days.', '🛏️,🌙'],
     ['When she finally pushed her way out, something amazing had happened. Luna had two beautiful, shimmering wings!', '🦋,✨'],
@@ -250,7 +370,7 @@ export const STORIES: Story[] = [
     ['Where did Luna hide from the storm?', 2, ['🏠 inside a house', '🌳 in a tree', '☂️ under an umbrella']],
     ['What changed Luna from a caterpillar?', 0, ['🦋 she grew wings', '🌻 she ate more', '🌈 she saw a rainbow']],
   ]),
-  story('treasure-hunt', 5, 'The Treasure Hunt', '💰', '#FFE29A', ['treasure', 'backpack', 'telescope'], [
+  story('treasure-hunt', 5, 'The Treasure Hunt', '💰', '#FFE29A', 'adventure', ['treasure', 'backpack', 'telescope'], [
     ['Leo found a crumpled map inside an old bottle on the beach. In the corner, a red cross marked a hidden treasure.', '🗺️,🏖️'],
     ['He packed his backpack with a flashlight, a sandwich, and a shiny telescope. Bella grabbed a shovel and followed him.', '🎒,🔭,🥪'],
     ['Through the telescope, Leo spotted a rocky hill with two palm trees at the top. "That is the place on the map!" he cried.', '🔭,🌴'],
@@ -262,7 +382,7 @@ export const STORIES: Story[] = [
     ['What did Leo use to look far away?', 2, ['🔬 a microscope', '📷 a camera', '🔭 a telescope']],
     ['What was the real treasure?', 1, ['💰 gold coins', '🤝 friendship', '💎 a diamond']],
   ]),
-  story('little-telescope', 5, 'The Little Telescope', '🔭', '#D4C9FF', ['telescope', 'calendar', 'fireworks'], [
+  story('little-telescope', 5, 'The Little Telescope', '🔭', '#D4C9FF', 'science', ['telescope', 'calendar', 'fireworks'], [
     ['Maya received a telescope for her eighth birthday. She circled the date on her calendar and waited for a clear night.', '🔭,📅'],
     ['On the first clear evening, she pointed it at the sky. The moon was covered with craters that looked like tiny bowls.', '🌙,🔭'],
     ['Next she found Jupiter, a bright dot with four little moons beside it. Maya wrote everything in her notebook.', '🪐,📓'],
@@ -274,7 +394,7 @@ export const STORIES: Story[] = [
     ['What did Maya see near Jupiter?', 0, ['🌙 four little moons', '☁️ a cloud', '🛸 a spaceship']],
     ['What did the fireworks look like to Maya?', 2, ['🐟 fish', '🦋 butterflies', '🌸 flowers of light']],
   ]),
-  story('elephant-day', 5, "The Elephant's Big Day", '🐘', '#99F0E3', ['elephant', 'strawberry', 'watermelon'], [
+  story('elephant-day', 5, "The Elephant's Big Day", '🐘', '#99F0E3', 'animals', ['elephant', 'strawberry', 'watermelon'], [
     ['Ellie the elephant woke up before sunrise. Today was the annual summer fair, and she had promised to help.', '🐘,🌄'],
     ['First, she carried a huge basket of juicy strawberries to the market stall. Her trunk made carrying them look easy.', '🍓,🧺'],
     ['Then the farmer asked her to move a giant watermelon. No one else was strong enough to lift it!', '🍉,💪'],
@@ -286,7 +406,7 @@ export const STORIES: Story[] = [
     ['Who got lost in the crowd?', 2, ['🐿️ a squirrel', '🦘 a kangaroo', '🦔 a hedgehog']],
     ['What did the mayor give Ellie?', 1, ['🏆 a trophy', '🏅 a medal', '🎁 a present']],
   ]),
-  story('science-fair', 5, 'The Rainy Science Fair', '🔬', '#BAE6FD', ['microscope', 'lightning', 'computer'], [
+  story('science-fair', 5, 'The Rainy Science Fair', '🔬', '#BAE6FD', 'science', ['microscope', 'lightning', 'computer'], [
     ['Sam and Zara spent weeks preparing for the school science fair. Their project was called "How Rainbows Are Made".', '🔬,🌈'],
     ['On the big morning, black clouds covered the sky. Thunder rumbled and heavy rain began to fall.', '⛈️,🌧️'],
     ['Inside the hall, a flash of lightning made the lights flicker. The computer with their slides went completely dark.', '⚡,💻'],
@@ -298,8 +418,9 @@ export const STORIES: Story[] = [
     ['What went wrong during the fair?', 0, ['⚡ the computer went dark', '🔥 a fire started', '🐕 a dog ran in']],
     ['How did Zara make a rainbow?', 1, ['🎨 with paint', '🔦 a torch and a glass of water', '☂️ with an umbrella']],
   ]),
-  // ───────────── PERSONAL STORIES · one per level · they star the child ({name}) and their buddy ({buddy}) ─────────────
-  story('me-pal', 1, 'My Pal', '{avatar}', '#FFE29A', ['sun', 'run', 'hug'], [
+
+  // ───────────── PERSONAL STORIES · one per level · star the child ({name}) and buddy ({buddy}) ─────────────
+  story('me-pal', 1, 'My Pal', '{avatar}', '#FFE29A', 'animals', ['sun', 'run', 'hug'], [
     ['{name} has a pal. The pal is a {buddy}.', '{avatar}'],
     ['{name} and the {buddy} sit in the sun.', '{avatar},☀️'],
     ['They run and run. Fun, fun, fun!', '🏃,{avatar}'],
@@ -308,7 +429,7 @@ export const STORIES: Story[] = [
     ["Who is {name}'s pal?", 0, ['{avatar} the {buddy}', '🐶 a dog', '🐱 a cat']],
     ['What do they do after they sit?', 1, ['😴 nap', '🏃 run', '🍽️ eat']],
   ]),
-  story('me-park', 2, "{name}'s Day at the Park", '🌳', '#99F0E3', ['frog', 'cake', 'tree'], [
+  story('me-park', 2, "{name}'s Day at the Park", '🌳', '#99F0E3', 'nature', ['frog', 'cake', 'tree'], [
     ['{name} and the {buddy} walk to the park. The sky is blue and the sun is warm.', '{avatar},🌳'],
     ['They see a big frog by the pond. Hop, hop, hop! The frog jumps in.', '🐸,💧'],
     ['{name} and the {buddy} play in the sun. Run, run, run!', '{avatar},☀️'],
@@ -317,7 +438,7 @@ export const STORIES: Story[] = [
     ['Who went to the park with {name}?', 0, ['{avatar} the {buddy}', '🐸 a frog', '🐶 a dog']],
     ['What jumped in the pond?', 0, ['🐸 a frog', '🐱 a cat', '🦆 a duck']],
   ]),
-  story('me-bike', 3, "{name}'s New Bike", '🚲', '#FFB4BA', ['bike', 'friend', 'beach'], [
+  story('me-bike', 3, "{name}'s New Bike", '🚲', '#FFB4BA', 'adventure', ['bike', 'friend', 'beach'], [
     ['{name} got a shiny new bike for a birthday present. It was bright red with a little bell.', '🚲,🎁'],
     ['The {buddy} said, "Let us ride to the beach!" {name} was happy but a little bit nervous.', '{avatar},🏖️'],
     ['At first {name} wobbled and almost fell. The {buddy} held the bike and said, "You can do it, friend!"', '🚲,{avatar}'],
@@ -328,7 +449,7 @@ export const STORIES: Story[] = [
     ['Where did they ride to?', 0, ['🏖️ the beach', '🏫 school', '🏰 a castle']],
     ['How did {name} feel at first?', 0, ['😟 nervous', '😴 sleepy', '😡 angry']],
   ]),
-  story('me-rocket', 4, '{name} and the Rainbow Rocket', '🚀', '#BAE6FD', ['rocket', 'rainbow', 'basket'], [
+  story('me-rocket', 4, '{name} and the Rainbow Rocket', '🚀', '#BAE6FD', 'adventure', ['rocket', 'rainbow', 'basket'], [
     ['One sunny morning, {name} found a tiny rocket hiding behind the garden shed. It sparkled with every colour of the rainbow.', '🚀,🌈'],
     ['The {buddy} climbed in first and shouted, "Hurry, {name}! The rocket is warming up!"', '{avatar},🚀'],
     ['Whoosh! They zoomed past birds, clouds and a surprised balloon floating in the sky.', '☁️,🎈'],
@@ -339,7 +460,7 @@ export const STORIES: Story[] = [
     ['What did {name} fill with flowers?', 0, ['🧺 a basket', '🪣 a bucket', '🎒 a backpack']],
     ['What did the rocket draw in the sky?', 0, ['🌈 a rainbow', '⭐ a star', '☁️ a cloud']],
   ]),
-  story('me-detective', 5, '{name} the Detective', '🔍', '#D4C9FF', ['umbrella', 'backpack', 'treasure'], [
+  story('me-detective', 5, '{name} the Detective', '🔍', '#D4C9FF', 'science', ['umbrella', 'backpack', 'treasure'], [
     ['Every morning, {name} packed a backpack with a notebook, a magnifying glass and a sandwich. Today, a mystery was waiting.', '🎒,🔍'],
     ['Someone had taken the golden trophy from the school hall! The {buddy} whispered, "We must find the thief before lunch."', '🏆,{avatar}'],
     ['{name} noticed wet footprints leading toward the garden. It had rained all night, so the clues were easy to follow.', '👣,🌧️'],

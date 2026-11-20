@@ -25,6 +25,6 @@ export default function BigButton({ label, onPress, color = colors.amber, emoji,
 }
 const styles = StyleSheet.create({
   btn: { minHeight: 56, borderRadius: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: 20, paddingVertical: 10 },
-  label: { fontSize: 18, fontWeight: '800', color: colors.ink },
+  label: { fontSize: 19, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
   emoji: { fontSize: 20 },
 });

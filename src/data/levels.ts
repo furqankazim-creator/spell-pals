@@ -32,4 +32,63 @@ export function rulesFor(level: number): Rules {
     default: return { pickChoices: 6, matchChoices: 8, rhymeDistractors: 4, memoryPairs: 10, decoyLetters: 3, hintAfter: 3 };
   }
 }
+
+export interface RoundStageInfo {
+  tier: 'warmup' | 'core' | 'challenge' | 'boss';
+  label: string;
+  badge: string;
+  color: string;
+  bg: string;
+  xpBonus: number;
+}
+
+/** Describes the complexity tier and story connection for a specific round */
+export function roundStageInfo(roundIndex: number, totalRounds: number): RoundStageInfo {
+  if (roundIndex >= totalRounds - 1) {
+    return { tier: 'boss', label: 'Star Boss Challenge', badge: '👑 Final Boss Round', color: '#D97706', bg: '#FEF3C7', xpBonus: 25 };
+  }
+  const ratio = roundIndex / totalRounds;
+  if (ratio < 0.34) {
+    return { tier: 'warmup', label: 'Warm-up Focus', badge: '🌱 Warm-up Round', color: '#059669', bg: '#D1FAE5', xpBonus: 10 };
+  }
+  if (ratio < 0.70) {
+    return { tier: 'core', label: 'Core Practice', badge: '⭐ Core Challenge', color: '#2563EB', bg: '#DBEAFE', xpBonus: 15 };
+  }
+  return { tier: 'challenge', label: 'Power Mastery', badge: '🔥 Power Round', color: '#7C3AED', bg: '#EDE9FE', xpBonus: 20 };
+}
+
+/** Dynamic round-by-round rules that scale complexity as rounds advance */
+export function rulesForRound(level: number, roundIndex: number, totalRounds: number): Rules {
+  const base = rulesFor(level);
+  const info = roundStageInfo(roundIndex, totalRounds);
+
+  if (info.tier === 'warmup') {
+    return {
+      pickChoices: Math.max(2, base.pickChoices - 1),
+      matchChoices: Math.max(3, base.matchChoices - 1),
+      rhymeDistractors: Math.max(1, base.rhymeDistractors - 1),
+      memoryPairs: base.memoryPairs,
+      decoyLetters: 0,
+      hintAfter: 1,
+    };
+  }
+
+  if (info.tier === 'core') {
+    return {
+      ...base,
+      decoyLetters: Math.min(1, base.decoyLetters),
+      hintAfter: Math.min(2, base.hintAfter),
+    };
+  }
+
+  return {
+    ...base,
+    pickChoices: base.pickChoices,
+    matchChoices: base.matchChoices,
+    rhymeDistractors: base.rhymeDistractors,
+    decoyLetters: base.decoyLetters,
+    hintAfter: base.hintAfter,
+  };
+}
+
 export type { Word };

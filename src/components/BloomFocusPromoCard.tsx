@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: 'Baloo2_800ExtraBold',
     color: '#242331',
     marginBottom: 10,
   },
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   titleCol: { flex: 1 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   title: {
-    fontSize: 19,
-    fontWeight: '800',
+    fontSize: 20,
+    fontFamily: 'Baloo2_800ExtraBold',
     color: '#5243C2',
   },
   badge: {
@@ -84,19 +84,20 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     fontSize: 11,
-    fontWeight: '800',
+    fontFamily: 'Baloo2_700Bold',
     color: '#D84534',
     letterSpacing: 0.5,
   },
   tagline: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Baloo2_600SemiBold',
     color: '#E05344',
     marginTop: 2,
   },
   description: {
     fontSize: 14,
     lineHeight: 20,
+    fontFamily: 'Baloo2_500Medium',
     color: '#3F3D56',
     marginBottom: 16,
   },
@@ -110,6 +111,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: 15,
-    fontWeight: '700',
+    fontFamily: 'Baloo2_700Bold',
   },
 });

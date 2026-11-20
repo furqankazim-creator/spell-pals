@@ -61,25 +61,26 @@ const styles = StyleSheet.create({
   titleCol: { flex: 1 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   title: {
-    fontSize: 19,
-    fontWeight: '800',
+    fontSize: 20,
+    fontFamily: 'Baloo2_800ExtraBold',
     color: '#242331',
   },
   publisherLabel: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Baloo2_700Bold',
     color: '#B85A2E',
     marginLeft: 6,
   },
   tagline: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: 'Baloo2_600SemiBold',
     color: '#E05344',
     marginTop: 2,
   },
   description: {
     fontSize: 14,
     lineHeight: 20,
+    fontFamily: 'Baloo2_500Medium',
     color: '#3F3D56',
     marginBottom: 16,
   },
@@ -93,6 +94,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Baloo2_700Bold',
   },
 });

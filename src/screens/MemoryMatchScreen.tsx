@@ -97,7 +97,7 @@ export default function MemoryMatchScreen() {
           const open = flipped.includes(i) || matched.includes(c.word);
           return (
             <Pressable key={c.key} onPress={() => flip(i)} style={[styles.card, { width: cardW }, open ? styles.open : null]} accessibilityRole="button">
-              {open ? (c.emoji || c.imageUri ? <Pic emoji={c.emoji ?? c.word} imageUri={c.imageUri} size={cols === 4 ? 56 : 84} /> : <Text style={[styles.face, cols === 4 || (c.text ?? '').length > 6 ? { fontSize: 15 } : null]}>{c.text}</Text>) : <Text style={styles.q}>?</Text>}
+              {open ? (c.emoji || c.imageUri ? <Pic emoji={c.emoji ?? c.word} imageUri={c.imageUri} size={cols === 4 ? 68 : 96} /> : <Text style={[styles.face, cols === 4 || (c.text ?? '').length > 6 ? { fontSize: 15 } : null]}>{c.text}</Text>) : <Text style={styles.q}>?</Text>}
             </Pressable>
           );
         })}
@@ -108,11 +108,11 @@ export default function MemoryMatchScreen() {
   );
 }
 const styles = StyleSheet.create({
-  title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
   sub: { fontSize: 15, color: colors.muted, marginBottom: 16 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
   card: { aspectRatio: 0.9, backgroundColor: colors.violet, borderRadius: 20, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 5, borderBottomColor: '#9A8CE6' },
   open: { backgroundColor: '#fff', borderBottomColor: '#E6ECF5' },
-  face: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink, textAlign: 'center' },
-  q: { fontSize: 36, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: '#fff' },
+  face: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink, textAlign: 'center' },
+  q: { fontSize: 36, fontFamily: 'Baloo2_800ExtraBold', color: '#fff' },
 });

@@ -18,7 +18,7 @@ export default function BloomFocusShowcase() {
   };
 
   return (
-      <ScreenShell max={820} onBack={handleBack} backLabel="‹">
+      <ScreenShell max={820} onBack={handleBack} backLabel="← Back">
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* 1. HERO BANNER */}
         <View style={styles.heroCard}>

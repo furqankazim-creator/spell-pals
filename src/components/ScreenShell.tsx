@@ -25,7 +25,7 @@ export default function ScreenShell({ children, tabs = true, max, backLabel, onB
         {onBack ? (
           <View style={styles.backWrap}>
             <Pressable onPress={onBack} style={styles.backBtn} accessibilityRole="button">
-              <Text style={styles.backText}>{backLabel ?? '← Back'}</Text>
+              <Text style={styles.backText}>{!backLabel || backLabel === '‹' || backLabel === '<' ? '← Back' : backLabel}</Text>
             </Pressable>
           </View>
         ) : null}
@@ -42,6 +42,17 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1, alignItems: 'center' },
   inner: { width: '100%', flex: 1, paddingBottom: 32 },
   backWrap: { paddingHorizontal: 16, paddingTop: 10, alignItems: 'flex-start' },
-  backBtn: { backgroundColor: 'rgba(255,255,255,0.45)', borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8, borderWidth: 2, borderColor: 'rgba(43,42,82,0.12)' },
-  backText: { fontSize: 14, fontWeight: '800', color: colors.ink },
+  backBtn: {
+    backgroundColor: 'rgba(255,255,255,0.65)',
+    borderRadius: 999,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderWidth: 2,
+    borderColor: 'rgba(43,42,82,0.12)',
+    shadowColor: '#5B8DB8',
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  backText: { fontSize: 14, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink },
 });

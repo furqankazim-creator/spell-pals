@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   wrap: { flex: 1, alignItems: 'center', paddingTop: 40, paddingHorizontal: 24 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   lock: { fontSize: 28 },
-  title: { fontSize: 32, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  title: { fontSize: 32, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
   sub: { fontSize: 18, color: colors.muted, marginTop: 10, marginBottom: 18 },
   dots: { flexDirection: 'row', gap: 12, marginBottom: 12 },
   dot: { width: 14, height: 14, borderRadius: 7, backgroundColor: '#fff', borderWidth: 2, borderColor: colors.violet },

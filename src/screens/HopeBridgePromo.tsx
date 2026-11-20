@@ -8,15 +8,12 @@ export default function HopeBridgePromo() {
   const goBack = () => router.back();
 
   return (
-    <ScreenShell max={820} onBack={goBack} backLabel="‹">
+    <ScreenShell max={820} onBack={goBack} backLabel="← Back">
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.inner}>
 
           {/* Header */}
           <View style={styles.headerRow}>
-            <Pressable onPress={goBack} style={styles.backBtn} accessibilityRole="button">
-              <Text style={styles.backArrow}>‹</Text>
-            </Pressable>
             <Text style={styles.headerTitle}>Hope Bridge Digital</Text>
           </View>
 

@@ -11,7 +11,7 @@ import { colors } from '../theme/colors';
 import ScreenShell from '../components/ScreenShell';
 import ParentGate from '../components/ParentGate';
 import BigButton from '../components/BigButton';
-import { STAGES, WORLDS } from '../data/mapStages';
+import { MAP_WORLDS, getStagesForLevel } from '../data/mapStages';
 import ChildTopBar from '../components/ChildTopBar';
 import StarWordImageUpload from '../components/StarWordImageUpload';
 import { useLayout } from '../lib/useLayout';
@@ -97,18 +97,22 @@ export default function ParentScreen() {
         {tab === 'map' ? (
           <View>
             <View style={styles.card}>
-              <Text style={styles.big}>🗺️ Adventure Map</Text>
-              <Text style={styles.sub}>{STAGES.reduce((n, s) => n + (mapStars[s.id] ?? 0), 0)} of {STAGES.length * 3} stars earned · {STAGES.filter((s) => (mapStars[s.id] ?? 0) > 0).length} of {STAGES.length} stages started</Text>
-              <BigButton label="Open the Map" onPress={() => router.push('/map')} color={colors.amber} />
+              <Text style={styles.big}>🗺️ 10 Locks Adventure Map</Text>
+              <Text style={styles.sub}>
+                {Object.values(mapStars).reduce((sum, v) => sum + v, 0)} stars collected across 10-lock adventure trails
+              </Text>
+              <BigButton label="Open the Adventure Map" onPress={() => router.push('/map')} color={colors.amber} />
             </View>
-            {WORLDS.map((world, wi) => {
-              const stages = STAGES.filter((s) => s.world === wi);
+            {MAP_WORLDS.map((world) => {
+              const stages = getStagesForLevel(world.level);
               const stars = stages.reduce((n, s) => n + (mapStars[s.id] ?? 0), 0);
-              const complete = stages.every((s) => (mapStars[s.id] ?? 0) > 0);
+              const completedCount = stages.filter((s) => (mapStars[s.id] ?? 0) > 0).length;
               return (
                 <View key={world.id} style={styles.card}>
-                  <Text style={styles.big}>{world.emoji} {world.name}</Text>
-                  <Text style={styles.sub}>⭐ {stars} / 15 stars · {complete ? 'World complete!' : 'Keep exploring'}</Text>
+                  <Text style={styles.big}>{world.emoji} {world.name} (Level {world.level})</Text>
+                  <Text style={styles.sub}>
+                    ⭐ {stars} / 30 stars · {completedCount} of 10 locks opened {completedCount === 10 ? '👑 Mastered!' : ''}
+                  </Text>
                 </View>
               );
             })}
@@ -264,7 +268,7 @@ export default function ParentScreen() {
   );
 }
 const styles = StyleSheet.create({
-  title: { fontSize: 26, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink, marginBottom: 12 },
+  title: { fontSize: 26, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink, marginBottom: 12 },
   tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 16 },
   tabsCompact: { flexWrap: 'wrap', gap: 8 },
   tab: { flex: 1, backgroundColor: '#fff', borderRadius: 999, paddingVertical: 12, alignItems: 'center', borderWidth: 2, borderColor: colors.ring },
@@ -272,7 +276,7 @@ const styles = StyleSheet.create({
   tabOn: { borderColor: colors.violet, backgroundColor: colors.violetSoft },
   tabText: { fontWeight: '800', color: colors.ink, fontSize: 13 },
   card: { backgroundColor: '#fff', borderRadius: 24, borderWidth: 2, borderColor: colors.ring, padding: 18, marginBottom: 12 },
-  big: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  big: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
   sub: { fontSize: 15, color: colors.muted, marginTop: 4, marginBottom: 12 },
   h: { fontSize: 18, fontWeight: '900', color: colors.ink, marginTop: 12 },
   dayRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 },
@@ -306,7 +310,7 @@ const styles = StyleSheet.create({
   customCardHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 14 },
   customHeaderIcon: { width: 44, height: 44, borderRadius: 14, backgroundColor: '#FFF1C2', alignItems: 'center', justifyContent: 'center' },
   customHeaderEmoji: { fontSize: 22 },
-  customTitle: { fontSize: 20, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '900', color: colors.ink },
+  customTitle: { fontSize: 20, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
   customSubtitle: { fontSize: 12, color: colors.muted, marginTop: 1 },
   customGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   customForm: { flexGrow: 1, flexBasis: 190 },
