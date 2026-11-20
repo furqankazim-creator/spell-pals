@@ -15,71 +15,62 @@ export default function BottomTabs() {
   const router = useRouter();
   const path = usePathname();
   const insets = useSafeAreaInsets();
+  const bottomPad = insets.bottom > 0 ? insets.bottom : 10;
 
   return (
-    <View style={[styles.wrapper, { paddingBottom: Math.max(insets.bottom, 10) }]}>
-      <View style={styles.dock}>
-        {TABS.map((t) => {
-          const active = path === t.route || (t.route === '/' && path === '/index');
-          return (
-            <Pressable
-              key={t.label}
-              onPress={() => router.push(t.route as never)}
-              style={({ pressed }) => [
-                styles.tab,
-                active && styles.tabActive,
-                pressed && styles.tabPressed,
+    <View style={[styles.bar, { paddingBottom: bottomPad }]}>
+      {TABS.map((t) => {
+        const active = path === t.route || (t.route === '/' && path === '/index');
+        return (
+          <Pressable
+            key={t.label}
+            onPress={() => router.push(t.route as never)}
+            style={({ pressed }) => [
+              styles.tab,
+              active && styles.tabActive,
+              pressed && styles.tabPressed,
+            ]}
+            accessibilityRole="button"
+            accessibilityState={{ selected: active }}
+          >
+            <View style={styles.iconWrap}>
+              <TabIcon id={t.icon} active={active} size={22} />
+            </View>
+            <Text
+              style={[
+                styles.label,
+                active
+                  ? [styles.labelActive, { color: t.activeColor }]
+                  : null,
               ]}
-              accessibilityRole="button"
-              accessibilityState={{ selected: active }}
+              numberOfLines={1}
             >
-              <View style={styles.iconWrap}>
-                <TabIcon id={t.icon} active={active} size={22} />
-              </View>
-              <Text
-                style={[
-                  styles.label,
-                  active
-                    ? [styles.labelActive, { color: t.activeColor }]
-                    : null,
-                ]}
-                numberOfLines={1}
-              >
-                {t.label}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
+              {t.label}
+            </Text>
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  bar: {
     width: '100%',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingTop: 4,
-    backgroundColor: 'transparent',
-  },
-  dock: {
-    width: '100%',
-    maxWidth: 520,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     backgroundColor: '#FFFFFF',
-    borderRadius: 24,
-    paddingVertical: 8,
-    paddingHorizontal: 6,
-    borderWidth: 1.5,
-    borderColor: 'rgba(255, 255, 255, 0.95)',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingTop: 8,
+    paddingHorizontal: 8,
     shadowColor: '#2B2A52',
-    shadowOpacity: 0.1,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 8,
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: -3 },
+    elevation: 10,
+    borderTopWidth: 0,
   },
   tab: {
     flex: 1,
