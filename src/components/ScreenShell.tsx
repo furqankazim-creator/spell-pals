@@ -34,7 +34,7 @@ export default function ScreenShell({
       colors={bedtime ? [colors.nightTop, colors.nightBottom] : [colors.skyTop, colors.skyBottom]}
       style={styles.safe}
     >
-      <SafeAreaView style={styles.safe} edges={['top']}>
+      <SafeAreaView style={styles.safe} edges={tabs ? ['top'] : ['top', 'bottom']}>
         {tabs ? <HopeBridgeTicker /> : null}
         {wide ? <TopNav links={tabs} /> : null}
         {onBack ? (
@@ -58,7 +58,7 @@ export default function ScreenShell({
               {
                 maxWidth: wide ? limit : '100%',
                 paddingHorizontal: wide ? 24 : 16,
-                paddingTop: wide ? 24 : 10,
+                paddingTop: wide ? 24 : 12,
               },
             ]}
           >
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scrollFlex: { flex: 1, width: '100%' },
   scroll: { flexGrow: 1, width: '100%', alignItems: 'center' },
-  inner: { width: '100%', alignSelf: 'stretch', flex: 1, paddingBottom: 32 },
+  inner: { width: '100%', alignSelf: 'stretch', paddingBottom: 36 },
   backWrap: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 2, alignItems: 'flex-start' },
   backBtn: {
     backgroundColor: 'rgba(255,255,255,0.75)',
