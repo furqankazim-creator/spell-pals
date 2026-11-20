@@ -12,14 +12,6 @@ import Pic from '../components/Pic';
 import { colors } from '../theme/colors';
 import { useLayout } from '../lib/useLayout';
 
-const LEVEL_ACTIVITIES: Record<number, GameId[]> = {
-  1: ['spell', 'pick', 'match'],
-  2: ['spell', 'sound', 'vowel'],
-  3: ['spell', 'rhyme', 'memory'],
-  4: ['pick', 'sound', 'match'],
-  5: ['spell', 'vowel', 'rhyme'],
-};
-
 export default function HomeScreen() {
   const router = useRouter();
   const profile = useStore((s) => s.profile);
@@ -41,9 +33,6 @@ export default function HomeScreen() {
       attempts.some((a) => a.game === gameId && a.correct > 0)
     );
   };
-
-  const levelActivityIds = LEVEL_ACTIVITIES[currentLevel] || LEVEL_ACTIVITIES[1];
-  const levelGames = levelActivityIds.map((id) => GAMES.find((g) => g.id === id)!);
 
   const getGameLevelDetail = (id: GameId, lvl: number) => {
     switch (id) {
@@ -141,54 +130,36 @@ export default function HomeScreen() {
 
       {/* ─────────────────── LEVEL-SPECIFIC ACTIVITIES ─────────────────── */}
       <View style={styles.sectionHeader}>
-        <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>🎮 Level {currentLevel} Core Activities</Text>
-          <View style={styles.activityProgressPill}>
-            <Text style={styles.activityProgressText}>
-              {levelGames.filter((g) => hasCompletedGame(g.id)).length}/3 Done
-            </Text>
-          </View>
-        </View>
+        <Text style={styles.sectionTitle}>🎮 Level {currentLevel} Interactive Activities</Text>
         <Text style={styles.sectionSub}>
-          Play in order: complete each challenge to unlock the next for {currentLevelInfo.name}!
+          All 7 core games open with 3 progressive rounds for {currentLevelInfo.name} ({currentLevelInfo.ages})
         </Text>
       </View>
 
       <View style={[styles.grid, compact && styles.gridCompact]}>
-        {levelGames.map((item, idx) => {
+        {GAMES.map((item) => {
           const detail = getGameLevelDetail(item.id, currentLevel);
           const isDone = hasCompletedGame(item.id);
-          const prevGame = idx > 0 ? levelGames[idx - 1] : null;
-          const isUnlocked = idx === 0 || (prevGame ? hasCompletedGame(prevGame.id) : true);
-
-          const handlePress = () => {
-            if (!isUnlocked) {
-              playSfx('wrong');
-              speak(`Complete ${prevGame?.title} first to unlock ${item.title}!`);
-              return;
-            }
-            playSfx('tap');
-            router.push(item.route as never);
-          };
 
           return (
             <Pressable
               key={item.id}
-              onPress={handlePress}
+              onPress={() => {
+                playSfx('tap');
+                router.push(item.route as never);
+              }}
               accessibilityRole="button"
-              accessibilityLabel={`${item.title}, ${isUnlocked ? (isDone ? 'Completed' : 'Ready') : 'Locked'}`}
+              accessibilityLabel={`${item.title}, ${isDone ? 'Completed' : 'Play'}`}
               style={[
                 styles.gameCard,
-                { backgroundColor: isUnlocked ? item.color : '#F1F5F9' },
+                { backgroundColor: item.color },
                 isDone && styles.gameCardDone,
-                !isUnlocked && styles.gameCardLocked,
                 compact && styles.gameCardCompact,
               ]}
             >
-              <View style={[styles.gameIcon, !isUnlocked && styles.gameIconLocked, compact && styles.gameIconCompact]}>
+              <View style={[styles.gameIcon, compact && styles.gameIconCompact]}>
                 <Pic
                   emoji={
-                    !isUnlocked ? '🔒' :
                     item.id === 'spell' ? '🔤' :
                     item.id === 'pick' ? '👉' :
                     item.id === 'sound' ? '🔊' :
@@ -201,52 +172,35 @@ export default function HomeScreen() {
               </View>
               <View style={styles.gameTextBox}>
                 <View style={styles.gameTitleRow}>
-                  <Text style={[styles.gameTitle, !isUnlocked && styles.gameTitleLocked, compact && styles.gameTitleCompact]}>
-                    {idx + 1}. {item.title}
+                  <Text style={[styles.gameTitle, compact && styles.gameTitleCompact]}>
+                    {item.title}
                   </Text>
                   {isDone ? (
                     <Text style={styles.doneCheck}>✓</Text>
                   ) : null}
                 </View>
-                <Text style={[styles.gameDesc, !isUnlocked && styles.gameDescLocked, compact && styles.gameDescCompact]}>
-                  {isUnlocked ? detail : `Complete ${prevGame?.title} first to unlock`}
+                <Text style={[styles.gameDesc, compact && styles.gameDescCompact]}>
+                  {detail}
                 </Text>
                 <View style={styles.activityBadgeRow}>
                   {isDone ? (
                     <View style={styles.activityBadgeDone}>
                       <Text style={styles.activityBadgeDoneText}>✓ Completed · Replay</Text>
                     </View>
-                  ) : isUnlocked ? (
-                    <>
-                      <View style={styles.activityBadge}>
-                        <Text style={styles.activityBadgeText}>Level {currentLevel} Fit</Text>
-                      </View>
-                      <View style={styles.roundBadge}>
-                        <Text style={styles.roundBadgeText}>3 Rounds ➔</Text>
-                      </View>
-                    </>
                   ) : (
-                    <View style={styles.activityBadgeLocked}>
-                      <Text style={styles.activityBadgeLockedText}>🔒 Locked</Text>
+                    <View style={styles.activityBadge}>
+                      <Text style={styles.activityBadgeText}>Level {currentLevel} Fit</Text>
                     </View>
                   )}
+                  <View style={styles.roundBadge}>
+                    <Text style={styles.roundBadgeText}>3 Rounds ➔</Text>
+                  </View>
                 </View>
               </View>
             </Pressable>
           );
         })}
       </View>
-
-      {/* Practice Library Link */}
-      <Pressable
-        onPress={() => router.push('/games')}
-        style={styles.browseAllGamesBar}
-        accessibilityRole="button"
-      >
-        <Text style={styles.browseAllGamesText}>
-          🕹️ Practice Library (Explore All 7 Activities) ➔
-        </Text>
-      </Pressable>
 
       <BloomFocusPromoCard onPress={() => router.push('/bloom-focus')} />
       <HopeBridgePublisherCard onPress={() => router.push('/about-hope-bridge')} />
