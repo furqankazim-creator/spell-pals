@@ -160,7 +160,7 @@ export default function MapScreen() {
       {/* Summary Box */}
       <View style={styles.summary}>
         <View style={styles.sumBox}>
-          <Pic emoji="⭐" size={32} />
+          <Pic emoji="⭐" size={28} />
           <Text style={styles.sumNum}>
             {totalStarsInWorld}
             <Text style={styles.sumOf}> / 30</Text>
@@ -168,19 +168,40 @@ export default function MapScreen() {
           <Text style={styles.sumLabel}>stars</Text>
         </View>
         <View style={styles.sumBox}>
-          <Pic emoji="🔓" size={32} />
+          <Pic emoji="🔓" size={28} />
           <Text style={styles.sumNum}>
             {locksOpened}
             <Text style={styles.sumOf}> / 10</Text>
           </Text>
           <Text style={styles.sumLabel}>locks open</Text>
         </View>
-        <View style={{ flex: 1.4 }}>
-          <BigButton
-            label={locksOpened === 0 ? 'Start Lock 1!' : locksOpened === 10 ? 'Replay' : `Continue Lock ${activeLockIdx + 1}`}
+        <View style={styles.sumBtnWrap}>
+          <Pressable
             onPress={() => openQuest(stages[activeLockIdx])}
-            color={colors.amber}
-          />
+            style={({ pressed }) => [
+              styles.sumYellowBtn,
+              pressed && styles.sumYellowBtnPressed,
+            ]}
+            accessibilityRole="button"
+          >
+            <View style={styles.sumYellowTopRow}>
+              <Text style={{ fontSize: 13 }}>{locksOpened === 10 ? '👑' : '▶️'}</Text>
+              <Text style={styles.sumYellowActionText}>
+                {locksOpened === 0 ? 'START' : locksOpened === 10 ? 'REPLAY' : 'CONTINUE'}
+              </Text>
+            </View>
+            <Text
+              style={styles.sumYellowMainText}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.85}
+            >
+              {locksOpened === 10 ? 'All 10 ⭐' : `Lock ${activeLockIdx + 1} ➔`}
+            </Text>
+            <Text style={styles.sumYellowSubLabel}>
+              {locksOpened === 10 ? 'cleared' : 'adventure'}
+            </Text>
+          </Pressable>
         </View>
       </View>
 
@@ -410,6 +431,59 @@ const styles = StyleSheet.create({
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: colors.muted,
+  },
+  sumBtnWrap: {
+    flex: 1.45,
+  },
+  sumYellowBtn: {
+    flex: 1,
+    backgroundColor: '#FBBF24',
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: '#F59E0B',
+    borderBottomWidth: 4,
+    borderBottomColor: '#D97706',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    shadowColor: '#D97706',
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
+  },
+  sumYellowBtnPressed: {
+    transform: [{ translateY: 2 }],
+    borderBottomWidth: 2,
+  },
+  sumYellowTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginBottom: 2,
+  },
+  sumYellowActionText: {
+    fontSize: 10,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#78350F',
+    letterSpacing: 0.5,
+  },
+  sumYellowMainText: {
+    fontSize: 16,
+    lineHeight: 20,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+    textAlign: 'center',
+  },
+  sumYellowSubLabel: {
+    fontSize: 10,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: '#92400E',
+    marginTop: 1,
   },
 
   realmShowcaseCard: {
