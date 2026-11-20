@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TabIcon } from './AppIcon';
 
 const TABS = [
@@ -12,24 +13,25 @@ const TABS = [
 export default function BottomTabs() {
   const router = useRouter();
   const path = usePathname();
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.bar}>
+    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 8) }]}>
       {TABS.map((t) => {
         const active = path === t.route || (t.route === '/' && path === '/index');
         return (
           <Pressable
             key={t.label}
             onPress={() => router.push(t.route as never)}
-            style={[
+            style={({ pressed }) => [
               styles.tab,
-              active && { backgroundColor: t.activeBg, borderColor: t.activeColor + '30', borderWidth: 1.5 },
+              pressed && { opacity: 0.8 },
             ]}
             accessibilityRole="button"
             accessibilityState={{ selected: active }}
           >
-            <View style={styles.iconWrap}>
-              <TabIcon id={t.icon} active={active} size={18} />
+            <View style={[styles.iconWrap, active && { backgroundColor: t.activeBg }]}>
+              <TabIcon id={t.icon} active={active} size={19} />
             </View>
             <Text
               style={[
@@ -52,40 +54,35 @@ const styles = StyleSheet.create({
   bar: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    borderTopWidth: 1.5,
-    borderTopColor: '#E2E8F0',
-    borderTopLeftRadius: 22,
-    borderTopRightRadius: 22,
-    paddingTop: 5,
-    paddingBottom: 6,
-    paddingHorizontal: 12,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(43, 42, 82, 0.08)',
+    paddingTop: 6,
+    paddingHorizontal: 8,
     shadowColor: '#1E1B4B',
-    shadowOpacity: 0.08,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: -4 },
-    elevation: 8,
+    shadowOpacity: 0.07,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: -3 },
+    elevation: 10,
   },
   tab: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 1,
-    paddingVertical: 3,
-    paddingHorizontal: 6,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    borderColor: 'transparent',
-    minHeight: 36,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    borderRadius: 12,
   },
   iconWrap: {
-    height: 20,
+    width: 44,
+    height: 28,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 2,
   },
   label: {
     fontSize: 11,
-    lineHeight: 13,
-    marginTop: 0,
+    lineHeight: 14,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: '#64748B',

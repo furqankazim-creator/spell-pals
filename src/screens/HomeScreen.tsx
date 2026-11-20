@@ -56,12 +56,12 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScreenShell max={compact ? 460 : 860}>
+    <ScreenShell>
       {/* ─────────────────── PARENT CHILD DETAILS HUB ─────────────────── */}
       <View style={styles.childHub}>
         <View style={styles.childHubMain}>
           <View style={styles.avatarBox}>
-            <Pic emoji={profile.avatar} size={compact ? 46 : 56} />
+            <Pic emoji={profile.avatar} size={compact ? 44 : 54} />
           </View>
           <View style={styles.childInfoBox}>
             <View style={styles.childNameRow}>
@@ -72,14 +72,14 @@ export default function HomeScreen() {
                 <Text style={styles.agePillText}>Age {profile.age}</Text>
               </View>
             </View>
-            <Text style={styles.levelActiveBadge}>
+            <Text style={styles.levelActiveBadge} numberOfLines={1}>
               {currentLevelInfo.emoji} Level {currentLevel}: {currentLevelInfo.name}
             </Text>
           </View>
           <View style={styles.childActionsRow}>
             <Pressable
               onPress={() => router.push('/map')}
-              style={styles.mapBtn}
+              style={({ pressed }) => [styles.mapBtn, pressed && styles.btnPressed]}
               accessibilityRole="button"
               accessibilityLabel="Open Adventure Map"
             >
@@ -88,7 +88,7 @@ export default function HomeScreen() {
             </Pressable>
             <Pressable
               onPress={() => router.push('/setup')}
-              style={styles.editProfileBtn}
+              style={({ pressed }) => [styles.editProfileBtn, pressed && styles.btnPressed]}
               accessibilityRole="button"
               accessibilityLabel="Edit child details"
             >
@@ -102,15 +102,15 @@ export default function HomeScreen() {
         <View style={styles.statsRow}>
           <View style={styles.statPill}>
             <Text style={styles.statIcon}>⭐</Text>
-            <Text style={styles.statNum}>{totalMapStars} Stars</Text>
+            <Text style={styles.statNum} numberOfLines={1}>{totalMapStars} Stars</Text>
           </View>
           <View style={styles.statPill}>
             <Text style={styles.statIcon}>🎁</Text>
-            <Text style={styles.statNum}>{stickers.length} Stickers</Text>
+            <Text style={styles.statNum} numberOfLines={1}>{stickers.length} Stickers</Text>
           </View>
           <View style={styles.statPill}>
             <Text style={styles.statIcon}>⏱️</Text>
-            <Text style={styles.statNum}>{profile.dailyGoal}m Goal</Text>
+            <Text style={styles.statNum} numberOfLines={1}>{profile.dailyGoal}m Goal</Text>
           </View>
         </View>
       </View>
@@ -150,11 +150,12 @@ export default function HomeScreen() {
               }}
               accessibilityRole="button"
               accessibilityLabel={`${item.title}, ${isDone ? 'Completed' : 'Play'}`}
-              style={[
+              style={({ pressed }) => [
                 styles.gameCard,
                 { backgroundColor: item.color },
                 isDone && styles.gameCardDone,
                 compact && styles.gameCardCompact,
+                pressed && styles.gameCardPressed,
               ]}
             >
               <View style={[styles.gameIcon, compact && styles.gameIconCompact]}>
@@ -226,12 +227,12 @@ const styles = StyleSheet.create({
   childHubMain: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
   },
   avatarBox: {
-    width: 62,
-    height: 62,
-    borderRadius: 22,
+    width: 58,
+    height: 58,
+    borderRadius: 20,
     backgroundColor: '#FEF9C3',
     alignItems: 'center',
     justifyContent: 'center',
@@ -240,41 +241,45 @@ const styles = StyleSheet.create({
   },
   childInfoBox: {
     flex: 1,
+    minWidth: 0,
+    justifyContent: 'center',
   },
   childNameRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
+    flexWrap: 'nowrap',
   },
   childName: {
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: colors.ink,
+    flexShrink: 1,
   },
   agePill: {
     backgroundColor: '#EEF2FF',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingHorizontal: 7,
+    paddingVertical: 1,
     borderRadius: 8,
   },
   agePillText: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#4F46E5',
   },
   levelActiveBadge: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#059669',
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
-    marginTop: 2,
+    marginTop: 1,
   },
   childActionsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   mapBtn: {
     flexDirection: 'row',
@@ -283,15 +288,22 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1.5,
     borderColor: '#FDE68A',
-    paddingHorizontal: 10,
-    paddingVertical: 7,
+    borderBottomWidth: 3,
+    borderBottomColor: '#F59E0B',
+    paddingHorizontal: 9,
+    paddingVertical: 6,
     gap: 4,
+    shadowColor: '#D97706',
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   mapBtnIcon: {
-    fontSize: 14,
+    fontSize: 13,
   },
   mapBtnText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#92400E',
@@ -303,18 +315,25 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1.5,
     borderColor: '#CBD5E1',
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    gap: 4,
+    borderBottomWidth: 3,
+    borderBottomColor: '#94A3B8',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    gap: 3,
+    elevation: 1,
   },
   editProfileIcon: {
-    fontSize: 13,
+    fontSize: 12,
   },
   editProfileText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: colors.ink,
+  },
+  btnPressed: {
+    transform: [{ translateY: 1 }],
+    borderBottomWidth: 1.5,
   },
   statsRow: {
     flexDirection: 'row',
@@ -423,14 +442,25 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     borderWidth: 2,
     borderColor: 'rgba(43,42,82,0.10)',
+    borderBottomWidth: 4,
+    borderBottomColor: 'rgba(43,42,82,0.18)',
     padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
+    shadowColor: '#5B8DB8',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 2,
   },
   gameCardCompact: {
     width: '100%',
     minHeight: 76,
     padding: 12,
+  },
+  gameCardPressed: {
+    transform: [{ translateY: 2 }],
+    borderBottomWidth: 2,
   },
   gameIcon: {
     width: 50,

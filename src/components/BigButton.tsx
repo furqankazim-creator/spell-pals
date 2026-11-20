@@ -15,7 +15,15 @@ export default function BigButton({ label, onPress, color = colors.amber, emoji,
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [styles.btn, { backgroundColor: color, borderBottomColor: shade(color), transform: [{ translateY: pressed ? 2 : 0 }], borderBottomWidth: pressed ? 3 : 5 }]}
+      style={({ pressed }) => [
+        styles.btn,
+        {
+          backgroundColor: color,
+          borderBottomColor: shade(color),
+          transform: [{ translateY: pressed ? 2 : 0 }],
+          borderBottomWidth: pressed ? 3 : 5,
+        },
+      ]}
       accessibilityRole="button"
     >
       {e ? <Text style={styles.emoji}>{e}</Text> : null}
@@ -24,7 +32,22 @@ export default function BigButton({ label, onPress, color = colors.amber, emoji,
   );
 }
 const styles = StyleSheet.create({
-  btn: { minHeight: 56, borderRadius: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: 20, paddingVertical: 10 },
-  label: { fontSize: 19, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
+  btn: {
+    minHeight: 54,
+    borderRadius: 20,
+    borderWidth: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    shadowColor: '#1E1B4B',
+    shadowOpacity: 0.14,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
+  },
+  label: { fontSize: 18, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink },
   emoji: { fontSize: 20 },
 });
