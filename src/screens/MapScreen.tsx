@@ -98,11 +98,9 @@ export default function MapScreen() {
   const profile = useStore((s) => s.profile);
   const W = Math.min(width - (width >= 900 ? 48 : 32), 520);
 
-  // Default to child's level realm (0 to 4 index)
-  const defaultWorldIndex = Math.min(Math.max(profile.level - 1, 0), MAP_WORLDS.length - 1);
-  const [selectedWorldIdx, setSelectedWorldIdx] = useState(defaultWorldIndex);
-
-  const world = MAP_WORLDS[selectedWorldIdx] || MAP_WORLDS[0];
+  // Focus exclusively on the level selected for the child on the main page
+  const worldIndex = Math.min(Math.max(profile.level - 1, 0), MAP_WORLDS.length - 1);
+  const world = MAP_WORLDS[worldIndex];
   const stages: MapStage[] = useMemo(() => getStagesForLevel(world.level), [world.level]);
 
   const activeLockIdx = useMemo(() => getCurrentLockIndex(stars, stages), [stars, stages]);
@@ -186,84 +184,27 @@ export default function MapScreen() {
         </View>
       </View>
 
-      {/* World Realm Selector Pills */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.worldListContainer}
-      >
-        {MAP_WORLDS.map((w, wi) => {
-          const isSelected = selectedWorldIdx === wi;
-          const isChildLevel = profile.level === w.level;
-          const isLocked = w.level > profile.level;
-          const worldStages = getStagesForLevel(w.level);
-          const worldStars = worldStages.reduce((sum, s) => sum + (stars[s.id] ?? 0), 0);
-
-          return (
-            <Pressable
-              key={w.id}
-              onPress={() => {
-                if (isLocked) {
-                  playSfx('wrong');
-                  speak(`Reach Level ${w.level} first to unlock ${w.name}!`);
-                  return;
-                }
-                playSfx('tap');
-                setSelectedWorldIdx(wi);
-              }}
-              style={[
-                styles.worldCard,
-                isSelected && styles.worldCardSelected,
-                isLocked && styles.worldCardLocked,
-                { borderColor: isSelected ? w.accent : isLocked ? '#CBD5E1' : '#E2E8F0' },
-              ]}
-            >
-              <LinearGradient
-                colors={isLocked ? ['#F8FAFC', '#E2E8F0'] : w.cardGrad}
-                style={StyleSheet.absoluteFill}
-              />
-              <View style={styles.worldCardHeader}>
-                <Text style={styles.worldCardLevel}>LEVEL {w.level}</Text>
-                {isChildLevel ? (
-                  <View style={styles.activeLevelPill}>
-                    <Text style={styles.activeLevelPillText}>Your Fit</Text>
-                  </View>
-                ) : isLocked ? (
-                  <View style={styles.lockedLevelPill}>
-                    <Text style={styles.lockedLevelPillText}>🔒 Locked</Text>
-                  </View>
-                ) : (
-                  <View style={styles.unlockedLevelPill}>
-                    <Text style={styles.unlockedLevelPillText}>✓ Open</Text>
-                  </View>
-                )}
-              </View>
-
-              <View style={[styles.worldAvatar, isLocked && { opacity: 0.6 }]}>
-                <Pic emoji={isLocked ? '🔒' : w.pic} size={36} />
-              </View>
-
-              <Text
-                style={[
-                  styles.worldName,
-                  { color: isLocked ? colors.muted : w.dark },
-                ]}
-                numberOfLines={2}
-              >
-                {w.name}
-              </Text>
-              <Text
-                style={[
-                  styles.worldStarsText,
-                  isLocked && { color: colors.muted },
-                ]}
-              >
-                {isLocked ? `🔒 Reach Lvl ${w.level}` : `⭐ ${worldStars}/30`}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
+      {/* Focused Level Realm Hero Card (Only the active level selected on the main page) */}
+      <View style={[styles.realmShowcaseCard, { borderColor: world.accent }]}>
+        <LinearGradient colors={world.cardGrad} style={StyleSheet.absoluteFill} />
+        <View style={styles.realmShowcaseAvatar}>
+          <Pic emoji={world.pic} size={64} />
+        </View>
+        <View style={styles.realmShowcaseInfo}>
+          <View style={styles.realmLevelTagRow}>
+            <View style={styles.realmLevelTag}>
+              <Text style={styles.realmLevelTagText}>LEVEL {world.level}</Text>
+            </View>
+            <View style={styles.realmActivePill}>
+              <Text style={styles.realmActivePillText}>🎯 Active Level</Text>
+            </View>
+          </View>
+          <Text style={[styles.realmShowcaseTitle, { color: world.dark }]}>
+            {world.emoji} {world.name}
+          </Text>
+          <Text style={styles.realmShowcaseDesc}>{world.desc}</Text>
+        </View>
+      </View>
 
       {/* 10-Locks Winding Adventure Trail Panel */}
       <View style={[styles.panel, { width: W, height: PANEL_H, borderColor: world.accent }]}>
@@ -319,7 +260,7 @@ export default function MapScreen() {
                 top: p.y - 24,
               }}
             >
-              <Pic emoji={world.deco[k % world.deco.length]} size={s.boss ? 52 : 44} />
+              <Pic emoji={world.deco[k % world.deco.length]} size={s.boss ? 56 : 46} />
             </View>
           );
         })}
@@ -327,7 +268,7 @@ export default function MapScreen() {
         {/* 10 Lock Nodes */}
         {stages.map((s, k) => {
           const p = pts[k];
-          const r = s.boss ? 48 : 38;
+          const r = s.boss ? 56 : 46;
           const got = stars[s.id] ?? 0;
           const unlocked = isStageUnlocked(s.lockNumber, stars, stages);
           const isCur = k === activeLockIdx && unlocked;
@@ -353,7 +294,7 @@ export default function MapScreen() {
                   ]}
                 >
                   <View style={styles.hereAvatar}>
-                    <Pic emoji={profile.avatar || '🐼'} size={32} />
+                    <Pic emoji={profile.avatar || '🐼'} size={36} />
                   </View>
                   <Text style={styles.hereText}>You are here!</Text>
                 </View>
@@ -375,7 +316,7 @@ export default function MapScreen() {
                   isCur && styles.nodeCurrent,
                 ]}
               >
-                <Pic emoji={unlocked ? s.character : '🔒'} size={s.boss ? 48 : 36} />
+                <Pic emoji={unlocked ? s.character : '🔒'} size={unlocked ? (s.boss ? 60 : 48) : 44} />
 
                 {/* Lock Badge Pill on the node */}
                 <View
@@ -394,7 +335,7 @@ export default function MapScreen() {
               <View style={styles.starRow}>
                 {[1, 2, 3].map((n) => (
                   <View key={n} style={{ opacity: n <= got ? 1 : 0.25 }}>
-                    <Pic emoji="⭐" size={16} />
+                    <Pic emoji="⭐" size={20} />
                   </View>
                 ))}
               </View>
@@ -471,112 +412,84 @@ const styles = StyleSheet.create({
     color: colors.muted,
   },
 
-  worldListContainer: {
-    paddingVertical: 6,
-    paddingHorizontal: 2,
-    gap: 12,
-    marginBottom: 16,
-  },
-  worldCard: {
-    width: 142,
-    minHeight: 150,
+  realmShowcaseCard: {
+    width: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
     borderWidth: 3,
-    padding: 10,
-    alignItems: 'center',
-    overflow: 'hidden',
-    shadowColor: '#5B8DB8',
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-  },
-  worldCardLocked: {
-    opacity: 0.72,
-    borderColor: '#CBD5E1',
-  },
-  worldCardSelected: {
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    transform: [{ scale: 1.04 }],
-  },
-  worldCardHeader: {
-    width: '100%',
+    padding: 14,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 4,
+    gap: 14,
+    marginBottom: 16,
+    overflow: 'hidden',
+    shadowColor: '#5B8DB8',
+    shadowOpacity: 0.16,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
   },
-  worldCardLevel: {
+  realmShowcaseAvatar: {
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  realmShowcaseInfo: {
+    flex: 1,
+  },
+  realmLevelTagRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 2,
+  },
+  realmLevelTag: {
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 999,
+  },
+  realmLevelTagText: {
     fontSize: 10,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: 'rgba(43,42,82,0.85)',
-    backgroundColor: 'rgba(255,255,255,0.75)',
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-    borderRadius: 999,
   },
-  activeLevelPill: {
+  realmActivePill: {
     backgroundColor: '#10B981',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
     borderRadius: 999,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
   },
-  activeLevelPillText: {
-    fontSize: 9,
+  realmActivePillText: {
+    fontSize: 10,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#FFFFFF',
   },
-  lockedLevelPill: {
-    backgroundColor: '#64748B',
-    borderRadius: 999,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-  },
-  lockedLevelPillText: {
-    fontSize: 9,
+  realmShowcaseTitle: {
+    fontSize: 20,
+    lineHeight: 24,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
-    color: '#FFFFFF',
-  },
-  unlockedLevelPill: {
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    borderRadius: 999,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-  },
-  unlockedLevelPillText: {
-    fontSize: 9,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '800',
-    color: colors.ink,
-  },
-  worldAvatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 4,
-  },
-  worldName: {
-    fontSize: 13,
-    lineHeight: 16,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '800',
-    textAlign: 'center',
-    minHeight: 34,
     marginTop: 2,
   },
-  worldStarsText: {
-    fontSize: 11,
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontWeight: '800',
+  realmShowcaseDesc: {
+    fontSize: 12,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
     color: colors.ink,
-    marginTop: 4,
+    lineHeight: 16,
+    marginTop: 2,
   },
 
   panel: {
@@ -612,13 +525,13 @@ const styles = StyleSheet.create({
   node: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 4,
-    borderBottomWidth: 8,
+    borderWidth: 5,
+    borderBottomWidth: 9,
     shadowColor: '#3B4BDB',
-    shadowOpacity: 0.18,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 4,
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
   },
   nodeCleared: {
     backgroundColor: '#FEF3C7',
@@ -634,33 +547,33 @@ const styles = StyleSheet.create({
   },
   lockPill: {
     position: 'absolute',
-    top: -6,
-    left: -6,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-    borderRadius: 10,
-    borderWidth: 1.5,
+    top: -8,
+    left: -8,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+    borderWidth: 2,
     borderColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
   lockPillText: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#FFFFFF',
   },
   starRow: {
     flexDirection: 'row',
-    gap: 2,
-    marginTop: 4,
+    gap: 3,
+    marginTop: 6,
   },
   nodeTitle: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: colors.ink,
-    marginTop: 2,
+    marginTop: 3,
     textAlign: 'center',
   },
   nodeTitleBoss: {
@@ -671,16 +584,16 @@ const styles = StyleSheet.create({
 
   hereBadge: {
     position: 'absolute',
-    top: 14,
-    width: 120,
+    top: 18,
+    width: 130,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
     backgroundColor: '#FFFFFF',
     borderRadius: 999,
-    paddingRight: 8,
-    paddingLeft: 3,
-    paddingVertical: 2,
+    paddingRight: 10,
+    paddingLeft: 4,
+    paddingVertical: 3,
     shadowColor: '#3B4BDB',
     shadowOpacity: 0.25,
     shadowRadius: 8,
@@ -689,15 +602,15 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   hereAvatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: '#FEF3C7',
     alignItems: 'center',
     justifyContent: 'center',
   },
   hereText: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: colors.ink,
