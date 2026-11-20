@@ -42,7 +42,11 @@ export default function StoriesScreen() {
             <Pressable
               key={s.id}
               onPress={() => router.push({ pathname: '/story', params: { id: s.id } } as never)}
-              style={[styles.card, { borderColor: s.color }]}
+              style={({ pressed }) => [
+                styles.card,
+                { borderColor: s.color, borderBottomColor: s.color },
+                pressed && styles.cardPressed,
+              ]}
               accessibilityRole="button"
             >
               <View style={[styles.cover, { backgroundColor: s.color }]}>
@@ -60,7 +64,9 @@ export default function StoriesScreen() {
                   </View>
                 </View>
                 <Text style={styles.t}>{s.title}</Text>
-                <Text style={styles.meta}>{s.pages.length} pages · {s.questions.length} questions</Text>
+                <Text style={styles.meta}>
+                  {s.pages.length} pages · {s.questions.length} questions
+                </Text>
                 <Text style={r ? styles.done : styles.new}>
                   {r ? `${'⭐'.repeat(r.stars)}${'☆'.repeat(3 - r.stars)} Completed` : '✨ Read Now'}
                 </Text>
@@ -75,32 +81,104 @@ export default function StoriesScreen() {
 
 const styles = StyleSheet.create({
   header: { marginBottom: 16 },
-  title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink, marginBottom: 4 },
-  sub: { fontSize: 14, fontFamily: 'Baloo2_700Bold', fontWeight: '700', color: colors.muted, lineHeight: 19 },
+  title: {
+    fontSize: 28,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+    marginBottom: 4,
+  },
+  sub: {
+    fontSize: 14,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: colors.muted,
+    lineHeight: 19,
+  },
   card: {
     flexDirection: 'row',
     gap: 14,
     backgroundColor: '#fff',
     borderRadius: 24,
-    borderWidth: 2,
+    borderWidth: 1.5,
+    borderBottomWidth: 4,
     padding: 14,
     alignItems: 'center',
     minHeight: 104,
     flex: 1,
     shadowColor: '#5B8DB8',
-    shadowOpacity: 0.10,
+    shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 3 },
-    elevation: 2,
+    elevation: 3,
   },
-  cover: { width: 80, height: 80, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
-  cardHeaderRow: { flexDirection: 'row', gap: 6, alignItems: 'center', marginBottom: 4 },
-  cardTopicBadge: { backgroundColor: '#F1F5F9', borderRadius: 6, paddingHorizontal: 6, paddingVertical: 1.5 },
-  cardTopicText: { fontSize: 10, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: '#475569' },
-  cardLevelBadge: { backgroundColor: '#EEF2FF', borderRadius: 6, paddingHorizontal: 6, paddingVertical: 1.5 },
-  cardLevelText: { fontSize: 10, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: '#4F46E5' },
-  t: { fontSize: 18, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink, lineHeight: 22 },
-  meta: { fontSize: 12, fontFamily: 'Baloo2_700Bold', fontWeight: '700', color: colors.muted, marginTop: 2 },
-  done: { fontSize: 13, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.good, marginTop: 4 },
-  new: { fontSize: 13, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: '#6366F1', marginTop: 4 },
+  cardPressed: {
+    transform: [{ translateY: 2 }],
+    borderBottomWidth: 2,
+  },
+  cover: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardHeaderRow: {
+    flexDirection: 'row',
+    gap: 6,
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  cardTopicBadge: {
+    backgroundColor: '#F1F5F9',
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 1.5,
+  },
+  cardTopicText: {
+    fontSize: 10,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#475569',
+  },
+  cardLevelBadge: {
+    backgroundColor: '#EEF2FF',
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 1.5,
+  },
+  cardLevelText: {
+    fontSize: 10,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#4F46E5',
+  },
+  t: {
+    fontSize: 18,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+    lineHeight: 22,
+  },
+  meta: {
+    fontSize: 12,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: colors.muted,
+    marginTop: 2,
+  },
+  done: {
+    fontSize: 13,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.good,
+    marginTop: 4,
+  },
+  new: {
+    fontSize: 13,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: '#6366F1',
+    marginTop: 4,
+  },
 });

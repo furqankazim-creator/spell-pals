@@ -152,7 +152,10 @@ export default function RewardsScreen() {
 
         <Pressable
           onPress={handleOpenMysteryBox}
-          style={styles.openBoxBtn}
+          style={({ pressed }) => [
+            styles.openBoxBtn,
+            pressed && styles.openBoxBtnPressed,
+          ]}
           accessibilityRole="button"
           accessibilityLabel="Open Mystery Reward Box"
         >
@@ -166,7 +169,11 @@ export default function RewardsScreen() {
       <View style={styles.filterRow}>
         <Pressable
           onPress={() => setFilter('all')}
-          style={[styles.filterTab, filter === 'all' && styles.filterTabActive]}
+          style={({ pressed }) => [
+            styles.filterTab,
+            filter === 'all' && styles.filterTabActive,
+            pressed && styles.filterTabPressed,
+          ]}
           accessibilityRole="button"
         >
           <Text style={[styles.filterTabText, filter === 'all' && styles.filterTabTextActive]}>
@@ -176,7 +183,11 @@ export default function RewardsScreen() {
 
         <Pressable
           onPress={() => setFilter('collected')}
-          style={[styles.filterTab, filter === 'collected' && styles.filterTabActive]}
+          style={({ pressed }) => [
+            styles.filterTab,
+            filter === 'collected' && styles.filterTabActive,
+            pressed && styles.filterTabPressed,
+          ]}
           accessibilityRole="button"
         >
           <Text style={[styles.filterTabText, filter === 'collected' && styles.filterTabTextActive]}>
@@ -186,7 +197,11 @@ export default function RewardsScreen() {
 
         <Pressable
           onPress={() => setFilter('locked')}
-          style={[styles.filterTab, filter === 'locked' && styles.filterTabActive]}
+          style={({ pressed }) => [
+            styles.filterTab,
+            filter === 'locked' && styles.filterTabActive,
+            pressed && styles.filterTabPressed,
+          ]}
           accessibilityRole="button"
         >
           <Text style={[styles.filterTabText, filter === 'locked' && styles.filterTabTextActive]}>
@@ -204,9 +219,10 @@ export default function RewardsScreen() {
               <Pressable
                 key={s.id}
                 onPress={() => handleTapSticker(s, isEarned)}
-                style={[
+                style={({ pressed }) => [
                   styles.cell,
                   isEarned ? styles.cellEarned : styles.cellLocked,
+                  pressed && styles.cellPressed,
                 ]}
                 accessibilityRole="button"
                 accessibilityLabel={`${isEarned ? s.label : 'Locked Badge'}`}
@@ -437,8 +453,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 20,
     gap: 8,
+    borderWidth: 0,
     borderBottomWidth: 4,
     borderBottomColor: '#B45309',
+  },
+  openBoxBtnPressed: {
+    transform: [{ translateY: 2 }],
+    borderBottomWidth: 2,
   },
   openBoxIcon: {
     fontSize: 20,
@@ -466,10 +487,17 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 1.5,
     borderColor: '#E2E8F0',
+    borderBottomWidth: 3,
+    borderBottomColor: '#CBD5E1',
   },
   filterTabActive: {
     backgroundColor: '#EEF2FF',
     borderColor: '#6366F1',
+    borderBottomColor: '#4F46E5',
+  },
+  filterTabPressed: {
+    transform: [{ translateY: 1 }],
+    borderBottomWidth: 1.5,
   },
   filterTabText: {
     fontSize: 13,
@@ -488,7 +516,9 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
-    borderWidth: 2,
+    borderWidth: 1.5,
+    borderBottomWidth: 4,
+    borderBottomColor: '#CBD5E1',
     padding: 12,
     alignItems: 'center',
     shadowColor: '#5B8DB8',
@@ -496,6 +526,10 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
+  },
+  cellPressed: {
+    transform: [{ translateY: 2 }],
+    borderBottomWidth: 2,
   },
   cellEarned: {
     borderColor: '#E2E8F0',

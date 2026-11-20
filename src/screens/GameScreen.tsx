@@ -428,8 +428,14 @@ export default function GameScreen({ game }: { game: GameId }) {
 
       {feedback ? <Text style={styles.feedback}>{feedback}</Text> : null}
       {wrong > 0 ? <Text style={styles.wrong}>Wrong tries: {wrong}</Text> : null}
-      <View style={{ height: 16 }} />
-      <BigButton label="Quit game" onPress={() => router.replace(stage ? '/map' : '/')} color={colors.muted} />
+      <Pressable
+        onPress={() => router.replace(stage ? '/map' : '/')}
+        style={styles.quitTextBtn}
+        accessibilityRole="button"
+        accessibilityLabel="Quit game"
+      >
+        <Text style={styles.quitText}>Quit game ✕</Text>
+      </Pressable>
 
       {/* ─────────────────── ROUND CLEARED VICTORY OVERLAY ─────────────────── */}
       {clearedOverlay && (
@@ -1045,5 +1051,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: colors.muted,
+  },
+  quitTextBtn: {
+    marginTop: 18,
+    marginBottom: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+  },
+  quitText: {
+    fontSize: 15,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
+    color: '#64748B',
   },
 });
