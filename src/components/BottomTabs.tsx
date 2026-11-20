@@ -2,12 +2,13 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TabIcon } from './AppIcon';
+import { colors } from '../theme/colors';
 
 const TABS = [
-  { label: 'Home', icon: 'home', route: '/', activeColor: '#4F46E5', activeBg: '#EEF2FF' },
-  { label: 'Stories', icon: 'stories', route: '/stories', activeColor: '#7C3AED', activeBg: '#F3E8FF' },
-  { label: 'Rewards', icon: 'rewards', route: '/rewards', activeColor: '#D97706', activeBg: '#FEF3C7' },
-  { label: 'Grown-ups', icon: 'parent', route: '/parent', activeColor: '#334155', activeBg: '#F1F5F9' },
+  { label: 'Home', icon: 'home', route: '/', activeColor: '#1E293B' },
+  { label: 'Stories', icon: 'stories', route: '/stories', activeColor: '#1E293B' },
+  { label: 'Rewards', icon: 'rewards', route: '/rewards', activeColor: '#D97706' },
+  { label: 'Grown-ups', icon: 'parent', route: '/parent', activeColor: '#1E293B' },
 ];
 
 export default function BottomTabs() {
@@ -32,8 +33,8 @@ export default function BottomTabs() {
               accessibilityRole="button"
               accessibilityState={{ selected: active }}
             >
-              <View style={[styles.iconWrap, active && { backgroundColor: t.activeBg }]}>
-                <TabIcon id={t.icon} active={active} size={20} />
+              <View style={styles.iconWrap}>
+                <TabIcon id={t.icon} active={active} size={22} />
               </View>
               <Text
                 style={[
@@ -46,7 +47,6 @@ export default function BottomTabs() {
               >
                 {t.label}
               </Text>
-              {active ? <View style={[styles.activeDot, { backgroundColor: t.activeColor }]} /> : null}
             </Pressable>
           );
         })}
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
-    paddingVertical: 6,
+    paddingVertical: 8,
     paddingHorizontal: 6,
     borderWidth: 1.5,
-    borderColor: 'rgba(255, 255, 255, 0.9)',
+    borderColor: 'rgba(255, 255, 255, 0.95)',
     shadowColor: '#2B2A52',
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
+    shadowOpacity: 0.1,
+    shadowRadius: 14,
     shadowOffset: { width: 0, height: 4 },
     elevation: 8,
   },
@@ -87,18 +87,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 2,
     paddingHorizontal: 4,
-    borderRadius: 14,
   },
   tabActive: {
-    transform: [{ scale: 1.02 }],
+    transform: [{ scale: 1.05 }],
   },
   tabPressed: {
     transform: [{ scale: 0.95 }],
   },
   iconWrap: {
-    width: 44,
     height: 28,
-    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 2,
@@ -108,17 +105,12 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
-    color: '#64748B',
+    color: '#94A3B8',
     textAlign: 'center',
   },
   labelActive: {
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
-  },
-  activeDot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    marginTop: 2,
+    color: colors.ink,
   },
 });

@@ -5,10 +5,10 @@ import { TabIcon } from './AppIcon';
 import Logo from './Logo';
 
 const LINKS = [
-  { label: 'Home', icon: 'home', route: '/', activeColor: '#4F46E5', activeBg: '#EEF2FF' },
-  { label: 'Stories', icon: 'stories', route: '/stories', activeColor: '#7C3AED', activeBg: '#F3E8FF' },
+  { label: 'Home', icon: 'home', route: '/', activeColor: '#1E293B', activeBg: '#F1F5F9' },
+  { label: 'Stories', icon: 'stories', route: '/stories', activeColor: '#1E293B', activeBg: '#F1F5F9' },
   { label: 'Rewards', icon: 'rewards', route: '/rewards', activeColor: '#D97706', activeBg: '#FEF3C7' },
-  { label: 'Grown-ups', icon: 'parent', route: '/parent', activeColor: '#334155', activeBg: '#F1F5F9' },
+  { label: 'Grown-ups', icon: 'parent', route: '/parent', activeColor: '#1E293B', activeBg: '#F1F5F9' },
 ];
 
 /** Desktop header: logo on the left, menu on the right with soft, polished pills. */
