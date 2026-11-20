@@ -194,8 +194,8 @@ export default function QuestScreen() {
   }
 
   return (
-    <ScreenShell tabs={false} max={640} onBack={() => router.replace('/map')} backLabel="← Map">
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+    <ScreenShell tabs={false} scroll={false} max={640} onBack={() => router.replace('/map')} backLabel="← Map">
+      <View style={styles.container}>
         {/* Top Header Card */}
         <View style={styles.headerCard}>
           <View style={styles.headerRow}>
@@ -242,7 +242,7 @@ export default function QuestScreen() {
         {/* Narrative Story Dialogue Card */}
         <View style={styles.storyCard}>
           <View style={styles.characterAvatar}>
-            <Text style={{ fontSize: 36 }}>{stage.character}</Text>
+            <Text style={{ fontSize: 26 }}>{stage.character}</Text>
           </View>
           <View style={styles.dialogueBox}>
             <Text style={styles.characterName}>{stage.characterName}</Text>
@@ -261,11 +261,11 @@ export default function QuestScreen() {
 
           {/* Visual Clue Card */}
           <View style={styles.clueBox}>
-            <Pic emoji={curQ.emoji} size={72} />
+            <Pic emoji={curQ.emoji} size={54} />
             <Text style={styles.clueText}>“{curQ.clue}”</Text>
           </View>
 
-          {/* Challenge Interaction (Phase 1 = Riddle Choices, Phase 2 & 3 = Speller Tile Cipher) */}
+          {/* Challenge Interaction */}
           {questionIdx === 0 ? (
             <View style={styles.choicesRow}>
               {curQ.choices.map((c) => (
@@ -283,7 +283,6 @@ export default function QuestScreen() {
             </View>
           ) : (
             <View style={styles.spellBox}>
-              {/* Target letter slots */}
               <View style={styles.slotRow}>
                 {curQ.word.split('').map((_, idx) => (
                   <View key={idx} style={styles.slot}>
@@ -294,13 +293,12 @@ export default function QuestScreen() {
                 ))}
               </View>
 
-              {/* Scrambled letter tiles */}
               <View style={styles.tilesRow}>
                 {letters.map((l, idx) => (
                   <LetterTile
                     key={idx}
                     letter={l}
-                    size={58}
+                    size={48}
                     disabled={used.includes(idx)}
                     onPress={() => tapLetter(l, idx)}
                   />
@@ -338,116 +336,117 @@ export default function QuestScreen() {
           {feedback ? <Text style={styles.feedback}>{feedback}</Text> : null}
           {lockOpen ? (
             <View style={styles.lockOpenBanner}>
-              <Text style={{ fontSize: 32 }}>🔓</Text>
+              <Text style={{ fontSize: 24 }}>🔓</Text>
               <Text style={styles.lockOpenBannerText}>LOCK SHATTERED!</Text>
             </View>
           ) : null}
         </View>
 
-        <View style={{ height: 16 }} />
-        <BigButton
-          label="← Return to Map"
+        <Pressable
           onPress={() => router.replace('/map')}
-          color={colors.muted}
-        />
-        <View style={{ height: 32 }} />
-      </ScrollView>
+          style={styles.quitMapLink}
+        >
+          <Text style={styles.quitMapLinkText}>Quit quest ✕</Text>
+        </Pressable>
+      </View>
     </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 24,
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingBottom: 4,
   },
   headerCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 24,
+    borderRadius: 18,
     borderWidth: 2,
     borderColor: '#E2E8F0',
-    padding: 16,
-    marginBottom: 12,
+    padding: 8,
+    marginBottom: 6,
     shadowColor: '#5B8DB8',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   lockNumberBadge: {
     backgroundColor: '#FEF3C7',
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
     borderWidth: 1.5,
     borderColor: '#F59E0B',
   },
   lockNumberText: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#B45309',
   },
   levelBadge: {
     backgroundColor: '#EEF2FF',
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
     borderWidth: 1.5,
     borderColor: '#C7D2FE',
   },
   levelBadgeText: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#4F46E5',
   },
   stageTitle: {
-    fontSize: 22,
+    fontSize: 17,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: colors.ink,
-    marginBottom: 12,
+    marginBottom: 6,
   },
   phaseStepper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     backgroundColor: '#F8FAFC',
-    borderRadius: 16,
-    paddingVertical: 8,
+    borderRadius: 12,
+    paddingVertical: 4,
   },
   phaseStepItem: {
     alignItems: 'center',
   },
   phaseDot: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: '#E2E8F0',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   phaseDotDone: {
     backgroundColor: '#22C55E',
   },
   phaseDotActive: {
     backgroundColor: '#F59E0B',
-    transform: [{ scale: 1.15 }],
+    transform: [{ scale: 1.1 }],
   },
   phaseDotText: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#FFFFFF',
   },
   phaseLabel: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: colors.muted,
@@ -462,19 +461,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#EFF6FF',
-    borderRadius: 22,
-    borderWidth: 2,
+    borderRadius: 16,
+    borderWidth: 1.5,
     borderColor: '#BFDBFE',
-    padding: 14,
-    marginBottom: 12,
-    gap: 12,
+    padding: 8,
+    marginBottom: 6,
+    gap: 8,
   },
   characterAvatar: {
-    width: 58,
-    height: 58,
-    borderRadius: 29,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: '#FFFFFF',
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#93C5FD',
     alignItems: 'center',
     justifyContent: 'center',
@@ -483,46 +482,46 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   characterName: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#1E40AF',
   },
   storyText: {
-    fontSize: 13,
+    fontSize: 11,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: '#1E3A8A',
-    lineHeight: 18,
-    marginTop: 2,
+    lineHeight: 14,
+    marginTop: 1,
   },
 
   challengeCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 24,
+    borderRadius: 18,
     borderWidth: 2,
     borderColor: '#E2E8F0',
-    padding: 16,
+    padding: 10,
     alignItems: 'center',
     shadowColor: '#5B8DB8',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
   },
   challengePhaseTag: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#EA580C',
     textAlign: 'center',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   challengePromptBox: {
     width: '100%',
-    marginBottom: 12,
+    marginBottom: 6,
   },
   challengePrompt: {
-    fontSize: 18,
+    fontSize: 15,
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: colors.ink,
@@ -531,20 +530,31 @@ const styles = StyleSheet.create({
   clueBox: {
     alignItems: 'center',
     backgroundColor: '#FFFBEB',
-    borderRadius: 18,
-    borderWidth: 2,
+    borderRadius: 14,
+    borderWidth: 1.5,
     borderColor: '#FDE68A',
-    padding: 12,
+    padding: 6,
     width: '100%',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   clueText: {
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: '#92400E',
-    marginTop: 6,
+    marginTop: 2,
     textAlign: 'center',
+  },
+  quitMapLink: {
+    alignSelf: 'center',
+    paddingVertical: 4,
+    marginTop: 2,
+  },
+  quitMapLinkText: {
+    fontSize: 12,
+    color: colors.muted,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
   },
 
   choicesRow: {

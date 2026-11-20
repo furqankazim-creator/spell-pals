@@ -87,32 +87,38 @@ export default function MemoryMatchScreen() {
       </ScreenShell>
     );
   }
-  const cardW = cols === 4 ? '22%' : '30%';
+  const cardW = cols === 4 ? '22%' : '29%';
   return (
-    <ScreenShell tabs={false} max={820} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
-      <Text style={styles.title}>Memory Match</Text>
-      <Text style={styles.sub}>Find the {pairs} pairs: a picture and its word. Tries: {tries}</Text>
+    <ScreenShell tabs={false} scroll={false} max={680} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
+      <View style={styles.header}>
+        <Text style={styles.title}>Memory Match</Text>
+        <Text style={styles.sub}>Find the {pairs} pairs: picture & word · Tries: {tries}</Text>
+      </View>
       <View style={styles.grid}>
         {cards.map((c, i) => {
           const open = flipped.includes(i) || matched.includes(c.word);
           return (
             <Pressable key={c.key} onPress={() => flip(i)} style={[styles.card, { width: cardW }, open ? styles.open : null]} accessibilityRole="button">
-              {open ? (c.emoji || c.imageUri ? <Pic emoji={c.emoji ?? c.word} imageUri={c.imageUri} size={cols === 4 ? 68 : 96} /> : <Text style={[styles.face, cols === 4 || (c.text ?? '').length > 6 ? { fontSize: 15 } : null]}>{c.text}</Text>) : <Text style={styles.q}>?</Text>}
+              {open ? (c.emoji || c.imageUri ? <Pic emoji={c.emoji ?? c.word} imageUri={c.imageUri} size={cols === 4 ? 52 : 72} /> : <Text style={[styles.face, cols === 4 || (c.text ?? '').length > 6 ? { fontSize: 13 } : null]}>{c.text}</Text>) : <Text style={styles.q}>?</Text>}
             </Pressable>
           );
         })}
       </View>
-      <View style={{ height: 16 }} />
-      <BigButton label="Quit game" onPress={() => router.replace(stage ? '/map' : '/')} color={colors.muted} />
+      <Pressable onPress={() => router.replace(stage ? '/map' : '/')} style={styles.quitLink}>
+        <Text style={styles.quitLinkText}>Quit game ✕</Text>
+      </Pressable>
     </ScreenShell>
   );
 }
 const styles = StyleSheet.create({
-  title: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
-  sub: { fontSize: 15, color: colors.muted, marginBottom: 16 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
-  card: { aspectRatio: 0.9, backgroundColor: colors.violet, borderRadius: 20, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 5, borderBottomColor: '#9A8CE6' },
+  header: { marginBottom: 8, alignItems: 'center' },
+  title: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
+  sub: { fontSize: 13, color: colors.muted, fontFamily: 'Baloo2_700Bold', fontWeight: '700' },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center', flex: 1, alignItems: 'center' },
+  card: { aspectRatio: 0.9, backgroundColor: colors.violet, borderRadius: 16, alignItems: 'center', justifyContent: 'center', borderBottomWidth: 4, borderBottomColor: '#9A8CE6' },
   open: { backgroundColor: '#fff', borderBottomColor: '#E6ECF5' },
-  face: { fontSize: 22, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink, textAlign: 'center' },
-  q: { fontSize: 36, fontFamily: 'Baloo2_800ExtraBold', color: '#fff' },
+  face: { fontSize: 18, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink, textAlign: 'center' },
+  q: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', color: '#fff' },
+  quitLink: { alignSelf: 'center', paddingVertical: 4, marginTop: 4 },
+  quitLinkText: { fontSize: 12, color: colors.muted, fontFamily: 'Baloo2_700Bold', fontWeight: '700' },
 });

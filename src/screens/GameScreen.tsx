@@ -300,7 +300,7 @@ export default function GameScreen({ game }: { game: GameId }) {
   const smallPics = matchChoices.length > 4;
 
   return (
-    <ScreenShell tabs={false} max={820} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
+    <ScreenShell tabs={false} scroll={false} max={680} onBack={() => router.replace(stage ? '/map' : '/')} backLabel="← Back">
       {/* ─────────────────── LEVEL & ROUND STEPPING-STONES HEADER ─────────────────── */}
       <View style={styles.topJourneyCard}>
         <View style={styles.journeyHeaderRow}>
@@ -357,7 +357,7 @@ export default function GameScreen({ game }: { game: GameId }) {
                   {isCompleted ? (
                     <Text style={styles.stoneStar}>⭐</Text>
                   ) : isCurrent ? (
-                    <Pic emoji={profile.avatar || '🐼'} size={26} />
+                    <Pic emoji={profile.avatar || '🐼'} size={20} />
                   ) : isBoss ? (
                     <Text style={styles.stoneBossIcon}>👑</Text>
                   ) : (
@@ -381,19 +381,27 @@ export default function GameScreen({ game }: { game: GameId }) {
           <View style={styles.grid}>
             {matchChoices.map((c) => (
               <Pressable key={c.word} onPress={() => tapChoice(c.word)} style={[styles.picChoice, smallPics ? styles.picSmall : null]}>
-                <Pic emoji={c.emoji} imageUri={c.imageUri} size={smallPics ? 112 : 140} />
+                <Pic emoji={c.emoji} imageUri={c.imageUri} size={smallPics ? 80 : 100} />
               </Pressable>
             ))}
           </View>
         </View>
       ) : (
-        <WordCard word={word} hideWord={game === 'spell' || game === 'sound'} />
+        <WordCard word={word} hideWord={game === 'spell' || game === 'sound'} compact />
       )}
 
       {game !== 'match' ? (
         <View style={styles.hearRow}>
-          <BigButton label="Hear it" icon="volume-high" onPress={() => speak(word.word)} color={colors.violet} />
-          {game === 'sound' ? <BigButton label="Hear the sounds" icon="volume-high" onPress={() => speakSounds(word.sounds)} color={colors.teal} /> : null}
+          <Pressable onPress={() => speak(word.word)} style={styles.hearPillBtn}>
+            <Text style={{ fontSize: 15 }}>🔊</Text>
+            <Text style={styles.hearPillText}>Hear it</Text>
+          </Pressable>
+          {game === 'sound' ? (
+            <Pressable onPress={() => speakSounds(word.sounds)} style={[styles.hearPillBtn, { backgroundColor: colors.teal }]}>
+              <Text style={{ fontSize: 15 }}>🧩</Text>
+              <Text style={styles.hearPillText}>Hear sounds</Text>
+            </Pressable>
+          ) : null}
         </View>
       ) : null}
 
@@ -401,12 +409,12 @@ export default function GameScreen({ game }: { game: GameId }) {
         <View>
           <View style={styles.slots}>
             {word.word.split('').map((_, i) => (
-              <View key={i} style={[styles.slot, { width: slotW }]}><Text style={[styles.slotText, long ? { fontSize: 22 } : null]}>{slots[i]?.toUpperCase() ?? ''}</Text></View>
+              <View key={i} style={[styles.slot, { width: slotW }]}><Text style={[styles.slotText, long ? { fontSize: 20 } : null]}>{slots[i]?.toUpperCase() ?? ''}</Text></View>
             ))}
           </View>
           <View style={styles.tiles}>
             {letters.map((l, i) => (
-              <LetterTile key={i} letter={l} size={tileSize} disabled={used.includes(i)} onPress={() => tapLetter(l, i)} />
+              <LetterTile key={i} letter={l} size={tileSize > 52 ? 52 : tileSize} disabled={used.includes(i)} onPress={() => tapLetter(l, i)} />
             ))}
           </View>
           <Pressable onPress={() => { setSlots([]); setUsed([]); }}><Text style={styles.clear}>Clear ↺</Text></Pressable>
@@ -420,7 +428,7 @@ export default function GameScreen({ game }: { game: GameId }) {
           </Text>
           <View style={styles.tiles}>
             {choices.map((c) => (
-              <LetterTile key={c} letter={c} wide={game === 'rhyme'} filled={picked === c} onPress={() => tapChoice(c)} />
+              <LetterTile key={c} letter={c} wide={game === 'rhyme'} filled={picked === c} size={54} onPress={() => tapChoice(c)} />
             ))}
           </View>
         </View>
@@ -428,8 +436,10 @@ export default function GameScreen({ game }: { game: GameId }) {
 
       {feedback ? <Text style={styles.feedback}>{feedback}</Text> : null}
       {wrong > 0 ? <Text style={styles.wrong}>Wrong tries: {wrong}</Text> : null}
-      <View style={{ height: 16 }} />
-      <BigButton label="Quit game" onPress={() => router.replace(stage ? '/map' : '/')} color={colors.muted} />
+
+      <Pressable onPress={() => router.replace(stage ? '/map' : '/')} style={styles.quitTextLink}>
+        <Text style={styles.quitTextLinkText}>Quit game ✕</Text>
+      </Pressable>
 
       {/* ─────────────────── ROUND CLEARED VICTORY OVERLAY ─────────────────── */}
       {clearedOverlay && (
@@ -557,66 +567,68 @@ export default function GameScreen({ game }: { game: GameId }) {
 const styles = StyleSheet.create({
   topJourneyCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 22,
+    borderRadius: 18,
     borderWidth: 2,
     borderColor: '#E2E8F0',
-    padding: 14,
-    marginBottom: 16,
+    padding: 8,
+    marginBottom: 6,
     shadowColor: '#5B8DB8',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
     elevation: 2,
   },
   journeyHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   gameTitle: {
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
     color: colors.ink,
   },
   roundTierBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
     borderWidth: 1.5,
   },
   roundTierBadgeText: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
   },
   journeySub: {
-    fontSize: 13,
+    fontSize: 11,
     color: colors.muted,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   threeRoundsTrack: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F8FAFC',
-    borderRadius: 16,
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    marginBottom: 10,
-    gap: 6,
+    borderRadius: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    marginBottom: 4,
+    gap: 4,
   },
   roundPill: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    borderWidth: 1.5,
+    borderRadius: 8,
+    borderWidth: 1,
     borderColor: '#E2E8F0',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    gap: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    gap: 3,
   },
   roundPillActive: {
     backgroundColor: '#FEF3C7',
@@ -627,10 +639,10 @@ const styles = StyleSheet.create({
     borderColor: '#22C55E',
   },
   roundPillEmoji: {
-    fontSize: 13,
+    fontSize: 11,
   },
   roundPillText: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: 'Baloo2_700Bold',
     fontWeight: '700',
     color: colors.muted,
@@ -646,7 +658,7 @@ const styles = StyleSheet.create({
     color: '#15803D',
   },
   roundArrow: {
-    fontSize: 11,
+    fontSize: 9,
     color: '#94A3B8',
     fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
@@ -655,12 +667,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 4,
+    paddingVertical: 2,
   },
   stone: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     backgroundColor: '#F1F5F9',
     borderWidth: 2,
     borderColor: '#CBD5E1',
@@ -674,46 +686,51 @@ const styles = StyleSheet.create({
   stoneCurrent: {
     backgroundColor: '#EEF2FF',
     borderColor: '#4F46E5',
-    transform: [{ scale: 1.15 }],
+    transform: [{ scale: 1.1 }],
   },
   stoneBoss: {
     borderColor: '#D97706',
     backgroundColor: '#FFFBEB',
   },
   stoneStar: {
-    fontSize: 16,
+    fontSize: 13,
   },
   stoneBossIcon: {
-    fontSize: 16,
+    fontSize: 13,
   },
   stoneNum: {
-    fontSize: 13,
+    fontSize: 11,
     fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
     color: colors.muted,
   },
   stoneLine: {
     flex: 1,
-    height: 3,
+    height: 2,
     backgroundColor: '#E2E8F0',
-    maxWidth: 24,
+    maxWidth: 20,
   },
   stoneLineActive: {
     backgroundColor: '#F59E0B',
   },
 
-  prompt: { fontSize: 20, fontWeight: '800', color: colors.ink, textAlign: 'center', marginVertical: 12 },
-  bigWord: { fontSize: 40, fontFamily: 'Baloo2_800ExtraBold', letterSpacing: 6, color: colors.ink, textAlign: 'center', marginBottom: 12 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'center' },
-  picChoice: { width: 172, height: 172, backgroundColor: '#fff', borderRadius: 32, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#EDF2F7', shadowColor: '#5B8DB8', shadowOpacity: 0.18, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 3 },
-  picSmall: { width: 138, height: 138, borderRadius: 26 },
-  hearRow: { flexDirection: 'row', gap: 10, justifyContent: 'center', marginVertical: 12, flexWrap: 'wrap' },
-  slots: { flexDirection: 'row', gap: 8, justifyContent: 'center', marginVertical: 12, flexWrap: 'wrap' },
-  slot: { height: 64, borderRadius: 16, borderWidth: 2, borderStyle: 'dashed', borderColor: colors.violetText, backgroundColor: '#FFFBF0', alignItems: 'center', justifyContent: 'center' },
-  slotText: { fontSize: 32, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
-  tiles: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginVertical: 8 },
-  clear: { textAlign: 'center', color: colors.muted, fontWeight: '800', marginTop: 10, fontSize: 16 },
-  feedback: { fontSize: 20, fontFamily: 'Baloo2_800ExtraBold', color: colors.good, textAlign: 'center', marginTop: 16 },
-  wrong: { fontSize: 14, color: colors.bad, textAlign: 'center', marginTop: 6 },
+  prompt: { fontSize: 16, fontWeight: '800', color: colors.ink, textAlign: 'center', marginVertical: 4 },
+  bigWord: { fontSize: 28, fontFamily: 'Baloo2_800ExtraBold', letterSpacing: 4, color: colors.ink, textAlign: 'center', marginBottom: 6 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center' },
+  picChoice: { width: 110, height: 110, backgroundColor: '#fff', borderRadius: 20, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#EDF2F7', shadowColor: '#5B8DB8', shadowOpacity: 0.12, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 2 },
+  picSmall: { width: 92, height: 92, borderRadius: 16 },
+  hearRow: { flexDirection: 'row', gap: 8, justifyContent: 'center', marginVertical: 4, flexWrap: 'wrap' },
+  hearPillBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.violet, paddingVertical: 5, paddingHorizontal: 12, borderRadius: 12, gap: 5 },
+  hearPillText: { color: '#fff', fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', fontSize: 13 },
+  slots: { flexDirection: 'row', gap: 6, justifyContent: 'center', marginVertical: 6, flexWrap: 'wrap' },
+  slot: { height: 48, borderRadius: 12, borderWidth: 2, borderStyle: 'dashed', borderColor: colors.violetText, backgroundColor: '#FFFBF0', alignItems: 'center', justifyContent: 'center' },
+  slotText: { fontSize: 24, fontFamily: 'Baloo2_800ExtraBold', color: colors.ink },
+  tiles: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginVertical: 4 },
+  clear: { textAlign: 'center', color: colors.muted, fontWeight: '800', marginTop: 4, fontSize: 13 },
+  feedback: { fontSize: 16, fontFamily: 'Baloo2_800ExtraBold', color: colors.good, textAlign: 'center', marginTop: 6 },
+  wrong: { fontSize: 12, color: colors.bad, textAlign: 'center', marginTop: 2 },
+  quitTextLink: { alignSelf: 'center', paddingVertical: 4, marginTop: 4 },
+  quitTextLinkText: { fontSize: 12, color: colors.muted, fontFamily: 'Baloo2_700Bold', fontWeight: '700' },
 
   /* Round Cleared Modal */
   clearedOverlay: {

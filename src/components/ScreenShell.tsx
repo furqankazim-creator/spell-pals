@@ -12,7 +12,21 @@ import HopeBridgeTicker from './HopeBridgeTicker';
  * Light, still sky background. Phones: content + bottom tabs. Wide screens (web/tablet): top menu bar and
  * a centred, wider content area. `max` limits the content width for form/game screens.
  */
-export default function ScreenShell({ children, tabs = true, max, backLabel, onBack }: { children: React.ReactNode; tabs?: boolean; max?: number; backLabel?: string; onBack?: () => void }) {
+export default function ScreenShell({
+  children,
+  tabs = true,
+  max,
+  backLabel,
+  onBack,
+  scroll = true,
+}: {
+  children: React.ReactNode;
+  tabs?: boolean;
+  max?: number;
+  backLabel?: string;
+  onBack?: () => void;
+  scroll?: boolean;
+}) {
   const bedtime = useStore((s) => s.profile.bedtimeMode);
   const { wide, width } = useLayout();
   const limit = max ?? (wide ? 1100 : width < 440 ? 420 : 680);
@@ -29,9 +43,15 @@ export default function ScreenShell({ children, tabs = true, max, backLabel, onB
             </Pressable>
           </View>
         ) : null}
-        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-          <View style={[styles.inner, { maxWidth: limit, paddingHorizontal: wide ? 24 : mobilePad, paddingTop: wide ? 24 : 10 }]}>{children}</View>
-        </ScrollView>
+        {scroll ? (
+          <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+            <View style={[styles.inner, { maxWidth: limit, paddingHorizontal: wide ? 24 : mobilePad, paddingTop: wide ? 24 : 10 }]}>{children}</View>
+          </ScrollView>
+        ) : (
+          <View style={[styles.noScrollContainer, { paddingHorizontal: wide ? 24 : mobilePad }]}>
+            <View style={[styles.innerNoScroll, { maxWidth: limit }]}>{children}</View>
+          </View>
+        )}
         {tabs && !wide && width < 900 ? <BottomTabs /> : null}
       </SafeAreaView>
     </LinearGradient>
@@ -41,12 +61,14 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { flexGrow: 1, alignItems: 'center' },
   inner: { width: '100%', flex: 1, paddingBottom: 32 },
-  backWrap: { paddingHorizontal: 16, paddingTop: 10, alignItems: 'flex-start' },
+  noScrollContainer: { flex: 1, alignItems: 'center', width: '100%', overflow: 'hidden' },
+  innerNoScroll: { width: '100%', flex: 1, justifyContent: 'space-between', paddingTop: 6, paddingBottom: 8 },
+  backWrap: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 4, alignItems: 'flex-start' },
   backBtn: {
     backgroundColor: 'rgba(255,255,255,0.65)',
     borderRadius: 999,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
     borderWidth: 2,
     borderColor: 'rgba(43,42,82,0.12)',
     shadowColor: '#5B8DB8',
@@ -54,5 +76,5 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
   },
-  backText: { fontSize: 14, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink },
+  backText: { fontSize: 13, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink },
 });
