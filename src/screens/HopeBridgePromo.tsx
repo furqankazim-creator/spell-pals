@@ -47,10 +47,18 @@ export default function HopeBridgePromo() {
             </View>
 
             <View style={styles.actionsRow}>
-              <Pressable style={styles.buttonYellow} onPress={openHopeBridgeWebsite} accessibilityRole="button">
-                <Text style={styles.buttonYellowText}>🌐 Visit Official Live Portal</Text>
+              <Pressable
+                style={({ pressed }) => [styles.buttonYellow, pressed && styles.btnPressed]}
+                onPress={openHopeBridgeWebsite}
+                accessibilityRole="button"
+              >
+                <Text style={styles.buttonYellowText}>🌐 Visit Official Portal</Text>
               </Pressable>
-              <Pressable style={styles.buttonWhite} onPress={openHopeBridgeEmail} accessibilityRole="button">
+              <Pressable
+                style={({ pressed }) => [styles.buttonWhite, pressed && styles.btnPressed]}
+                onPress={openHopeBridgeEmail}
+                accessibilityRole="button"
+              >
                 <Text style={styles.buttonWhiteText}>✉️ Contact Us</Text>
               </Pressable>
             </View>
@@ -66,10 +74,18 @@ export default function HopeBridgePromo() {
               Hope Bridge Digital creates compassionate, evidence-based assistive technology. Visit our live portal to discover new releases, clinical updates, and partnership opportunities.
             </Text>
             <View style={styles.inviteActions}>
-              <Pressable style={styles.buttonCoral} onPress={openHopeBridgeWebsite} accessibilityRole="button">
+              <Pressable
+                style={({ pressed }) => [styles.buttonCoral, pressed && styles.btnPressed]}
+                onPress={openHopeBridgeWebsite}
+                accessibilityRole="button"
+              >
                 <Text style={styles.buttonCoralText}>🌐 Open hopebridgedigital.site</Text>
               </Pressable>
-              <Pressable style={styles.buttonOutline} onPress={openHopeBridgeEmail} accessibilityRole="button">
+              <Pressable
+                style={({ pressed }) => [styles.buttonOutline, pressed && styles.btnPressed]}
+                onPress={openHopeBridgeEmail}
+                accessibilityRole="button"
+              >
                 <Text style={styles.buttonOutlineText}>Contact Publisher ({HOPE_BRIDGE.email})</Text>
               </Pressable>
             </View>
@@ -95,7 +111,8 @@ const styles = StyleSheet.create({
   backBtn: { paddingRight: 10 },
   backArrow: { fontSize: 26, color: '#1B1B1B', fontWeight: '400' },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 22,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#1B1B1B',
     marginLeft: 6,
@@ -106,12 +123,19 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 20,
     marginBottom: 14,
+    shadowColor: '#2B2A52',
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
   },
   cardPurple: {
     backgroundColor: '#5A52E0',
   },
   cardCream: {
     backgroundColor: '#FFF7E6',
+    borderWidth: 1.5,
+    borderColor: '#FDE68A',
   },
 
   publisherHeaderRow: {
@@ -140,26 +164,31 @@ const styles = StyleSheet.create({
   publisherInfo: { flex: 1 },
   publisherLabel: {
     fontSize: 11,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
-    color: '#FFFFFF',
+    color: '#D5D1FC',
     letterSpacing: 0.5,
   },
   publisherName: {
-    fontSize: 18,
+    fontSize: 20,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#FFFFFF',
-    marginTop: 2,
+    marginTop: 1,
   },
   publisherTitle: {
-    fontSize: 20,
+    fontSize: 21,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#FFFFFF',
-    lineHeight: 26,
+    lineHeight: 27,
     marginBottom: 8,
   },
   publisherDesc: {
     fontSize: 14,
-    lineHeight: 21,
+    fontFamily: 'Baloo2_600SemiBold',
+    fontWeight: '600',
+    lineHeight: 20,
     color: '#E4E0FD',
     marginBottom: 14,
   },
@@ -168,17 +197,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
-    marginBottom: 14,
+    marginBottom: 16,
   },
   pill: {
     backgroundColor: '#FFFFFF',
     borderRadius: 999,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 5,
   },
   pillText: {
-    fontSize: 11.5,
-    fontWeight: '800',
+    fontSize: 12,
+    fontFamily: 'Baloo2_700Bold',
+    fontWeight: '700',
     color: '#242331',
   },
 
@@ -186,27 +216,45 @@ const styles = StyleSheet.create({
   buttonYellow: {
     flex: 1,
     backgroundColor: '#FDCB36',
+    borderWidth: 0,
+    borderBottomWidth: 4,
+    borderBottomColor: '#D9A100',
     borderRadius: 16,
-    paddingVertical: 13,
+    paddingVertical: 12,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#B45309',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   buttonYellowText: {
     color: '#27254A',
     fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
   },
   buttonWhite: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+    borderWidth: 0,
+    borderBottomWidth: 4,
+    borderBottomColor: '#CBD5E1',
     borderRadius: 16,
-    paddingVertical: 13,
+    paddingVertical: 12,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   buttonWhiteText: {
     color: '#5A52E0',
     fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
   },
 
@@ -225,7 +273,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inviteTitle: {
-    fontSize: 19,
+    fontSize: 20,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
     color: '#242331',
     textAlign: 'center',
@@ -233,6 +282,8 @@ const styles = StyleSheet.create({
   },
   inviteDesc: {
     fontSize: 13.5,
+    fontFamily: 'Baloo2_600SemiBold',
+    fontWeight: '600',
     lineHeight: 20,
     color: '#3F3D56',
     textAlign: 'center',
@@ -241,14 +292,23 @@ const styles = StyleSheet.create({
   inviteActions: { gap: 10 },
   buttonCoral: {
     backgroundColor: '#FF6459',
+    borderWidth: 0,
+    borderBottomWidth: 4,
+    borderBottomColor: '#D9382B',
     borderRadius: 16,
     paddingVertical: 13,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#D9382B',
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
   buttonCoralText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
   },
   buttonOutline: {
@@ -257,12 +317,24 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1.5,
+    borderWidth: 2,
     borderColor: '#5A52E0',
+    borderBottomWidth: 4,
+    borderBottomColor: '#4338CA',
+    shadowColor: '#5A52E0',
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   buttonOutlineText: {
     color: '#5A52E0',
-    fontSize: 13.5,
+    fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
     fontWeight: '800',
+  },
+  btnPressed: {
+    transform: [{ translateY: 2 }],
+    borderBottomWidth: 1.5,
   },
 });

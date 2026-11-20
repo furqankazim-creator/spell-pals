@@ -16,53 +16,70 @@ export default function BottomTabs() {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 8) }]}>
-      {TABS.map((t) => {
-        const active = path === t.route || (t.route === '/' && path === '/index');
-        return (
-          <Pressable
-            key={t.label}
-            onPress={() => router.push(t.route as never)}
-            style={({ pressed }) => [
-              styles.tab,
-              pressed && { opacity: 0.8 },
-            ]}
-            accessibilityRole="button"
-            accessibilityState={{ selected: active }}
-          >
-            <View style={[styles.iconWrap, active && { backgroundColor: t.activeBg }]}>
-              <TabIcon id={t.icon} active={active} size={19} />
-            </View>
-            <Text
-              style={[
-                styles.label,
-                active
-                  ? { color: t.activeColor, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800' }
-                  : null,
+    <View style={[styles.wrapper, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+      <View style={styles.dock}>
+        {TABS.map((t) => {
+          const active = path === t.route || (t.route === '/' && path === '/index');
+          return (
+            <Pressable
+              key={t.label}
+              onPress={() => router.push(t.route as never)}
+              style={({ pressed }) => [
+                styles.tab,
+                active && styles.tabActive,
+                pressed && styles.tabPressed,
               ]}
+              accessibilityRole="button"
+              accessibilityState={{ selected: active }}
             >
-              {t.label}
-            </Text>
-          </Pressable>
-        );
-      })}
+              <View style={[styles.iconWrap, active && { backgroundColor: t.activeBg }]}>
+                <TabIcon id={t.icon} active={active} size={20} />
+              </View>
+              <Text
+                style={[
+                  styles.label,
+                  active
+                    ? [styles.labelActive, { color: t.activeColor }]
+                    : null,
+                ]}
+                numberOfLines={1}
+              >
+                {t.label}
+              </Text>
+              {active ? <View style={[styles.activeDot, { backgroundColor: t.activeColor }]} /> : null}
+            </Pressable>
+          );
+        })}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  bar: {
+  wrapper: {
+    width: '100%',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingTop: 4,
+    backgroundColor: 'transparent',
+  },
+  dock: {
+    width: '100%',
+    maxWidth: 520,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(43, 42, 82, 0.08)',
-    paddingTop: 6,
-    paddingHorizontal: 8,
-    shadowColor: '#1E1B4B',
-    shadowOpacity: 0.07,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: -3 },
-    elevation: 10,
+    borderRadius: 24,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.9)',
+    shadowColor: '#2B2A52',
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 8,
   },
   tab: {
     flex: 1,
@@ -70,7 +87,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 2,
     paddingHorizontal: 4,
-    borderRadius: 12,
+    borderRadius: 14,
+  },
+  tabActive: {
+    transform: [{ scale: 1.02 }],
+  },
+  tabPressed: {
+    transform: [{ scale: 0.95 }],
   },
   iconWrap: {
     width: 44,
@@ -87,5 +110,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#64748B',
     textAlign: 'center',
+  },
+  labelActive: {
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+  },
+  activeDot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    marginTop: 2,
   },
 });
