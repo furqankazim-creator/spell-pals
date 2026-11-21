@@ -38,7 +38,12 @@ export default function ScreenShell({
         {tabs ? <HopeBridgeTicker /> : null}
         {wide ? <TopNav links={tabs} /> : null}
         {onBack ? (
-          <View style={styles.backWrap}>
+          <View
+            style={[
+              styles.backWrap,
+              wide ? { maxWidth: limit, alignSelf: 'center', width: '100%' } : null,
+            ]}
+          >
             <Pressable onPress={onBack} style={styles.backBtn} accessibilityRole="button">
               <Text style={styles.backText}>
                 {!backLabel || backLabel === '‹' || backLabel === '<' ? '← Back' : backLabel}
@@ -74,9 +79,23 @@ export default function ScreenShell({
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scrollFlex: { flex: 1, width: '100%' },
-  scroll: { flexGrow: 1, width: '100%', alignItems: 'center' },
-  inner: { width: '100%', alignSelf: 'stretch', paddingBottom: 36 },
-  backWrap: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 2, alignItems: 'flex-start' },
+  scroll: {
+    flexGrow: 1,
+    width: '100%',
+    alignItems: 'center',
+  },
+  inner: {
+    width: '100%',
+    alignSelf: 'center',
+    marginHorizontal: 'auto',
+    paddingBottom: 36,
+  },
+  backWrap: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 2,
+    alignItems: 'flex-start',
+  },
   backBtn: {
     backgroundColor: 'rgba(255,255,255,0.75)',
     borderRadius: 999,
@@ -90,5 +109,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
   },
-  backText: { fontSize: 14, fontFamily: 'Baloo2_800ExtraBold', fontWeight: '800', color: colors.ink },
+  backText: {
+    fontSize: 14,
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontWeight: '800',
+    color: colors.ink,
+  },
 });
